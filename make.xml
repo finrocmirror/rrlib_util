@@ -1,0 +1,15 @@
+<targets>
+
+  <rrlib name="util_fstream">
+    <sources>
+      fstream/*
+    </sources>
+  </rrlib>
+
+  <rrlib name="util_stl_container">
+    <sources>
+      stl_container/*
+    </sources>
+  </rrlib>
+
+</targets>

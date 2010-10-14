@@ -82,6 +82,6 @@ inline const std::string Join(const TContainer &container, const char *delimiter
 }
 }
 
-#include "util/stl_container/join.hpp"
+#include "rrlib/util/stl_container/join.hpp"
 
 #endif

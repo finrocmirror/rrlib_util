@@ -35,16 +35,9 @@
 #include <string>
 #include <iostream>
 
-extern "C"
-{
-#include <libgen.h>
-}
-
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/logging/definitions.h"
-
 #include "rrlib/util/patterns/singleton.h"
 
 //----------------------------------------------------------------------
@@ -54,7 +47,6 @@ extern "C"
 //----------------------------------------------------------------------
 // Namespace usage
 //----------------------------------------------------------------------
-using namespace rrlib::logging;
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
@@ -127,10 +119,6 @@ typedef rrlib::util::tSingletonHolder<tDisplayImplementation> tDisplay;
 
 int main(int argc, char **argv)
 {
-  default_log_description = basename(argv[0]);
-
-  tLogDomainRegistry::GetInstance()->SetDomainMaxMessageLevel(tLogDomainRegistry::GetDefaultDomain()->GetName(), eLL_DEBUG_VERBOSE_3);
-
   tKeyboard::GetInstance().Type("foo");
   tDisplay::GetInstance().Show("bar");
 

@@ -32,17 +32,11 @@
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
 #include <cstdlib>
-
-extern "C"
-{
-#include <libgen.h>
-}
+#include <iostream>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/logging/definitions.h"
-
 #include "rrlib/util/patterns/final_class.h"
 
 //----------------------------------------------------------------------
@@ -52,7 +46,6 @@ extern "C"
 //----------------------------------------------------------------------
 // Namespace usage
 //----------------------------------------------------------------------
-using namespace rrlib::logging;
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
@@ -74,7 +67,7 @@ struct A
 {
   void f()
   {
-    RRLIB_LOG_STREAM(eLL_USER) << "A";
+    std::cout << "A" << std::endl;
   }
 };
 
@@ -82,7 +75,7 @@ struct B : public A
 {
   void f()
   {
-    RRLIB_LOG_STREAM(eLL_USER) << "B";
+    std::cout << "B" << std::endl;
   }
 };
 
@@ -96,7 +89,7 @@ struct Final : RRLIB_FINAL_CLASS
 {
   void f()
   {
-    RRLIB_LOG_STREAM(eLL_USER) << "Final";
+    std::cout << "Final" << std::endl;
   }
 };
 
@@ -113,8 +106,6 @@ class IllegalFromFinal : public Final
 
 int main(int argc, char **argv)
 {
-  default_log_description = basename(argv[0]);
-
   A a;
   a.f();
 

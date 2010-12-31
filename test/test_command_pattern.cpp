@@ -33,17 +33,12 @@
 //----------------------------------------------------------------------
 #include <cstdlib>
 #include <string>
-
-extern "C"
-{
-#include <libgen.h>
-}
+#include <iostream>
+#include <vector>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/logging/definitions.h"
-
 #include "rrlib/util/patterns/command.h"
 
 //----------------------------------------------------------------------
@@ -53,7 +48,6 @@ extern "C"
 //----------------------------------------------------------------------
 // Namespace usage
 //----------------------------------------------------------------------
-using namespace rrlib::logging;
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
@@ -72,7 +66,7 @@ struct TestFunctor1
 {
   void operator()(int i, double d)
   {
-    RRLIB_LOG_STREAM(eLL_USER) << "TestFunctor1 called with i = " << i << ", d = " << d << ".";
+    std::cout << "TestFunctor1 called with i = " << i << ", d = " << d << "." << std::endl;
   }
 };
 // Functor class with return type void and parameter int
@@ -80,7 +74,7 @@ struct TestFunctor2
 {
   bool operator()(int i)
   {
-    RRLIB_LOG_STREAM(eLL_USER) << "TestFunctor2 called with i = " << i << ".";
+    std::cout << "TestFunctor2 called with i = " << i << "." << std::endl;
     return true;
   }
 };
@@ -89,14 +83,14 @@ struct TestFunctor3
 {
   void operator()()
   {
-    RRLIB_LOG_STREAM(eLL_USER) << "TestFunctor3 called.";
+    std::cout << "TestFunctor3 called." << std::endl;
   }
 };
 
 // Classic void function we can get a pointer to with parameters int and double
 void TestFunction(int i, double d)
 {
-  RRLIB_LOG_STREAM(eLL_USER) << "TestFunction called with i = " << i << ", d = " << d << ".";
+  std::cout << "TestFunction called with i = " << i << ", d = " << d << "." << std::endl;
 }
 
 // A function to test if automatic conversion of two int parameters to double for the function and from const char * to std::string as returny type would work
@@ -116,11 +110,11 @@ struct Parrot
 {
   void Eat()
   {
-    RRLIB_LOG_STREAM(eLL_USER) << "Tsk, knick, tsk...";
+    std::cout << "Tsk, knick, tsk..." << std::endl;
   }
   void Speak()
   {
-    RRLIB_LOG_STREAM(eLL_USER) << "Oh Captain, my Captain!";
+    std::cout << "Oh Captain, my Captain!" << std::endl;
   }
 };
 
@@ -128,10 +122,6 @@ struct Parrot
 
 int main(int argc, char **argv)
 {
-  default_log_description = basename(argv[0]);
-
-  tLogDomainRegistry::GetInstance()->SetDomainMaxMessageLevel(tLogDomainRegistry::GetDefaultDomain()->GetName(), eLL_DEBUG_VERBOSE_3);
-
   // Test basic functor objects
   TestFunctor1 f1;
   rrlib::util::tFunctor<void, int, double> cmd1(f1);

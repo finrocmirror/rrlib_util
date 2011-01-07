@@ -441,8 +441,8 @@ struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
   sStringUtils::Tokenize(result_str, tokens, " \t");
 
   for_each(tokens.begin(), tokens.end(), sStringUtils::Trim<std::string>());
-  RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG, "sFileIOUtils::HostToIpViaHost() >>> got %d tokens:\n", tokens.size());
-  copy(tokens.begin(), tokens.end(), std::ostream_iterator<std::string> (RRLIB_LOG_STREAM(rrlib::logging::eLL_DEBUG), "\n"));
+  RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::HostToIpViaHost() >>> got %d tokens:\n", tokens.size());
+  copy(tokens.begin(), tokens.end(), std::ostream_iterator<std::string> (RRLIB_LOG_STREAM(rrlib::logging::eLL_DEBUG_VERBOSE_1), "\n"));
 
   assert(tokens.size() == 4);
   RRLIB_LOG_MESSAGE(rrlib::logging::eLL_USER, "found_name <%s> , ip <%s> \n", tokens[0].c_str(), tokens[3].c_str());
@@ -596,7 +596,7 @@ int sFileIOUtils::RSyncFiles(const std::string& source_host_name, const std::str
 //----------------------------------------------------------------------
 bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &full_local_file_name, const std::string& resource_repository, const std::string& resource_server, const std::string& local_resource_directory, const std::string& server_resource_directory, bool use_cache)
 {
-  RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG, "sFileIOUtils::CheckAndGetFile() >>> started with local_resource_directory <%s>, resource_repository <%s>, file_name <%s>, resource_server <%s>, server_resource_directory <%s>\n", local_resource_directory.c_str(), resource_repository.c_str(), file_name.c_str(), resource_server.c_str(), server_resource_directory.c_str());
+  RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> started with local_resource_directory <%s>, resource_repository <%s>, file_name <%s>, resource_server <%s>, server_resource_directory <%s>\n", local_resource_directory.c_str(), resource_repository.c_str(), file_name.c_str(), resource_server.c_str(), server_resource_directory.c_str());
 
   //!#####################################################################################################
   //! step 0: check whether token "resource_repository + filename" is in local cache
@@ -617,7 +617,7 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
   //!#####################################################################################################
   full_local_file_name = "./" + resource_repository + file_name;
 
-  RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG, "sFileIOUtils::CheckAndGetFile() >>> 1. check: trying to load <%s>\n", full_local_file_name.c_str());
+  RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 1. check: trying to load <%s>\n", full_local_file_name.c_str());
   ifstream try_1(full_local_file_name.c_str());
   if (try_1)
   {
@@ -640,7 +640,7 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
     }
     full_local_file_name = (expanded_local_resource_directory + resource_repository + file_name);
 
-    RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG, "sFileIOUtils::CheckAndGetFile() >>> 2. check: trying to load <%s>\n", full_local_file_name.c_str());
+    RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 2. check: trying to load <%s>\n", full_local_file_name.c_str());
     ifstream try_2(full_local_file_name.c_str());
     if (try_2)
     {
@@ -658,7 +658,7 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
       if (use_cache && sFileIOUtils::cached_local_host.length() > 0)
       {
         local_host = sFileIOUtils::cached_local_host;
-        RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG, "sFileIOUtils::CheckAndGetFile() >>> retrieved local_host <%s> from cache\n", local_host.c_str());
+        RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> retrieved local_host <%s> from cache\n", local_host.c_str());
       }
       else
       {
@@ -675,12 +675,12 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
         if (use_cache && ((pos = sFileIOUtils::host_name_to_ip_cache.find(server)) != sFileIOUtils::host_name_to_ip_cache.end()))
         {
           server_ip_address = pos->second;
-          RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG, "sFileIOUtils::CheckAndGetFile() >>> retrieved ip address <%s> of host <%s> from cache\n", server_ip_address.c_str(), server.c_str());
+          RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> retrieved ip address <%s> of host <%s> from cache\n", server_ip_address.c_str(), server.c_str());
         }
         else
         {
           server_ip_address = inet_ntoa(sFileIOUtils::HostToIp(server));
-          RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG, "sFileIOUtils::CheckAndGetFile() >>> got ip address <%s> of host <%s>\n", server_ip_address.c_str(), server.c_str());
+          RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> got ip address <%s> of host <%s>\n", server_ip_address.c_str(), server.c_str());
 
           if (server_ip_address == "0.0.0.0")
           {
@@ -697,7 +697,7 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
       // start check
       if (server != "")   //&& server != local_host)
       {
-        RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG, "sFileIOUtils::CheckAndGetFile() >>> 3. check: trying to rsync <%s:%s> to <%s> \n", server_ip_address.c_str(), (server_resource_directory + resource_repository + file_name).c_str(), expanded_local_resource_directory.c_str());
+        RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 3. check: trying to rsync <%s:%s> to <%s> \n", server_ip_address.c_str(), (server_resource_directory + resource_repository + file_name).c_str(), expanded_local_resource_directory.c_str());
 
         // rsync from <resource_server:server_resource_directory + resource_repository>
         //       to <local_resource_directory> on local host

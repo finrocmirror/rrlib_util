@@ -82,10 +82,22 @@ public:
     return tTime(ntime);
   }
 
+  /*! Returns tTime in seconds rounded down to an long integer.*/
+  inline long long ToSec()const
+  {
+    return this->tv_sec;
+  }
+
   /*! Returns tTime in milli seconds rounded down to an long integer.*/
   inline long long ToMSec()const
   {
     return (long long)tv_usec / 1000 + (long long)tv_sec*1000;
+  }
+
+  /*! Returns tTime in microseconds */
+  inline long long ToUSec()const
+  {
+    return (long long)tv_usec + (long long)tv_sec*1000000;
   }
 
   /*! Substracts the second time from the first */

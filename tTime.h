@@ -26,7 +26,8 @@
 #ifndef _util_tTime_h_
 #define _util_tTime_h_
 
-# include <sys/time.h>
+#include <sys/time.h>
+#include <iostream>
 
 namespace rrlib
 {
@@ -139,6 +140,8 @@ private:
   }
 
 };
+
+std::ostream& operator<<(std::ostream& str, const tTime& time);
 }
 }
 

@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_singleton_h_
-#define _rrlib_util_patterns_singleton_h_
+#ifndef __rrlib__util__patterns__singleton_h__
+#define __rrlib__util__patterns__singleton_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")

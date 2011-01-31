@@ -67,7 +67,7 @@ namespace util
 namespace
 {
 template <typename TBidirectionalIterator>
-inline void __Join(TBidirectionalIterator first, TBidirectionalIterator last, std::ostream &destination, const char *delimiter, std::bidirectional_iterator_tag)
+inline void JoinImplementation(TBidirectionalIterator first, TBidirectionalIterator last, std::ostream &destination, const char *delimiter, std::bidirectional_iterator_tag)
 {
   assert(first != last);
   std::copy(first, --last, std::ostream_iterator<typename std::iterator_traits<TBidirectionalIterator>::value_type>(destination, delimiter));
@@ -75,7 +75,7 @@ inline void __Join(TBidirectionalIterator first, TBidirectionalIterator last, st
 }
 
 template <class TInputIterator>
-inline void __Join(TInputIterator first, TInputIterator last, std::ostream &destination, const char *delimiter, std::input_iterator_tag)
+inline void JoinImplementation(TInputIterator first, TInputIterator last, std::ostream &destination, const char *delimiter, std::input_iterator_tag)
 {
   assert(first != last);
   destination << *first++;
@@ -86,7 +86,7 @@ inline void __Join(TInputIterator first, TInputIterator last, std::ostream &dest
 }
 
 template <class TInputIterator>
-inline std::string __Join(TInputIterator first, TInputIterator last, const char *delimiter)
+inline std::string JoinImplementation(TInputIterator first, TInputIterator last, const char *delimiter)
 {
   assert(first != last);
   std::stringstream result;
@@ -100,7 +100,7 @@ inline void Join(TIterator first, TIterator last, std::ostream &destination, con
 {
   if (first != last)
   {
-    __Join(first, last, destination, delimiter, typename std::iterator_traits<TIterator>::iterator_category());
+    JoinImplementation(first, last, destination, delimiter, typename std::iterator_traits<TIterator>::iterator_category());
   }
 }
 
@@ -115,7 +115,7 @@ inline const std::string Join(TIterator first, TIterator last, const char *delim
 {
   if (first != last)
   {
-    return __Join(first, last, delimiter);
+    return JoinImplementation(first, last, delimiter);
   }
   return "";
 }

@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_singleton_PhoenixSingleton_h_
-#define _rrlib_util_patterns_singleton_PhoenixSingleton_h_
+#ifndef __rrlib__util__patterns__singleton__policies__lifetime__PhoenixSingleton_h__
+#define __rrlib__util__patterns__singleton__policies__lifetime__PhoenixSingleton_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -53,6 +53,8 @@
 namespace rrlib
 {
 namespace util
+{
+namespace singleton
 {
 
 //----------------------------------------------------------------------
@@ -80,6 +82,7 @@ struct PhoenixSingleton
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
+}
 }
 }
 

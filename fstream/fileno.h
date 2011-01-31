@@ -57,8 +57,8 @@
  *       guidelines because it is a copy of code from public domain.
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_fstream_fileno_h_
-#define _rrlib_util_fstream_fileno_h_
+#ifndef ___rrlib__util__fstream__fileno_h___
+#define ___rrlib__util__fstream__fileno_h___
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")

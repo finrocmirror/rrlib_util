@@ -19,7 +19,8 @@
     <sources>
       patterns/*
       patterns/command/*
-<!--  patterns/singleton/* -->
+      patterns/singleton/*
+<!--  patterns/factory/* -->
     </sources>
   </rrlib>
 
@@ -35,18 +36,24 @@
     </sources>
   </testprogram>
 
-<!-- 
   <testprogram name="singleton_pattern">
     <sources>
       test/test_singleton_pattern.cpp
     </sources>
   </testprogram>
--->
 
   <testprogram name="final_class_pattern">
     <sources>
       test/test_final_class_pattern.cpp
     </sources>
   </testprogram>
+
+<!-- 
+  <testprogram name="factory_pattern">
+    <sources>
+      test/test_factory_pattern.cpp
+    </sources>
+  </testprogram>
+-->
 
 </targets>

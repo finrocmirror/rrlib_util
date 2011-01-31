@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_final_class_h_
-#define _rrlib_util_patterns_final_class_h_
+#ifndef __rrlib__util__patterns__final_class_h__
+#define __rrlib__util__patterns__final_class_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")

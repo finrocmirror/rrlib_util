@@ -48,6 +48,7 @@
 //----------------------------------------------------------------------
 // Namespace usage
 //----------------------------------------------------------------------
+using namespace rrlib::util;
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
@@ -100,7 +101,7 @@ const char *TestConversions(double, double)
   return buffer;
 }
 
-void CreateCommand(const rrlib::util::tFunctor<const char *, double, double> &command)
+void CreateCommand(const tFunctor<const char *, double, double> &command)
 {
   std::cout << command(4, 4.5) << std::endl;
 }
@@ -124,59 +125,59 @@ int main(int argc, char **argv)
 {
   // Test basic functor objects
   TestFunctor1 f1;
-  rrlib::util::tFunctor<void, int, double> cmd1(f1);
+  tFunctor<void, int, double> cmd1(f1);
   TestFunctor2 f2;
-  rrlib::util::tFunctor<bool, int> cmd2(f2);
+  tFunctor<bool, int> cmd2(f2);
   TestFunctor3 f3;
-  rrlib::util::tFunctor<void> cmd3(f3);
+  tFunctor<void> cmd3(f3);
 
   cmd1(4, 4.5);
   cmd2(4);
   cmd3();
 
   // pointer to function
-  rrlib::util::tFunctor<void, int, double> cmd4(&TestFunction);
+  tFunctor<void, int, double> cmd4(&TestFunction);
   cmd4(4, 4.5);
 
   // pointer to function with implicit conversions
-  rrlib::util::tFunctor<std::string, int, int> cmd5(&TestConversions);
+  tFunctor<std::string, int, int> cmd5(&TestConversions);
   std::cout << cmd5(4, 4.5).substr(7) << std::endl;
 
   CreateCommand(&TestConversions);
 
   // pointer to member functions for objects
   Parrot geronimo;
-  rrlib::util::tFunctor<void> cmd6(geronimo, &Parrot::Eat);
-  rrlib::util::tFunctor<void> cmd7(geronimo, &Parrot::Speak);
+  tFunctor<void> cmd6(geronimo, &Parrot::Eat);
+  tFunctor<void> cmd7(geronimo, &Parrot::Speak);
 
   cmd6();
   cmd7();
 
   // copy of functors
-  rrlib::util::tFunctor<void, int, double> cmd8(cmd1);
+  tFunctor<void, int, double> cmd8(cmd1);
   cmd8(4, 4.5);
 
   // binding of first parameter
-  rrlib::util::tFunctor<void, double> cmd9 = rrlib::util::BindFirstParameter(cmd1, 4);
+  tFunctor<void, double> cmd9 = BindFirstParameter(cmd1, 4);
   cmd9(4.5);
 
   // binding of second parameter (in terms of the first parameter, applied recursively)
-  rrlib::util::BindFirstParameter(cmd9, 4.5)();
+  BindFirstParameter(cmd9, 4.5)();
 
   // chaining of two functors
-  rrlib::util::tFunctor<void> cmd10 = rrlib::util::ChainFunctors(cmd6, cmd7);
+  tFunctor<void> cmd10 = ChainFunctors(cmd6, cmd7);
   cmd10();
 
   // recursive chaining
-  rrlib::util::ChainFunctors(cmd6, cmd10)();
+  ChainFunctors(cmd6, cmd10)();
 
   // STL compliance
-  std::vector<rrlib::util::tFunctor<void, int, double>> commands;
+  std::vector<tFunctor<void, int, double>> commands;
   commands.push_back(cmd1);
   commands.push_back(cmd4);
   commands.push_back(cmd8);
 
-  for (std::vector<rrlib::util::tFunctor<void, int, double>>::iterator it = commands.begin(); it != commands.end(); ++it)
+  for (std::vector<tFunctor<void, int, double>>::iterator it = commands.begin(); it != commands.end(); ++it)
   {
     (*it)(4, 4.5);
   }

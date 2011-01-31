@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_stl_container_join_h_
-#define _rrlib_util_stl_container_join_h_
+#ifndef __rrlib__util__stl_container__join_h__
+#define __rrlib__util__stl_container__join_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")

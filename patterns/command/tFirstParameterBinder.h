@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_command_tFirstParameterBinder_h_
-#define _rrlib_util_patterns_command_tFirstParameterBinder_h_
+#ifndef __rrlib__util__patterns__command__tFirstParameterBinder_h__
+#define __rrlib__util__patterns__command__tFirstParameterBinder_h__
 
 #include "rrlib/util/patterns/command/tFunctorHandlerBase.h"
 //----------------------------------------------------------------------
@@ -69,9 +69,10 @@ namespace util
 template <typename TReturn, typename TFirstParameter, typename ... TParameterRest>
 class tFirstParameterBinder : public tFunctorHandlerBase<TReturn, TParameterRest...>
 {
-  tFunctor<TReturn, TFirstParameter, TParameterRest...> functor;
-  TFirstParameter bound_parameter;
 
+//----------------------------------------------------------------------
+// Public methods and typedefs
+//----------------------------------------------------------------------
 public:
 
   tFirstParameterBinder(const tFunctor<TReturn, TFirstParameter, TParameterRest...> &functor, TFirstParameter bound_parameter)
@@ -84,6 +85,13 @@ public:
     return this->functor(bound_parameter, parameters...);
   }
 
+//----------------------------------------------------------------------
+// Private fields and methods
+//----------------------------------------------------------------------
+private:
+
+  tFunctor<TReturn, TFirstParameter, TParameterRest...> functor;
+  TFirstParameter bound_parameter;
 };
 
 //----------------------------------------------------------------------

@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_command_tFunctorHandler_h_
-#define _rrlib_util_patterns_command_tFunctorHandler_h_
+#ifndef __rrlib__util__patterns__command__tFunctorHandler_h__
+#define __rrlib__util__patterns__command__tFunctorHandler_h__
 
 #include "rrlib/util/patterns/command/tFunctorHandlerBase.h"
 //----------------------------------------------------------------------
@@ -70,8 +70,9 @@ template <typename TFunctor, typename TReturn, typename ... TParameters>
 class tFunctorHandler : public tFunctorHandlerBase<TReturn, TParameters...>
 {
 
-  TFunctor functor;
-
+//----------------------------------------------------------------------
+// Public methods and typedefs
+//----------------------------------------------------------------------
 public:
 
   tFunctorHandler(const TFunctor &functor)
@@ -82,6 +83,13 @@ public:
   {
     return this->functor(parameters...);
   }
+
+//----------------------------------------------------------------------
+// Private fields and methods
+//----------------------------------------------------------------------
+private:
+
+  TFunctor functor;
 
 };
 

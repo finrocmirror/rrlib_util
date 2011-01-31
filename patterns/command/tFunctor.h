@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_command_tFunctor_h_
-#define _rrlib_util_patterns_command_tFunctor_h_
+#ifndef __rrlib__util__patterns__command__tFunctor_h__
+#define __rrlib__util__patterns__command__tFunctor_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -73,10 +73,9 @@ template <typename TReturn, typename ... TParameters>
 class tFunctor
 {
 
-  std::shared_ptr<tFunctorHandlerBase<TReturn, TParameters...>> handler;
-
-  tFunctor();
-
+//----------------------------------------------------------------------
+// Public methods and typedefs
+//----------------------------------------------------------------------
 public:
 
   tFunctor(const tFunctor &other)
@@ -101,6 +100,15 @@ public:
   {
     return (*this->handler)(parameters...);
   }
+
+//----------------------------------------------------------------------
+// Private fields and methods
+//----------------------------------------------------------------------
+private:
+
+  std::shared_ptr<tFunctorHandlerBase<TReturn, TParameters...>> handler;
+
+//  tFunctor();
 
 };
 

@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_command_tMemberFunctionHandler_h_
-#define _rrlib_util_patterns_command_tMemberFunctionHandler_h_
+#ifndef __rrlib__util__patterns__command__tMemberFunctionHandler_h__
+#define __rrlib__util__patterns__command__tMemberFunctionHandler_h__
 
 #include "rrlib/util/patterns/command/tFunctorHandlerBase.h"
 //----------------------------------------------------------------------
@@ -70,9 +70,9 @@ template <typename TObject, typename TFunction, typename TReturn, typename ... T
 class tMemberFunctionHandler : public tFunctorHandlerBase<TReturn, TParameters...>
 {
 
-  TObject &object;
-  TFunction function;
-
+//----------------------------------------------------------------------
+// Public methods and typedefs
+//----------------------------------------------------------------------
 public:
 
   tMemberFunctionHandler(TObject &object, const TFunction &function)
@@ -84,6 +84,14 @@ public:
   {
     return (this->object.*function)(parameters...);
   }
+
+//----------------------------------------------------------------------
+// Private fields and methods
+//----------------------------------------------------------------------
+private:
+
+  TObject &object;
+  TFunction function;
 
 };
 

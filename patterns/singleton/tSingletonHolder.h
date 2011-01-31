@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_singleton_tSingletonHolder_h_
-#define _rrlib_util_patterns_singleton_tSingletonHolder_h_
+#ifndef __rrlib__util__patterns__singleton__tSingletonHolder_h__
+#define __rrlib__util__patterns__singleton__tSingletonHolder_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -67,19 +67,47 @@ namespace util
 /*!
  *
  */
-template < typename T,
-template <typename> class TCreationPolicy = CreateUsingNew,
-template <typename> class TLifetimePolicy = DefaultLifetime >
+template <
+typename T,
+template <typename> class TCreationPolicy = singleton::CreateUsingNew,
+template <typename> class TLifetimePolicy = singleton::DefaultLifetime
+>
 class tSingletonHolder : public boost::noncopyable
 {
+
+//----------------------------------------------------------------------
+// Public methods and typedefs
+//----------------------------------------------------------------------
+public:
+
+  static T &GetInstance()
+  {
+    if (!tSingletonHolder::Instance())
+    {
+      if (tSingletonHolder::Destroyed())
+      {
+        TLifetimePolicy<T>::OnDeadReference();
+        tSingletonHolder::Destroyed() = false;
+      }
+      tSingletonHolder::Instance() = TCreationPolicy<T>::Create();
+      TLifetimePolicy<T>::ScheduleDestruction(&tSingletonHolder::DestroyInstance);
+    }
+    return *tSingletonHolder::Instance();
+  }
+
+//----------------------------------------------------------------------
+// Private fields and methods
+//----------------------------------------------------------------------
+private:
+
   tSingletonHolder();
 
   static void DestroyInstance()
   {
-    assert(!Destroyed());
-    TCreationPolicy<T>::Destroy(Instance());
-    Instance() = 0;
-    Destroyed() = true;
+    assert(!tSingletonHolder::Destroyed());
+    TCreationPolicy<T>::Destroy(tSingletonHolder::Instance());
+    tSingletonHolder::Instance() = 0;
+    tSingletonHolder::Destroyed() = true;
   }
 
   static T *&Instance()
@@ -91,23 +119,6 @@ class tSingletonHolder : public boost::noncopyable
   {
     static bool destroyed = false;
     return destroyed;
-  }
-
-public:
-
-  static T &GetInstance()
-  {
-    if (!Instance())
-    {
-      if (Destroyed())
-      {
-        TLifetimePolicy<T>::OnDeadReference();
-        Destroyed() = false;
-      }
-      Instance() = TCreationPolicy<T>::Create();
-      TLifetimePolicy<T>::ScheduleDestruction(&DestroyInstance);
-    }
-    return *Instance();
   }
 
 };

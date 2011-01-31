@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_singleton_CreateUsingNew_h_
-#define _rrlib_util_patterns_singleton_CreateUsingNew_h_
+#ifndef __rrlib__util__patterns__singleton__policies__creation__CreateUsingNew_h__
+#define __rrlib__util__patterns__singleton__policies__creation__CreateUsingNew_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -53,6 +53,8 @@
 namespace rrlib
 {
 namespace util
+{
+namespace singleton
 {
 
 //----------------------------------------------------------------------
@@ -82,6 +84,7 @@ struct CreateUsingNew
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
+}
 }
 }
 

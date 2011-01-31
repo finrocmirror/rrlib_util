@@ -31,12 +31,13 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_singleton_NoDestruction_h_
-#define _rrlib_util_patterns_singleton_NoDestruction_h_
+#ifndef __rrlib__util__patterns__singleton__policies__lifetime__NoDestruction_h__
+#define __rrlib__util__patterns__singleton__policies__lifetime__NoDestruction_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
+#include <stdexcept>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
@@ -53,6 +54,8 @@
 namespace rrlib
 {
 namespace util
+{
+namespace singleton
 {
 
 //----------------------------------------------------------------------
@@ -80,6 +83,7 @@ struct NoDestruction
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
+}
 }
 }
 

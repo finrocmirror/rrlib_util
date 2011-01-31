@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_command_tFunctorHandlerBase_h_
-#define _rrlib_util_patterns_command_tFunctorHandlerBase_h_
+#ifndef __rrlib__util__patterns__command__tFunctorHandlerBase_h__
+#define __rrlib__util__patterns__command__tFunctorHandlerBase_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")

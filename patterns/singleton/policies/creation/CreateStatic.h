@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_singleton_CreateStatic_h_
-#define _rrlib_util_patterns_singleton_CreateStatic_h_
+#ifndef __rrlib__util__patterns__singleton__policies__creation__CreateStatic_h__
+#define __rrlib__util__patterns__singleton__policies__creation__CreateStatic_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -54,6 +54,9 @@ namespace rrlib
 {
 namespace util
 {
+namespace singleton
+{
+
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
@@ -82,6 +85,7 @@ struct CreateStatic
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
+}
 }
 }
 

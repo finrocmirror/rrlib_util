@@ -47,6 +47,7 @@
 //----------------------------------------------------------------------
 // Namespace usage
 //----------------------------------------------------------------------
+using namespace rrlib::util;
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
@@ -77,7 +78,8 @@ struct tLogImplementation
     std::cout << "log: " << message << std::endl;
   }
 };
-typedef rrlib::util::tSingletonHolder<tLogImplementation, rrlib::util::CreateStatic, rrlib::util::NoDestruction> tLog;
+typedef tSingletonHolder<tLogImplementation, singleton::CreateStatic, singleton::PhoenixSingleton> tLog;
+//typedef tSingletonHolder<tLogImplementation, singleton::CreateStatic, singleton::NoDestruction> tLog;
 
 struct tKeyboardImplementation
 {

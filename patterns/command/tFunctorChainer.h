@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_util_patterns_command_tFunctorChainer_h_
-#define _rrlib_util_patterns_command_tFunctorChainer_h_
+#ifndef __rrlib__util__patterns__command__tFunctorChainer_h__
+#define __rrlib__util__patterns__command__tFunctorChainer_h__
 
 #include "rrlib/util/patterns/command/tFunctorHandlerBase.h"
 //----------------------------------------------------------------------
@@ -69,9 +69,10 @@ namespace util
 template <typename TFirstFunctor, typename TSecondFunctor>
 class tFunctorChainer : public tFunctorHandlerBase<void>
 {
-  TFirstFunctor first_functor;
-  TSecondFunctor second_functor;
 
+//----------------------------------------------------------------------
+// Public methods and typedefs
+//----------------------------------------------------------------------
 public:
 
   tFunctorChainer(const TFirstFunctor &first_functor, const TSecondFunctor &second_functor)
@@ -84,6 +85,14 @@ public:
     this->first_functor();
     this->second_functor();
   }
+
+//----------------------------------------------------------------------
+// Private fields and methods
+//----------------------------------------------------------------------
+private:
+
+  TFirstFunctor first_functor;
+  TSecondFunctor second_functor;
 
 };
 

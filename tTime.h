@@ -142,6 +142,15 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& str, const tTime& time);
+
+const bool operator == (const tTime &a, const tTime &b);
+
+const bool operator != (const tTime &a, const tTime &b);
+
+const bool operator < (const tTime &a, const tTime &b);
+
+const bool operator > (const tTime &a, const tTime &b);
+
 }
 }
 

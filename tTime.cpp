@@ -29,3 +29,22 @@ std::ostream& rrlib::util::operator<<(std::ostream& str, const rrlib::util::tTim
 {
   return str << "(" << time.TvSec() << ", " << time.TvUSec() << ")";
 }
+
+const bool rrlib::util::operator == (const tTime &a, const tTime &b)
+{
+  return a.TvSec() == b.TvSec() && a.TvUSec() == b.TvUSec();
+}
+
+const bool rrlib::util::operator != (const tTime &a, const tTime &b)
+{
+  return !(a == b);
+}
+const bool rrlib::util::operator < (const tTime &a, const tTime &b)
+{
+  return a.TvSec() == b.TvSec() ? a.TvUSec() < b.TvUSec() : a.TvSec() < b.TvSec();
+}
+
+const bool rrlib::util::operator > (const tTime &a, const tTime &b)
+{
+  return !(a == b || a < b);
+}

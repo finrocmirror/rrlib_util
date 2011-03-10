@@ -25,26 +25,33 @@
 //----------------------------------------------------------------------
 #include "rrlib/util/tTime.h"
 
-std::ostream& rrlib::util::operator<<(std::ostream& str, const rrlib::util::tTime& time)
-{
-  return str << "(" << time.TvSec() << ", " << time.TvUSec() << ")";
-}
+using rrlib::util::tTime;
 
-const bool rrlib::util::operator == (const tTime &a, const tTime &b)
-{
-  return a.TvSec() == b.TvSec() && a.TvUSec() == b.TvUSec();
-}
-
-const bool rrlib::util::operator != (const tTime &a, const tTime &b)
-{
-  return !(a == b);
-}
-const bool rrlib::util::operator < (const tTime &a, const tTime &b)
-{
-  return a.TvSec() == b.TvSec() ? a.TvUSec() < b.TvUSec() : a.TvSec() < b.TvSec();
-}
-
-const bool rrlib::util::operator > (const tTime &a, const tTime &b)
-{
-  return !(a == b || a < b);
-}
+const tTime tTime::time_forever(-1, 0);
+const tTime tTime::time_0ms(0, 0);
+const tTime tTime::time_1us(0, 1);
+const tTime tTime::time_1ms(0, 1000);
+const tTime tTime::time_5ms(0, 5000);
+const tTime tTime::time_10ms(0, 10000);
+const tTime tTime::time_20ms(0, 20000);
+const tTime tTime::time_25ms(0, 25000);
+const tTime tTime::time_30ms(0, 30000);
+const tTime tTime::time_40ms(0, 40000);
+const tTime tTime::time_50ms(0, 50000);
+const tTime tTime::time_100ms(0, 100000);
+const tTime tTime::time_200ms(0, 200000);
+const tTime tTime::time_250ms(0, 250000);
+const tTime tTime::time_300ms(0, 300000);
+const tTime tTime::time_400ms(0, 400000);
+const tTime tTime::time_500ms(0, 500000);
+const tTime tTime::time_1s(1, 0);
+const tTime tTime::time_2s(2, 0);
+const tTime tTime::time_5s(5, 0);
+const tTime tTime::time_10s(10, 0);
+const tTime tTime::time_30s(30, 0);
+const tTime tTime::time_60s(60, 0);
+const tTime tTime::time_120s(120, 0);
+const tTime tTime::time_180s(180, 0);
+const tTime tTime::time_240s(240, 0);
+const tTime tTime::time_30000s(30000, 0);
+const tTime tTime::time_1year(365 * 86400, 0);

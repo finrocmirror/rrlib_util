@@ -25,6 +25,27 @@
 //----------------------------------------------------------------------
 #include "rrlib/util/tTime.h"
 
+#ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
+#include "rrlib/serialization/tInputStream.h"
+#include "rrlib/serialization/tOutputStream.h"
+
+rrlib::serialization::tOutputStream &rrlib::util::operator << (rrlib::serialization::tOutputStream &stream, const rrlib::util::tTime &t)
+{
+  stream << t.TvSec() << t.TvUSec();
+  return stream;
+}
+
+rrlib::serialization::tInputStream &rrlib::util::operator >> (rrlib::serialization::tInputStream &stream, rrlib::util::tTime &t)
+{
+  long s, us;
+  stream >> s >> us;
+  t.SetTvSec(s);
+  t.SetTvUSec(us);
+  return stream;
+}
+
+#endif
+
 using rrlib::util::tTime;
 
 const tTime tTime::time_forever(-1, 0);
@@ -55,3 +76,4 @@ const tTime tTime::time_180s(180, 0);
 const tTime tTime::time_240s(240, 0);
 const tTime tTime::time_30000s(30000, 0);
 const tTime tTime::time_1year(365 * 86400, 0);
+

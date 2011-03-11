@@ -31,6 +31,15 @@
 
 namespace rrlib
 {
+
+#ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
+namespace serialization
+{
+class tInputStream;
+class tOutputStream;
+}
+#endif
+
 namespace util
 {
 //! Repesents times (absolutes and differences)
@@ -449,6 +458,15 @@ inline std::istream &operator>>(std::istream &str, tTime &time)
   time = tTime(tv_sec, tv_usec);
   return str;
 }
+
+#ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
+
+serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tTime &t);
+
+serialization::tInputStream &operator >> (serialization::tInputStream &stream, tTime &t);
+
+#endif
+
 }
 }
 #endif

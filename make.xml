@@ -8,7 +8,6 @@
     </sources>
   </rrlib>
 
-
   <rrlib name="util_stl_container">
     <sources>
       stl_container/*

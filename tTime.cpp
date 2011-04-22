@@ -31,16 +31,15 @@
 
 rrlib::serialization::tOutputStream &rrlib::util::operator << (rrlib::serialization::tOutputStream &stream, const rrlib::util::tTime &t)
 {
-  stream << t.TvSec() << t.TvUSec();
+  stream.WriteLong(t.TvSec());
+  stream.WriteLong(t.TvUSec());
   return stream;
 }
 
 rrlib::serialization::tInputStream &rrlib::util::operator >> (rrlib::serialization::tInputStream &stream, rrlib::util::tTime &t)
 {
-  long s, us;
-  stream >> s >> us;
-  t.SetTvSec(s);
-  t.SetTvUSec(us);
+  t.SetTvSec(static_cast<long>(stream.ReadLong()));
+  t.SetTvUSec(static_cast<long>(stream.ReadLong()));
   return stream;
 }
 

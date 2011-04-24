@@ -4,7 +4,20 @@
 
   <rrlib name="util">
     <sources>
-      *
+      sFileIOUtils.cpp
+      sStringUtils.cpp
+      tAutoRegister.h
+      tDoubleDispatcher.h
+      tTime.cpp
+      tTypeList.h
+      type_list/*
+    </sources>
+  </rrlib>
+
+  <rrlib name="util_unit_tests"
+        libs="cppunit">
+    <sources>
+      tUnitTestSuite.cpp
     </sources>
   </rrlib>
 
@@ -18,8 +31,8 @@
     <sources>
       patterns/*
       patterns/command/*
-      patterns/singleton/*
       patterns/factory/*
+      patterns/singleton/*
     </sources>
   </rrlib>
 
@@ -35,9 +48,9 @@
     </sources>
   </testprogram>
 
-  <testprogram name="singleton_pattern">
+  <testprogram name="factory_pattern">
     <sources>
-      test/test_singleton_pattern.cpp
+      test/test_factory_pattern.cpp
     </sources>
   </testprogram>
 
@@ -47,9 +60,21 @@
     </sources>
   </testprogram>
  
-  <testprogram name="factory_pattern">
+  <testprogram name="singleton_pattern">
     <sources>
-      test/test_factory_pattern.cpp
+      test/test_singleton_pattern.cpp
+    </sources>
+  </testprogram>
+
+  <testprogram name="type_list">
+    <sources>
+      test/test_type_list.cpp
+    </sources>
+  </testprogram>
+
+  <testprogram name="double_dispatcher">
+    <sources>
+      test/test_double_dispatcher.cpp
     </sources>
   </testprogram>
 

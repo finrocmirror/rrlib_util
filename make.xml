@@ -11,6 +11,7 @@
       tTime.cpp
       tTypeList.h
       type_list/*
+      tFPSComputer.cpp
     </sources>
   </rrlib>
 

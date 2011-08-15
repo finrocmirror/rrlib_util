@@ -199,7 +199,6 @@ bool sFileIOUtils::ShellExpandFilename(std::string &file_name)
   return ShellExpandFilename(file_name, file_name);
 } // ShellExpandFilename()
 
-
 //----------------------------------------------------------------------
 // class sFileIOUtils::ShellExpandFilename()
 //----------------------------------------------------------------------
@@ -240,22 +239,6 @@ bool sFileIOUtils::ShellExpandFilename(std::string &result, const std::string &f
 
   return true;
 } // ShellExpandFilename()
-
-
-//----------------------------------------------------------------------
-// class sFileIOUtils::ShellExpandFilename()
-//----------------------------------------------------------------------
-std::string sFileIOUtils::ShellExpandFilename(const std::string &file_name)
-{
-  std::string expanded;
-  if (ShellExpandFilename(expanded, file_name))
-  {
-    return expanded;
-  }
-  RRLIB_LOG_MESSAGE(rrlib::logging::eLL_ERROR, "sFileIOUtils::ShellExpandFilename >> Could not expand `%s'!\n", file_name.c_str());
-  return std::string();
-} // ShellExpandFilename()
-
 
 //----------------------------------------------------------------------
 // class sFileIOUtils::SplitFullQualifiedFilename()

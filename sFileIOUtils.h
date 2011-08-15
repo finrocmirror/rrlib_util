@@ -132,8 +132,6 @@ public:
   */
   static bool ShellExpandFilename(std::string &result, const std::string& file_name) __attribute__((__warn_unused_result__));
 
-  static std::string ShellExpandFilename(const std::string &file_name) __attribute__((deprecated));
-
 
   /*!
    *    Splits the given filename into directory, single file name and file extension

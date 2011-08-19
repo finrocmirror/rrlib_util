@@ -19,20 +19,20 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    factory.h
+/*!\file    ReturnNullptr.h
  *
  * \author  Tobias Foehst
  *
- * \date    2011-01-07
+ * \date    2011-08-18
  *
- * \brief Contains factory
+ * \brief Contains ReturnNullptr
  *
- * \b factory
+ * \b ReturnNullptr
  *
  */
 //----------------------------------------------------------------------
-#ifndef __rrlib__util__patterns__factory_h__
-#define __rrlib__util__patterns__factory_h__
+#ifndef __rrlib__util__patterns__factory__policies__error__ReturnNullptr_h__
+#define __rrlib__util__patterns__factory__policies__error__ReturnNullptr_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -41,16 +41,11 @@
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/util/patterns/factory/policies/error/ThrowException.h"
-#include "rrlib/util/patterns/factory/policies/error/ReturnNullptr.h"
-
-#include "rrlib/util/patterns/factory/functions.h"
-#include "rrlib/util/patterns/factory/tFactory.h"
-#include "rrlib/util/patterns/factory/tCloneFactory.h"
 
 //----------------------------------------------------------------------
 // Debugging
 //----------------------------------------------------------------------
+#include <cassert>
 
 //----------------------------------------------------------------------
 // Namespace declaration
@@ -59,18 +54,33 @@ namespace rrlib
 {
 namespace util
 {
+namespace factory
+{
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
-// Function declaration
+// Class declaration
 //----------------------------------------------------------------------
+//!
+/*!
+ *
+ */
+template <typename TAbstractProduct, typename TIdentifier>
+struct ReturnNullptr
+{
+  static TAbstractProduct *OnUnknownType(const TIdentifier &id)
+  {
+    return NULL;
+  }
+};
 
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
+}
 }
 }
 

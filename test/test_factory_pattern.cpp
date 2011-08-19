@@ -101,22 +101,6 @@ struct tEllipse : public tShape
   }
 };
 
-tLine *CreateLine()
-{
-  return new tLine;
-}
-tRectangle *CreateRectangle()
-{
-  return new tRectangle;
-}
-tCircle *CreateCircle()
-{
-  return new tCircle;
-}
-tEllipse *CreateEllipse()
-{
-  return new tEllipse;
-}
 
 tLine *CloneLine(const tShape &)
 {
@@ -141,10 +125,11 @@ int main(int argc, char **argv)
 {
   std::cout << "Testing factory" << std::endl;
 
-  tShapeFactory::GetInstance().Register("line", &CreateLine);
-  tShapeFactory::GetInstance().Register("rectangle", &CreateRectangle);
-  tShapeFactory::GetInstance().Register("circle", &CreateCircle);
-  tShapeFactory::GetInstance().Register("ellipse", &CreateEllipse);
+  tShapeFactory::GetInstance().Register<tLine>("line");
+  tShapeFactory::GetInstance().Register<tRectangle>("line");
+  tShapeFactory::GetInstance().Register<tRectangle>("rectangle");
+  tShapeFactory::GetInstance().Register<tCircle>("circle");
+  tShapeFactory::GetInstance().Register<tEllipse>("ellipse");
 
   tShape *line = tShapeFactory::GetInstance().Create("line");
   tShape *rectangle = tShapeFactory::GetInstance().Create("rectangle");

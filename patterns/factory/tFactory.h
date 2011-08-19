@@ -72,7 +72,7 @@ template <
 typename TAbstractProduct,
 typename TIdentifier,
 typename TProductCreator = tFunctor<TAbstractProduct *>,
-template <typename TAbstractProduct, typename TIdentifier> class TErrorPolicy = factory::DefaultError
+template <typename TAbstractProduct, typename TIdentifier> class TUnknownKeyPolicy = factory::ThrowException
 >
 class tFactory
 {
@@ -87,6 +87,12 @@ public:
     return this->id_to_creator_map.insert(std::make_pair(id, creator)).second;
   }
 
+  template <typename TProduct>
+  const bool Register(const TIdentifier &id)
+  {
+    return this->Register(id, &factory::DefaultNewCreator<TProduct>);
+  }
+
   const bool Unregister(const TIdentifier &id)
   {
     return this->id_to_creator_map.erase(id) == 1;
@@ -99,7 +105,7 @@ public:
     {
       return (it->second)();
     }
-    return TErrorPolicy<TAbstractProduct, TIdentifier>::OnUnknownType(id);
+    return TUnknownKeyPolicy<TAbstractProduct, TIdentifier>::OnUnknownType(id);
   }
 
 //----------------------------------------------------------------------

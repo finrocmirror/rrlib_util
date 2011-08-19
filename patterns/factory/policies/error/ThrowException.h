@@ -19,25 +19,26 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    DefaultError.h
+/*!\file    ThrowException.h
  *
  * \author  Tobias Foehst
  *
  * \date    2011-01-07
  *
- * \brief Contains DefaultError
+ * \brief Contains ThrowException
  *
- * \b DefaultError
+ * \b ThrowException
  *
  */
 //----------------------------------------------------------------------
-#ifndef __rrlib__util__patterns__factory__policies__error__DefaultError_h__
-#define __rrlib__util__patterns__factory__policies__error__DefaultError_h__
+#ifndef __rrlib__util__patterns__factory__policies__error__ThrowException_h__
+#define __rrlib__util__patterns__factory__policies__error__ThrowException_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
 #include <stdexcept>
+#include <string>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
@@ -70,7 +71,7 @@ namespace factory
  *
  */
 template <typename TAbstractProduct, typename TIdentifier>
-struct DefaultError
+struct ThrowException
 {
   class tFactoryException : public std::runtime_error
   {

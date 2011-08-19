@@ -19,38 +19,34 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    factory.h
+/*!\file    functions.h
  *
  * \author  Tobias Foehst
  *
- * \date    2011-01-07
+ * \date    2011-08-18
  *
- * \brief Contains factory
+ * \brief
  *
- * \b factory
+ * \b
  *
  */
 //----------------------------------------------------------------------
-#ifndef __rrlib__util__patterns__factory_h__
-#define __rrlib__util__patterns__factory_h__
+#ifndef __rrlib__util__patterns__factory__functions_h__
+#define __rrlib__util__patterns__factory__functions_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
+#include <map>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/util/patterns/factory/policies/error/ThrowException.h"
-#include "rrlib/util/patterns/factory/policies/error/ReturnNullptr.h"
-
-#include "rrlib/util/patterns/factory/functions.h"
-#include "rrlib/util/patterns/factory/tFactory.h"
-#include "rrlib/util/patterns/factory/tCloneFactory.h"
 
 //----------------------------------------------------------------------
 // Debugging
 //----------------------------------------------------------------------
+#include <cassert>
 
 //----------------------------------------------------------------------
 // Namespace declaration
@@ -58,6 +54,8 @@
 namespace rrlib
 {
 namespace util
+{
+namespace factory
 {
 
 //----------------------------------------------------------------------
@@ -67,10 +65,22 @@ namespace util
 //----------------------------------------------------------------------
 // Function declaration
 //----------------------------------------------------------------------
+template <typename T>
+T *DefaultNewCreator()
+{
+  return new T;
+}
+
+template <typename T>
+T *DefaultCopyCloner(const T &source)
+{
+  return new T(source);
+}
 
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
+}
 }
 }
 

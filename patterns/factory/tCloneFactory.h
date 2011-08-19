@@ -72,7 +72,7 @@ namespace util
 template <
 typename TAbstractProduct,
 typename TProductCreator = tFunctor<TAbstractProduct *, const TAbstractProduct &>,
-template <typename TAbstractProduct, typename TIdentifier> class TErrorPolicy = factory::DefaultError
+template <typename TAbstractProduct, typename TIdentifier> class TUnknownKeyPolicy = factory::ThrowException
 >
 class tCloneFactory
 {
@@ -99,6 +99,12 @@ public:
     return this->id_to_creator_map.insert(std::make_pair(id, creator)).second;
   }
 
+  template <typename TProduct>
+  const bool Register(const tTypeInfoWrapper &id)
+  {
+    return this->Register(id, &factory::DefaultCopyCloner<TProduct>);
+  }
+
   const bool Unregister(const tTypeInfoWrapper &id)
   {
     return this->id_to_creator_map.erase(id) == 1;
@@ -117,7 +123,7 @@ public:
     {
       return (it->second)(model);
     }
-    return TErrorPolicy<TAbstractProduct, tTypeInfoWrapper>::OnUnknownType(id);
+    return TUnknownKeyPolicy<TAbstractProduct, tTypeInfoWrapper>::OnUnknownType(id);
   }
 
 //----------------------------------------------------------------------

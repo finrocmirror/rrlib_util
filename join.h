@@ -31,8 +31,8 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef __rrlib__util__stl_container__join_h__
-#define __rrlib__util__stl_container__join_h__
+#ifndef __rrlib__util__join_h__
+#define __rrlib__util__join_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -82,6 +82,6 @@ inline const std::string Join(const TContainer &container, const char *delimiter
 }
 }
 
-#include "rrlib/util/stl_container/join.hpp"
+#include "rrlib/util/join.hpp"
 
 #endif

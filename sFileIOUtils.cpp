@@ -47,7 +47,7 @@ extern "C"
 }
 
 #include "rrlib/util/sStringUtils.h"
-#include "rrlib/util/stl_container/join.h"
+#include "rrlib/util/join.h"
 #include "rrlib/logging/definitions.h"
 
 using namespace std;

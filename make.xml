@@ -4,6 +4,7 @@
 
   <rrlib name="util">
     <sources>
+      join.h
       sFileIOUtils.cpp
       sStringUtils.cpp
       tAutoRegister.h
@@ -19,12 +20,6 @@
         libs="cppunit">
     <sources>
       tUnitTestSuite.cpp
-    </sources>
-  </rrlib>
-
-  <rrlib name="util_stl_container">
-    <sources>
-      stl_container/*
     </sources>
   </rrlib>
 

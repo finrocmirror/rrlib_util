@@ -42,9 +42,9 @@ namespace util
 class tFPSComputer
 {
 public:
-  tFPSComputer(long long int check_interval_ms = 1000);
+  tFPSComputer(long long int check_interval_ms = 1000, float old_value_weight = 0.75);
 
-  tFPSComputer(const rrlib::util::tTime &current_time, long long int check_interval_ms = 1000);
+  tFPSComputer(const rrlib::util::tTime &current_time, long long int check_interval_ms = 1000, float old_value_weight = 0.75);
 
   inline void IncrementFrameCounter()
   {

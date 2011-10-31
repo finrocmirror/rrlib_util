@@ -46,15 +46,13 @@
  *
  * See http://www.ginac.de/~kreckel/fileno for more information.
  *
- * I kept this behind the guards of rrlib_logging because this lib is meant
- * to deal with output to the console and files. So there should not be any
- * use for it outside.
- *
  * \note The original code works on complete streams. For the use within
  *       this library it was altered to work directly on std::basic_streambuf.
  *
- * \note The syntax in this file is not conforming to the RRLib Coding Style
- *       guidelines because it is a copy of code from public domain.
+ * \note The formatting and naming in this file is not conforming to the
+ *       RRLib Coding Style guidelines because it is a copy of code from
+ *       public domain. That makes it easier to merge with updates from
+ *       upstream.
  */
 //----------------------------------------------------------------------
 #ifndef ___rrlib__util__fstream__fileno_h___

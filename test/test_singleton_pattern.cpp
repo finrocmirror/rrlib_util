@@ -78,8 +78,8 @@ struct tLogImplementation
     std::cout << "log: " << message << std::endl;
   }
 };
-typedef tSingletonHolder<tLogImplementation, singleton::CreateStatic, singleton::PhoenixSingleton> tLog;
-//typedef tSingletonHolder<tLogImplementation, singleton::CreateStatic, singleton::NoDestruction> tLog;
+typedef tSingletonHolder<tLogImplementation, singleton::PhoenixSingleton> tLog;
+//typedef tSingletonHolder<tLogImplementation, singleton::NoDestruction> tLog;
 
 struct tKeyboardImplementation
 {

@@ -69,8 +69,8 @@ namespace util
  */
 template <
 typename T,
-template <typename> class TCreationPolicy = singleton::CreateUsingNew,
-template <typename> class TLifetimePolicy = singleton::DefaultLifetime
+template <typename> class TLifetimePolicy = singleton::DefaultLifetime,
+template <typename> class TCreationPolicy = singleton::CreateUsingNew
 >
 class tSingletonHolder : public boost::noncopyable
 {

@@ -90,7 +90,7 @@ struct tKeyboardImplementation
   ~tKeyboardImplementation()
   {
     std::cout << "Keyboard dtor" << std::endl;
-    tLog::GetInstance().Print("Keyboard destroyed.");
+    tLog::Instance().Print("Keyboard destroyed.");
   }
 
   void Type(const std::string &message) const
@@ -109,7 +109,7 @@ struct tDisplayImplementation
   ~tDisplayImplementation()
   {
     std::cout << "Display dtor" << std::endl;
-    tLog::GetInstance().Print("Display destroyed.");
+    tLog::Instance().Print("Display destroyed.");
   }
 
   void Show(const std::string &message) const
@@ -121,8 +121,8 @@ typedef rrlib::util::tSingletonHolder<tDisplayImplementation> tDisplay;
 
 int main(int argc, char **argv)
 {
-  tKeyboard::GetInstance().Type("foo");
-  tDisplay::GetInstance().Show("bar");
+  tKeyboard::Instance().Type("foo");
+  tDisplay::Instance().Show("bar");
 
   return EXIT_SUCCESS;
 }

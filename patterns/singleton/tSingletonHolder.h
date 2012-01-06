@@ -38,6 +38,7 @@
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
 #include <boost/noncopyable.hpp>
+#include <mutex>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
@@ -80,19 +81,13 @@ class tSingletonHolder : public boost::noncopyable
 //----------------------------------------------------------------------
 public:
 
-  static T &GetInstance()
+  static T &Instance()
   {
-    if (!tSingletonHolder::Instance())
+    if (!tSingletonHolder::InstancePointer())
     {
-      if (tSingletonHolder::Destroyed())
-      {
-        TLifetimePolicy<T>::OnDeadReference();
-        tSingletonHolder::Destroyed() = false;
-      }
-      tSingletonHolder::Instance() = TCreationPolicy<T>::Create();
-      TLifetimePolicy<T>::ScheduleDestruction(&tSingletonHolder::DestroyInstance);
+      tSingletonHolder::CreateInstance();
     }
-    return *tSingletonHolder::Instance();
+    return *tSingletonHolder::InstancePointer();
   }
 
 //----------------------------------------------------------------------
@@ -102,19 +97,37 @@ private:
 
   tSingletonHolder();
 
+  static void CreateInstance()
+  {
+    static std::mutex mutex;
+    std::unique_lock<std::mutex> lock(mutex);
+
+    if (!tSingletonHolder::InstancePointer())
+    {
+      if (tSingletonHolder::Destroyed())
+      {
+        TLifetimePolicy<T>::OnDeadReference();
+        tSingletonHolder::Destroyed() = false;
+      }
+      tSingletonHolder::InstancePointer() = TCreationPolicy<T>::Create();
+      TLifetimePolicy<T>::ScheduleDestruction(&tSingletonHolder::DestroyInstance);
+    }
+  }
+
   static void DestroyInstance()
   {
     assert(!tSingletonHolder::Destroyed());
-    TCreationPolicy<T>::Destroy(tSingletonHolder::Instance());
-    tSingletonHolder::Instance() = 0;
+    TCreationPolicy<T>::Destroy(tSingletonHolder::InstancePointer());
+    tSingletonHolder::InstancePointer() = 0;
     tSingletonHolder::Destroyed() = true;
   }
 
-  static T *&Instance()
+  static T *&InstancePointer()
   {
     static T *instance = 0;
     return instance;
   }
+
   static bool &Destroyed()
   {
     static bool destroyed = false;

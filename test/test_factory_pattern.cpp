@@ -125,31 +125,31 @@ int main(int argc, char **argv)
 {
   std::cout << "Testing factory" << std::endl;
 
-  tShapeFactory::GetInstance().Register<tLine>("line");
-  tShapeFactory::GetInstance().Register<tRectangle>("line");
-  tShapeFactory::GetInstance().Register<tRectangle>("rectangle");
-  tShapeFactory::GetInstance().Register<tCircle>("circle");
-  tShapeFactory::GetInstance().Register<tEllipse>("ellipse");
+  tShapeFactory::Instance().Register<tLine>("line");
+  tShapeFactory::Instance().Register<tRectangle>("line");
+  tShapeFactory::Instance().Register<tRectangle>("rectangle");
+  tShapeFactory::Instance().Register<tCircle>("circle");
+  tShapeFactory::Instance().Register<tEllipse>("ellipse");
 
-  tShape *line = tShapeFactory::GetInstance().Create("line");
-  tShape *rectangle = tShapeFactory::GetInstance().Create("rectangle");
-  tShape *circle = tShapeFactory::GetInstance().Create("circle");
-  tShape *ellipse = tShapeFactory::GetInstance().Create("ellipse");
+  tShape *line = tShapeFactory::Instance().Create("line");
+  tShape *rectangle = tShapeFactory::Instance().Create("rectangle");
+  tShape *circle = tShapeFactory::Instance().Create("circle");
+  tShape *ellipse = tShapeFactory::Instance().Create("ellipse");
 
   std::cout << "Testing clone factory" << std::endl;
 
-  tShapeCloneFactory::GetInstance().Register(*line, &CloneLine);
-  tShapeCloneFactory::GetInstance().Register(rectangle, &CloneRectangle);
-  tShapeCloneFactory::GetInstance().Register(*circle, &CloneCircle);
+  tShapeCloneFactory::Instance().Register(*line, &CloneLine);
+  tShapeCloneFactory::Instance().Register(rectangle, &CloneRectangle);
+  tShapeCloneFactory::Instance().Register(*circle, &CloneCircle);
 
-  tShapeCloneFactory::GetInstance().Create(*line);
-  tShapeCloneFactory::GetInstance().Create(*rectangle);
-  tShapeCloneFactory::GetInstance().Create(*circle);
-//  tShapeCloneFactory::GetInstance().Create(*ellipse);
+  tShapeCloneFactory::Instance().Create(*line);
+  tShapeCloneFactory::Instance().Create(*rectangle);
+  tShapeCloneFactory::Instance().Create(*circle);
+//  tShapeCloneFactory::Instance().Create(*ellipse);
 
-  tShapeCloneFactory::GetInstance().Create(line);
-  tShapeCloneFactory::GetInstance().Create(rectangle);
-  tShapeCloneFactory::GetInstance().Create(circle);
+  tShapeCloneFactory::Instance().Create(line);
+  tShapeCloneFactory::Instance().Create(rectangle);
+  tShapeCloneFactory::Instance().Create(circle);
 
 
 

@@ -44,7 +44,7 @@ class tFPSComputer
 public:
   tFPSComputer(long long int check_interval_ms = 1000, float old_value_weight = 0.75);
 
-  tFPSComputer(const rrlib::util::tTime &current_time, long long int check_interval_ms = 1000, float old_value_weight = 0.75);
+  tFPSComputer(const util::tTime &current_time, long long int check_interval_ms = 1000, float old_value_weight = 0.75);
 
   inline void IncrementFrameCounter()
   {
@@ -53,10 +53,10 @@ public:
 
   inline bool IncrementFrameCounterAndCheckFPS()
   {
-    return IncrementFrameCounterAndCheckFPS(rrlib::util::tTime::Now());
+    return IncrementFrameCounterAndCheckFPS(util::tTime::Now());
   }
 
-  inline bool IncrementFrameCounterAndCheckFPS(const rrlib::util::tTime &current_time)
+  inline bool IncrementFrameCounterAndCheckFPS(const util::tTime &current_time)
   {
     ++this->frame_counter;
     return this->CheckFPS(current_time);
@@ -64,10 +64,10 @@ public:
 
   inline bool CheckFPS()
   {
-    return CheckFPS(rrlib::util::tTime::Now());
+    return CheckFPS(util::tTime::Now());
   }
 
-  inline bool CheckFPS(const rrlib::util::tTime &current_time)
+  inline bool CheckFPS(const util::tTime &current_time)
   {
     current_fps_check = current_time;
     long long int ms_passed = (current_fps_check - last_fps_check).ToMSec();
@@ -105,9 +105,9 @@ public:
   }
 
 private:
-  rrlib::util::tTime current_fps_check;
-  rrlib::util::tTime last_fps_check;
-  rrlib::util::tTime time_diff_check;
+  util::tTime current_fps_check;
+  util::tTime last_fps_check;
+  util::tTime time_diff_check;
   double last_frame_counter;
   double frame_counter;
   double time_diff;

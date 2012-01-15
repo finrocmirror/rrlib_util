@@ -50,13 +50,23 @@ extern "C"
 #include "rrlib/util/join.h"
 #include "rrlib/logging/messages.h"
 
-using namespace std;
-using namespace rrlib::util;
-
 //----------------------------------------------------------------------
 // Debug
 //----------------------------------------------------------------------
 #include <cassert>
+
+//----------------------------------------------------------------------
+// Namespace usage
+//----------------------------------------------------------------------
+using namespace std;
+
+//----------------------------------------------------------------------
+// Namespace declaration
+//----------------------------------------------------------------------
+namespace rrlib
+{
+namespace util
+{
 
 //----------------------------------------------------------------------
 // initialization of static class vars
@@ -120,7 +130,7 @@ bool sFileIOUtils::CreateDirectory(const std::string& path)    //throw(runtime_e
 
   if (system(sys_call.str().c_str()) == -1)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils>> Error creating dir: '%s'\n", path.c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils>> Error creating dir: '%s'\n", path.c_str());
 //     std::stringstream error_msg;
 //     error_msg << "sFileIOUtils>> Error creating Dir:\n"
 //     << path << endl;
@@ -129,7 +139,7 @@ bool sFileIOUtils::CreateDirectory(const std::string& path)    //throw(runtime_e
   }
   else
   {
-//     RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils>> Directory: '%s' successfully created.\n", path.c_str());
+//     RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils>> Directory: '%s' successfully created.\n", path.c_str());
     return true;
   }
 }
@@ -143,7 +153,7 @@ std::string sFileIOUtils::CreateTempfile()
   char buf[ 1024 ];
   if (fgets(buf, sizeof(buf), pipe) == 0)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::CreateTempfile() >> Error creating temp file!\n");
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::CreateTempfile() >> Error creating temp file!\n");
     exit(EXIT_FAILURE);
   }
   std::string tempfile = buf;
@@ -171,7 +181,7 @@ void sFileIOUtils::CompressFile(const std::string& input_filename, std::string& 
   cmd << "gzip -c " << input_filename << " > " << output_filename;
   if (system(cmd.str().c_str()) != 0)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils>> Execution of command '%s' failed!\n", cmd.str().c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils>> Execution of command '%s' failed!\n", cmd.str().c_str());
     exit(EXIT_FAILURE);
   }
 } // CompressFile()
@@ -186,7 +196,7 @@ void sFileIOUtils::DecompressFile(const std::string& input_filename, const std::
   cmd << "gunzip -c " << input_filename << " > " << output_filename;
   if (system(cmd.str().c_str()) != 0)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils>> Execution of command '%s' failed!\n", cmd.str().c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils>> Execution of command '%s' failed!\n", cmd.str().c_str());
     exit(EXIT_FAILURE);
   }
 } // DecompressFile()
@@ -227,12 +237,12 @@ bool sFileIOUtils::ShellExpandFilename(std::string &result, const std::string &f
     default:
       error_msg = "Unknown error";
     }
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::%s >> Could not expand '%s': %s!\n", __FUNCTION__, file_name.c_str(), error_msg);
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::%s >> Could not expand '%s': %s!\n", __FUNCTION__, file_name.c_str(), error_msg);
     return false;
   }
 
   std::stringstream stream;
-  stream << rrlib::util::Join(expansion.we_wordv + expansion.we_offs, expansion.we_wordv + expansion.we_offs + expansion.we_wordc, " ");
+  stream << util::Join(expansion.we_wordv + expansion.we_offs, expansion.we_wordv + expansion.we_offs + expansion.we_wordc, " ");
   wordfree(&expansion);
 
   result = stream.str();
@@ -284,20 +294,20 @@ void sFileIOUtils::SplitFullQualifiedFilename(const std::string& complete_name, 
 //----------------------------------------------------------------------
 std::string sFileIOUtils::GetHostName(bool fqdn)
 {
-  //RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::GetHostName() >>> started\n");
+  //RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::GetHostName() >>> started\n");
   std::string cmd = fqdn ? "hostname -f" : "hostname";
   FILE * pipe = popen(cmd.c_str(), "r");
   char buf[ 1024 ];
   if (fgets(buf, sizeof(buf), pipe) == 0)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::GetHostName(bool fqdn) >> Error querying host name!\n");
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::GetHostName(bool fqdn) >> Error querying host name!\n");
     exit(EXIT_FAILURE);
   }
   pclose(pipe);
   std::string name(buf);
   sStringUtils::TrimWhitespace(name);
   //boost::trim(name);
-  //RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::GetHostName() >>> finished with name <%s>\n", name.c_str());
+  //RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::GetHostName() >>> finished with name <%s>\n", name.c_str());
   return name;
 } // GetHostName()
 
@@ -312,11 +322,11 @@ struct ::in_addr sFileIOUtils::HostToIpViaGetHostByName(const std::string& name)
   if (host_ent)
   {
     address = * ((struct in_addr *) host_ent->h_addr_list[ 0 ]);
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "ip address of host <%s> = <%s>\n", name.c_str(), inet_ntoa(address));
+    RRLIB_LOG_PRINTF(logging::eLL_USER, "ip address of host <%s> = <%s>\n", name.c_str(), inet_ntoa(address));
   }
   else
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::GetIpAddressOfHost() >>> could not get ip address of host <%s>\n", name.c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::GetIpAddressOfHost() >>> could not get ip address of host <%s>\n", name.c_str());
   }
   return address;
 } //HostToIpViaGetHostByName()
@@ -327,13 +337,13 @@ struct ::in_addr sFileIOUtils::HostToIpViaGetHostByName(const std::string& name)
 //----------------------------------------------------------------------
 struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
 {
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIpViaNslookup() >>> started with host <%s>\n", name.c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIpViaNslookup() >>> started with host <%s>\n", name.c_str());
   struct in_addr address;
   address.s_addr = 0;
 
   std::stringstream command;
   command << "nslookup \"" << name << "\"";
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "command = <%s>\n", command.str().c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "command = <%s>\n", command.str().c_str());
   FILE * pipe = popen(command.str().c_str(), "r");
   if (!pipe)
   {
@@ -347,27 +357,27 @@ struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
     result << buf;
   }
   pclose(pipe);
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIpViaNslookup() >>> host = <%s> , result = <%s> \n", name.c_str(), result.str().c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIpViaNslookup() >>> host = <%s> , result = <%s> \n", name.c_str(), result.str().c_str());
 
   std::string result_str(result.str());
   std::string search_token("Name:");
   std::string::size_type pos = result_str.find(search_token);
   if (pos == std::string::npos)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "Could not find token <%s> in nslookup result ... returning <%s> \n", search_token.c_str(), inet_ntoa(address));
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "Could not find token <%s> in nslookup result ... returning <%s> \n", search_token.c_str(), inet_ntoa(address));
     return address;
   }
   result_str.erase(0, pos + search_token.length());
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "pos = %zd\n", pos);
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "pos = %zd\n", pos);
 
   search_token = "Address:";
   pos = result_str.find(search_token);
   if (pos == std::string::npos)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "Could not find token <%s> in nslookup result ... returning <%s> \n", search_token.c_str(), inet_ntoa(address));
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "Could not find token <%s> in nslookup result ... returning <%s> \n", search_token.c_str(), inet_ntoa(address));
     return address;
   }
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "pos = %zd\n", pos);
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "pos = %zd\n", pos);
 
   std::string found_name(result_str.substr(0, pos));
   sStringUtils::TrimWhitespace(found_name);
@@ -376,14 +386,14 @@ struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
   sStringUtils::TrimWhitespace(ip);
   //boost::trim(ip);
 
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "found_name <%s> , name <%s> \n", found_name.c_str(), name.c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "found_name <%s> , name <%s> \n", found_name.c_str(), name.c_str());
 
   if (found_name != name)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "nslookup failed .... returning <%s> \n", inet_ntoa(address));
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "nslookup failed .... returning <%s> \n", inet_ntoa(address));
     return address;
   }
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "found_name <%s> , ip <%s> \n", found_name.c_str(), ip.c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "found_name <%s> , ip <%s> \n", found_name.c_str(), ip.c_str());
 
   inet_aton(ip.c_str(), &address);
 
@@ -397,13 +407,13 @@ struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
 //----------------------------------------------------------------------
 struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
 {
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIpViaHost() >>> started with host <%s>\n", name.c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIpViaHost() >>> started with host <%s>\n", name.c_str());
   struct in_addr address;
   address.s_addr = 0;
 
   std::stringstream command;
   command << "host -t A \"" << name << "\"";
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "command = <%s>\n", command.str().c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "command = <%s>\n", command.str().c_str());
   FILE * pipe = popen(command.str().c_str(), "r");
   if (!pipe)
   {
@@ -417,18 +427,18 @@ struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
     result << buf;
   }
   pclose(pipe);
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIpViaHost() >>> host = <%s> , result = <%s> \n", name.c_str(), result.str().c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIpViaHost() >>> host = <%s> , result = <%s> \n", name.c_str(), result.str().c_str());
 
   std::string result_str(result.str());
   std::vector<std::string> tokens;
   sStringUtils::Tokenize(result_str, tokens, " \t");
 
   for_each(tokens.begin(), tokens.end(), sStringUtils::Trim<std::string>());
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::HostToIpViaHost() >>> got %d tokens:\n", tokens.size());
-  RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, Join(tokens, "\n"));
+  RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::HostToIpViaHost() >>> got %d tokens:\n", tokens.size());
+  RRLIB_LOG_PRINT(logging::eLL_DEBUG_VERBOSE_1, Join(tokens, "\n"));
 
   assert(tokens.size() == 4);
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "found_name <%s> , ip <%s> \n", tokens[0].c_str(), tokens[3].c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "found_name <%s> , ip <%s> \n", tokens[0].c_str(), tokens[3].c_str());
 
   inet_aton(tokens[3].c_str(), &address);
   return address;
@@ -439,7 +449,7 @@ struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
 //----------------------------------------------------------------------
 struct in_addr sFileIOUtils::HostToIpViaHostsFile(const std::string & name)
 {
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIpViaHostsFile() >>> started with host <%s>\n", name.c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIpViaHostsFile() >>> started with host <%s>\n", name.c_str());
   struct in_addr address;
   address.s_addr = 0;
 
@@ -465,7 +475,7 @@ struct in_addr sFileIOUtils::HostToIpViaHostsFile(const std::string & name)
           if (inet_aton(iter->c_str(), &address))
           {
             ip_address = *iter;
-            RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIpViaHostsFile() >>> got ip <%s> of host <%s> from hosts file\n", ip_address.c_str(), name.c_str());
+            RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIpViaHostsFile() >>> got ip <%s> of host <%s> from hosts file\n", ip_address.c_str(), name.c_str());
             found = true;
             break;
           }
@@ -483,26 +493,26 @@ struct in_addr sFileIOUtils::HostToIpViaHostsFile(const std::string & name)
 //----------------------------------------------------------------------
 struct in_addr sFileIOUtils::HostToIp(const std::string & name)
 {
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIp() >>> started with host <%s>\n", name.c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIp() >>> started with host <%s>\n", name.c_str());
 
   struct in_addr address;
   address.s_addr = 0;
 
   if ((address = sFileIOUtils::HostToIpViaHostsFile(name)).s_addr != 0)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIp() >>> got ip <%s> of host <%s> from hosts_file\n", inet_ntoa(address), name.c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIp() >>> got ip <%s> of host <%s> from hosts_file\n", inet_ntoa(address), name.c_str());
   }
   else if ((address = sFileIOUtils::HostToIpViaHost(name)).s_addr != 0)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIp() >>> got ip <%s> of host <%s> via <host -t A>\n", inet_ntoa(address), name.c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIp() >>> got ip <%s> of host <%s> via <host -t A>\n", inet_ntoa(address), name.c_str());
   }
   else if ((address = sFileIOUtils::HostToIpViaNslookup(name)).s_addr != 0)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::HostToIp() >>> got ip <%s> of host <%s> via <nslookup>\n", inet_ntoa(address), name.c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::HostToIp() >>> got ip <%s> of host <%s> via <nslookup>\n", inet_ntoa(address), name.c_str());
   }
   else
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::HostToIp() >>> could not get ip of host <%s>\n", name.c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::HostToIp() >>> could not get ip of host <%s>\n", name.c_str());
   }
 
   return address;
@@ -530,11 +540,11 @@ int sFileIOUtils::RSyncFile(const std::string& source_host_name, const std::stri
   << " "
   << target_directory;
 
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::RSyncFile() >>> executing <%s> ...\n", rsync_command.str().c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::RSyncFile() >>> executing <%s> ...\n", rsync_command.str().c_str());
   int ret = system(rsync_command.str().c_str());
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::RSyncFile() >>> ... done.\n");
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::RSyncFile() >>> ... done.\n");
 
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::RSyncFile() >>> finished with result %d\n", ret);
+  RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::RSyncFile() >>> finished with result %d\n", ret);
   return ret;
 } // RSyncFile()
 
@@ -565,11 +575,11 @@ int sFileIOUtils::RSyncFiles(const std::string& source_host_name, const std::str
   << " "
   << target_directory;
 
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::RSyncFiles() >>> executing <%s> ...\n", rsync_command.str().c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::RSyncFiles() >>> executing <%s> ...\n", rsync_command.str().c_str());
   int ret = system(rsync_command.str().c_str());
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_USER, "sFileIOUtils::RSyncFiles() >>> ... done.\n");
+  RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::RSyncFiles() >>> ... done.\n");
 
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::RSyncFiles() >>> finished with result %d\n", ret);
+  RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::RSyncFiles() >>> finished with result %d\n", ret);
   return ret;
 } // RSyncFiles()
 
@@ -579,7 +589,7 @@ int sFileIOUtils::RSyncFiles(const std::string& source_host_name, const std::str
 //----------------------------------------------------------------------
 bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &full_local_file_name, const std::string& resource_repository, const std::string& resource_server, const std::string& local_resource_directory, const std::string& server_resource_directory, bool use_cache)
 {
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> started with local_resource_directory <%s>, resource_repository <%s>, file_name <%s>, resource_server <%s>, server_resource_directory <%s>\n", local_resource_directory.c_str(), resource_repository.c_str(), file_name.c_str(), resource_server.c_str(), server_resource_directory.c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> started with local_resource_directory <%s>, resource_repository <%s>, file_name <%s>, resource_server <%s>, server_resource_directory <%s>\n", local_resource_directory.c_str(), resource_repository.c_str(), file_name.c_str(), resource_server.c_str(), server_resource_directory.c_str());
 
   //!#####################################################################################################
   //! step 0: check whether token "resource_repository + filename" is in local cache
@@ -600,7 +610,7 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
   //!#####################################################################################################
   full_local_file_name = "./" + resource_repository + file_name;
 
-  RRLIB_LOG_PRINTF(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 1. check: trying to load <%s>\n", full_local_file_name.c_str());
+  RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 1. check: trying to load <%s>\n", full_local_file_name.c_str());
   ifstream try_1(full_local_file_name.c_str());
   if (try_1)
   {
@@ -618,12 +628,12 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
     std::string expanded_local_resource_directory;
     if (!sFileIOUtils::ShellExpandFilename(expanded_local_resource_directory, local_resource_directory + "/"))
     {
-      RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::%s >> Could not expand local resource directory!\n", __FUNCTION__);
+      RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::%s >> Could not expand local resource directory!\n", __FUNCTION__);
       return false;
     }
     full_local_file_name = (expanded_local_resource_directory + resource_repository + file_name);
 
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 2. check: trying to load <%s>\n", full_local_file_name.c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 2. check: trying to load <%s>\n", full_local_file_name.c_str());
     ifstream try_2(full_local_file_name.c_str());
     if (try_2)
     {
@@ -641,7 +651,7 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
       if (use_cache && sFileIOUtils::cached_local_host.length() > 0)
       {
         local_host = sFileIOUtils::cached_local_host;
-        RRLIB_LOG_PRINTF(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> retrieved local_host <%s> from cache\n", local_host.c_str());
+        RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> retrieved local_host <%s> from cache\n", local_host.c_str());
       }
       else
       {
@@ -658,16 +668,16 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
         if (use_cache && ((pos = sFileIOUtils::host_name_to_ip_cache.find(server)) != sFileIOUtils::host_name_to_ip_cache.end()))
         {
           server_ip_address = pos->second;
-          RRLIB_LOG_PRINTF(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> retrieved ip address <%s> of host <%s> from cache\n", server_ip_address.c_str(), server.c_str());
+          RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> retrieved ip address <%s> of host <%s> from cache\n", server_ip_address.c_str(), server.c_str());
         }
         else
         {
           server_ip_address = inet_ntoa(sFileIOUtils::HostToIp(server));
-          RRLIB_LOG_PRINTF(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> got ip address <%s> of host <%s>\n", server_ip_address.c_str(), server.c_str());
+          RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> got ip address <%s> of host <%s>\n", server_ip_address.c_str(), server.c_str());
 
           if (server_ip_address == "0.0.0.0")
           {
-            RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::constructor >>> zero ip address ... clearing server\n");
+            RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::constructor >>> zero ip address ... clearing server\n");
             server = "";
           }
           else
@@ -680,21 +690,21 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
       // start check
       if (server != "")   //&& server != local_host)
       {
-        RRLIB_LOG_PRINTF(rrlib::logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 3. check: trying to rsync <%s:%s> to <%s> \n", server_ip_address.c_str(), (server_resource_directory + resource_repository + file_name).c_str(), expanded_local_resource_directory.c_str());
+        RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "sFileIOUtils::CheckAndGetFile() >>> 3. check: trying to rsync <%s:%s> to <%s> \n", server_ip_address.c_str(), (server_resource_directory + resource_repository + file_name).c_str(), expanded_local_resource_directory.c_str());
 
         // rsync from <resource_server:server_resource_directory + resource_repository>
         //       to <local_resource_directory> on local host
 
         if (sFileIOUtils::RSyncFile("", server_ip_address, server_resource_directory + "/./" + resource_repository, file_name, expanded_local_resource_directory, "R") != 0)
         {
-          RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::CheckAndGetFile() >>> could not rsync file <%s> from server <%s> at <%s> ... skipping\n", file_name.c_str(), server.c_str(), (server_resource_directory + resource_repository).c_str());
+          RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::CheckAndGetFile() >>> could not rsync file <%s> from server <%s> at <%s> ... skipping\n", file_name.c_str(), server.c_str(), (server_resource_directory + resource_repository).c_str());
           return false;
         }
         full_local_file_name = (expanded_local_resource_directory + resource_repository + file_name);
       }
       else
       {
-        RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::CheckAndGetFile() >>> could neither load <%s> locally nor from resource server ... skipping\n", file_name.c_str());
+        RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::CheckAndGetFile() >>> could neither load <%s> locally nor from resource server ... skipping\n", file_name.c_str());
         return false;
       }
     }
@@ -704,7 +714,7 @@ bool sFileIOUtils::CheckAndGetFile(const std::string &file_name, std::string &fu
   ifstream try_3(full_local_file_name.c_str());
   if (!try_3)
   {
-    RRLIB_LOG_PRINTF(rrlib::logging::eLL_ERROR, "sFileIOUtils::CheckAndGetFile() >>> final check failed: could not load <%s> ... skipping\n", full_local_file_name.c_str());
+    RRLIB_LOG_PRINTF(logging::eLL_ERROR, "sFileIOUtils::CheckAndGetFile() >>> final check failed: could not load <%s> ... skipping\n", full_local_file_name.c_str());
     return false;
   }
   else
@@ -733,3 +743,9 @@ void sFileIOUtils::ClearResourceCache()
 {
   sFileIOUtils::resource_cache.clear();
 } // ClearResourceCache()
+
+//----------------------------------------------------------------------
+// End of namespace declaration
+//----------------------------------------------------------------------
+}
+}

@@ -35,7 +35,13 @@
 // boost includes
 //#include <boost/algorithm/string.hpp> // trim
 
-using namespace rrlib::util;
+//----------------------------------------------------------------------
+// Namespace declaration
+//----------------------------------------------------------------------
+namespace rrlib
+{
+namespace util
+{
 
 const size_t sStringUtils::max_chars;
 
@@ -187,3 +193,8 @@ bool sStringUtils::StringToBool(std::string s)
     return false;
 }
 
+//----------------------------------------------------------------------
+// End of namespace declaration
+//----------------------------------------------------------------------
+}
+}

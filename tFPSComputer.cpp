@@ -33,7 +33,13 @@
 
 #include "rrlib/util/tFPSComputer.h"
 
-using namespace rrlib::util;
+//----------------------------------------------------------------------
+// Namespace declaration
+//----------------------------------------------------------------------
+namespace rrlib
+{
+namespace util
+{
 
 tFPSComputer::tFPSComputer(long long int check_interval_ms, float old_value_weight):
     current_fps_check(tTime::Now()),
@@ -56,3 +62,10 @@ tFPSComputer::tFPSComputer(const tTime &current_time, long long int check_interv
     old_value_weight(old_value_weight),
     check_interval_ms(check_interval_ms)
 { }
+
+
+//----------------------------------------------------------------------
+// End of namespace declaration
+//----------------------------------------------------------------------
+}
+}

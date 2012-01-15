@@ -28,24 +28,15 @@
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 #include "rrlib/serialization/tInputStream.h"
 #include "rrlib/serialization/tOutputStream.h"
-
-rrlib::serialization::tOutputStream &rrlib::util::operator << (rrlib::serialization::tOutputStream &stream, const rrlib::util::tTime &t)
-{
-  stream.WriteLong(t.TvSec());
-  stream.WriteLong(t.TvUSec());
-  return stream;
-}
-
-rrlib::serialization::tInputStream &rrlib::util::operator >> (rrlib::serialization::tInputStream &stream, rrlib::util::tTime &t)
-{
-  t.SetTvSec(static_cast<long>(stream.ReadLong()));
-  t.SetTvUSec(static_cast<long>(stream.ReadLong()));
-  return stream;
-}
-
 #endif
 
-using rrlib::util::tTime;
+//----------------------------------------------------------------------
+// Namespace declaration
+//----------------------------------------------------------------------
+namespace rrlib
+{
+namespace util
+{
 
 const tTime tTime::time_forever(-1, 0);
 const tTime tTime::time_0ms(0, 0);
@@ -76,3 +67,26 @@ const tTime tTime::time_240s(240, 0);
 const tTime tTime::time_30000s(30000, 0);
 const tTime tTime::time_1year(365 * 86400, 0);
 
+
+#ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
+serialization::tOutputStream &util::operator << (serialization::tOutputStream &stream, const util::tTime &t)
+{
+  stream.WriteLong(t.TvSec());
+  stream.WriteLong(t.TvUSec());
+  return stream;
+}
+
+serialization::tInputStream &util::operator >> (serialization::tInputStream &stream, util::tTime &t)
+{
+  t.SetTvSec(static_cast<long>(stream.ReadLong()));
+  t.SetTvUSec(static_cast<long>(stream.ReadLong()));
+  return stream;
+}
+
+#endif
+
+//----------------------------------------------------------------------
+// End of namespace declaration
+//----------------------------------------------------------------------
+}
+}

@@ -69,14 +69,14 @@ const tTime tTime::time_1year(365 * 86400, 0);
 
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
-serialization::tOutputStream &util::operator << (serialization::tOutputStream &stream, const util::tTime &t)
+serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tTime &t)
 {
   stream.WriteLong(t.TvSec());
   stream.WriteLong(t.TvUSec());
   return stream;
 }
 
-serialization::tInputStream &util::operator >> (serialization::tInputStream &stream, util::tTime &t)
+serialization::tInputStream &operator >> (serialization::tInputStream &stream, tTime &t)
 {
   t.SetTvSec(static_cast<long>(stream.ReadLong()));
   t.SetTvUSec(static_cast<long>(stream.ReadLong()));

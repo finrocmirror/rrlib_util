@@ -161,15 +161,15 @@ public:
 
 template <typename THead>
 struct tTypeList<THead> : public tTypeListBase<THead, type_list::tEmptyList>
-  {};
+{};
 
 template <typename THead, typename ... TTail>
 struct tTypeList<THead, TTail...> : public tTypeListBase<THead, tTypeList<TTail...>>
-  {};
+{};
 
 template <typename THead, typename ... TTail>
 struct tTypeList<THead, tTypeList<TTail...>> : public tTypeListBase<THead, tTypeList<TTail...>>
-  {};
+{};
 
 //----------------------------------------------------------------------
 // End of namespace declaration

@@ -71,9 +71,9 @@ namespace util
  */
 template <
 typename TAbstractProduct,
-typename TProductCreator = tFunctor<TAbstractProduct *, const TAbstractProduct &>,
-template <typename TAbstractProduct, typename TIdentifier> class TUnknownKeyPolicy = factory::ThrowException
->
+         typename TProductCreator = tFunctor<TAbstractProduct *, const TAbstractProduct &>,
+         template <typename TAbstractProduct, typename TIdentifier> class TUnknownKeyPolicy = factory::ThrowException
+         >
 class tCloneFactory
 {
 

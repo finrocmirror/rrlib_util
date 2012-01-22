@@ -76,7 +76,7 @@ class tMemberFunctionHandler : public tFunctorHandlerBase<TReturn, TParameters..
 public:
 
   tMemberFunctionHandler(TObject &object, const TFunction &function)
-      : object(object),
+    : object(object),
       function(function)
   {}
 

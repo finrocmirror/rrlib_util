@@ -98,7 +98,7 @@ public:
     return tTime(0, clock());
 # else
 
-    return tTime(0, clock()*(1000000 / CLOCKS_PER_SEC));
+    return tTime(0, clock() * (1000000 / CLOCKS_PER_SEC));
 # endif
 
   }
@@ -118,7 +118,7 @@ public:
   */
   static inline tTime FutureMSec(long msec)
   {
-    tTime ntime(0, msec*1000);
+    tTime ntime(0, msec * 1000);
     //FromMSec(msec);
     ntime += tTime::Now();
     return ntime;
@@ -190,19 +190,19 @@ public:
   /*! Returns tTime in nanoseconds */
   inline long long ToNSec()const
   {
-    return ((long long)tv_usec + (long long)tv_sec*1000000)*1000;
+    return ((long long)tv_usec + (long long)tv_sec * 1000000) * 1000;
   }
 
   /*! Returns tTime in microseconds */
   inline long long ToUSec()const
   {
-    return (long long)tv_usec + (long long)tv_sec*1000000;
+    return (long long)tv_usec + (long long)tv_sec * 1000000;
   }
 
   /*! Returns tTime in milli seconds rounded down to an long integer.*/
   inline long long ToMSec()const
   {
-    return (long long)tv_usec / 1000 + (long long)tv_sec*1000;
+    return (long long)tv_usec / 1000 + (long long)tv_sec * 1000;
   }
 
   /*! Returns tTime in seconds rounded down to an long integer.*/
@@ -363,7 +363,7 @@ public:
   /*! Casts this tTime object into timespec object (consists of tv_sec/tv_nsec, see h)*/
   operator timespec()
   {
-    timespec t = {tv_sec, 1000*tv_usec};
+    timespec t = {tv_sec, 1000 * tv_usec};
     return t;
   }
 

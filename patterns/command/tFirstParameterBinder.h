@@ -76,7 +76,7 @@ class tFirstParameterBinder : public tFunctorHandlerBase<TReturn, TParameterRest
 public:
 
   tFirstParameterBinder(const tFunctor<TReturn, TFirstParameter, TParameterRest...> &functor, TFirstParameter bound_parameter)
-      : functor(functor),
+    : functor(functor),
       bound_parameter(bound_parameter)
   {}
 

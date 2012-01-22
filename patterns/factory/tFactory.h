@@ -70,10 +70,10 @@ namespace util
  */
 template <
 typename TAbstractProduct,
-typename TIdentifier,
-typename TProductCreator = tFunctor<TAbstractProduct *>,
-template <typename TAbstractProduct, typename TIdentifier> class TUnknownKeyPolicy = factory::ThrowException
->
+         typename TIdentifier,
+         typename TProductCreator = tFunctor<TAbstractProduct *>,
+         template <typename TAbstractProduct, typename TIdentifier> class TUnknownKeyPolicy = factory::ThrowException
+         >
 class tFactory
 {
 

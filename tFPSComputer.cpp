@@ -42,25 +42,25 @@ namespace util
 {
 
 tFPSComputer::tFPSComputer(long long int check_interval_ms, float old_value_weight):
-    current_fps_check(tTime::Now()),
-    last_fps_check(current_fps_check),
-    time_diff_check(current_fps_check),
-    last_frame_counter(0.),
-    frame_counter(0.),
-    fps(0.),
-    old_value_weight(old_value_weight),
-    check_interval_ms(check_interval_ms)
+  current_fps_check(tTime::Now()),
+  last_fps_check(current_fps_check),
+  time_diff_check(current_fps_check),
+  last_frame_counter(0.),
+  frame_counter(0.),
+  fps(0.),
+  old_value_weight(old_value_weight),
+  check_interval_ms(check_interval_ms)
 { }
 
 tFPSComputer::tFPSComputer(const tTime &current_time, long long int check_interval_ms, float old_value_weight):
-    current_fps_check(current_time),
-    last_fps_check(current_time),
-    time_diff_check(current_time),
-    last_frame_counter(0.),
-    frame_counter(0.),
-    fps(0.),
-    old_value_weight(old_value_weight),
-    check_interval_ms(check_interval_ms)
+  current_fps_check(current_time),
+  last_fps_check(current_time),
+  time_diff_check(current_time),
+  last_frame_counter(0.),
+  frame_counter(0.),
+  fps(0.),
+  old_value_weight(old_value_weight),
+  check_interval_ms(check_interval_ms)
 { }
 
 

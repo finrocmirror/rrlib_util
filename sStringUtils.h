@@ -60,7 +60,7 @@ struct imanip
   std::istream& (*f)(std::istream&, std::string&);
   std::string& str;
 
-  imanip(std::istream& (*ff)(std::istream&, std::string&), std::string& sstr) : f(ff), str(sstr)
+  imanip(std::istream & (*ff)(std::istream&, std::string&), std::string& sstr) : f(ff), str(sstr)
   {}
 }
 ;

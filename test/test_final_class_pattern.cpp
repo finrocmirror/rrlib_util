@@ -80,10 +80,10 @@ struct B : public A
 };
 
 class FinalFromA : public A, RRLIB_FINAL_CLASS
-  {};
+{};
 
 class FinalFromB : public B, RRLIB_FINAL_CLASS
-  {};
+{};
 
 struct Final : RRLIB_FINAL_CLASS
 {
@@ -95,13 +95,13 @@ struct Final : RRLIB_FINAL_CLASS
 
 #ifdef TRY_ILLEGAL
 class IllegalFromFinalFromA : public FinalFromA
-  {};
+{};
 
 class IllegalFromFinalFromB : public FinalFromB
-  {};
+{};
 
 class IllegalFromFinal : public Final
-  {};
+{};
 #endif
 
 int main(int argc, char **argv)

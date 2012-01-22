@@ -76,7 +76,7 @@ class tFunctorHandler : public tFunctorHandlerBase<TReturn, TParameters...>
 public:
 
   tFunctorHandler(const TFunctor &functor)
-      : functor(functor)
+    : functor(functor)
   {}
 
   TReturn operator()(TParameters... parameters)

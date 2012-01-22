@@ -76,7 +76,7 @@ class tFunctorChainer : public tFunctorHandlerBase<void>
 public:
 
   tFunctorChainer(const TFirstFunctor &first_functor, const TSecondFunctor &second_functor)
-      : first_functor(first_functor),
+    : first_functor(first_functor),
       second_functor(second_functor)
   {}
 

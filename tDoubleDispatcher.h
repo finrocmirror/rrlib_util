@@ -70,13 +70,13 @@ namespace util
  */
 template <
 typename TExecutor,
-typename TLeftBase,
-typename TLeftTypes,
-bool Tsymmetric = true,
-typename TRightBase = TLeftBase,
-typename TRightTypes = TLeftTypes,
-typename TReturn = void
->
+         typename TLeftBase,
+         typename TLeftTypes,
+         bool Tsymmetric = true,
+         typename TRightBase = TLeftBase,
+         typename TRightTypes = TLeftTypes,
+         typename TReturn = void
+         >
 class tDoubleDispatcher
 {
 

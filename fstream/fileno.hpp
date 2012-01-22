@@ -186,8 +186,8 @@ inline int fileno_hack(std::basic_streambuf<charT, traits> *stream_buffer)
         // __basic_file<charT> inherits from __basic_file_base<charT>
         return *(FILE **)((char *)ptr_M_file + sizeof(std::__basic_file_base<charT>));
 #  else
-  // __basic_file<charT> is base class, but with vptr.
-  return *(FILE **)((char *)ptr_M_file + sizeof(void*));
+        // __basic_file<charT> is base class, but with vptr.
+        return *(FILE **)((char *)ptr_M_file + sizeof(void*));
 #  endif
       }
     };

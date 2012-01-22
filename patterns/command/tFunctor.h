@@ -79,21 +79,21 @@ class tFunctor
 public:
 
   tFunctor(const tFunctor &other)
-      : handler(other.handler)
+    : handler(other.handler)
   {}
 
   explicit tFunctor(std::shared_ptr<tFunctorHandlerBase<TReturn, TParameters...>> handler)
-      : handler(handler)
+    : handler(handler)
   {}
 
   template <typename TFunctor>
   tFunctor(const TFunctor &functor)
-      : handler(new tFunctorHandler<TFunctor, TReturn, TParameters...>(functor))
+    : handler(new tFunctorHandler<TFunctor, TReturn, TParameters...>(functor))
   {}
 
   template <typename TObject, typename TFunction>
   tFunctor(TObject &object, const TFunction &function)
-      : handler(new tMemberFunctionHandler<TObject, TFunction, TReturn, TParameters...>(object, function))
+    : handler(new tMemberFunctionHandler<TObject, TFunction, TReturn, TParameters...>(object, function))
   {}
 
   TReturn operator()(TParameters... parameters) const

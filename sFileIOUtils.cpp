@@ -535,10 +535,10 @@ int sFileIOUtils::RSyncFile(const std::string& source_host_name, const std::stri
     rsync_command << source_host_ip_address;
   }
   rsync_command << ":"
-  << source_directory
-  << source_file_name
-  << " "
-  << target_directory;
+                << source_directory
+                << source_file_name
+                << " "
+                << target_directory;
 
   RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::RSyncFile() >>> executing <%s> ...\n", rsync_command.str().c_str());
   int ret = system(rsync_command.str().c_str());
@@ -571,9 +571,9 @@ int sFileIOUtils::RSyncFiles(const std::string& source_host_name, const std::str
     rsync_command << source_host_ip_address;
   }
   rsync_command << ":"
-  << source_directory
-  << " "
-  << target_directory;
+                << source_directory
+                << " "
+                << target_directory;
 
   RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::RSyncFiles() >>> executing <%s> ...\n", rsync_command.str().c_str());
   int ret = system(rsync_command.str().c_str());

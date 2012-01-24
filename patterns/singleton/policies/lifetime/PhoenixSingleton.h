@@ -72,9 +72,9 @@ namespace singleton
 template <typename T>
 struct PhoenixSingleton
 {
-  static void ScheduleDestruction(void (*function)())
+  static void ScheduleDestruction(T *, void (*function)())
   {
-    atexit(function);
+    std::atexit(function);
   }
   static void OnDeadReference()
   {}

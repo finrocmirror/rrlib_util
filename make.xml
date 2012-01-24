@@ -26,9 +26,9 @@
   <rrlib name="util_patterns">
     <sources>
       patterns/*
-      patterns/command/*
-      patterns/factory/*
-      patterns/singleton/*
+      patterns/command/**
+      patterns/factory/**
+      patterns/singleton/**
     </sources>
   </rrlib>
 

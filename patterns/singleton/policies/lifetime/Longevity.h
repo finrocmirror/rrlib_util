@@ -19,30 +19,30 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    DefaultLifetime.h
+/*!\file    Longevity.h
  *
  * \author  Tobias Foehst
  *
- * \date    2010-10-26
+ * \date    2012-01-23
  *
- * \brief Contains DefaultLifetime
+ * \brief Contains Longevity
  *
- * \b DefaultLifetime
+ * \b Longevity
  *
  */
 //----------------------------------------------------------------------
-#ifndef __rrlib__util__patterns__singleton__policies__lifetime__DefaultLifetime_h__
-#define __rrlib__util__patterns__singleton__policies__lifetime__DefaultLifetime_h__
+#ifndef __rrlib__util__patterns__singleton__policies__lifetime__Longevity_h__
+#define __rrlib__util__patterns__singleton__policies__lifetime__Longevity_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
-#include <cstdlib>
 #include <stdexcept>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
+#include "rrlib/util/patterns/singleton/tLifetimeTracker.h"
 
 //----------------------------------------------------------------------
 // Debugging
@@ -71,11 +71,11 @@ namespace singleton
  *
  */
 template <typename T>
-struct DefaultLifetime
+struct Longevity
 {
-  static void ScheduleDestruction(T *, void (*function)())
+  static void ScheduleDestruction(T *object, void (*function)())
   {
-    std::atexit(function);
+    SetLongevity(GetLongevity(object), function);
   }
   static void OnDeadReference()
   {

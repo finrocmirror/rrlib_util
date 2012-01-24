@@ -116,10 +116,14 @@ private:
 
 inline void SetLongevity(unsigned int longevity, void (*destroy_instance)())
 {
+  static std::mutex mutex;
+  std::unique_lock<std::mutex> lock(mutex);
+
   std::auto_ptr<tLifetimeTracker> p(new tLifetimeTracker(longevity, destroy_instance));
 
-  auto position = std::upper_bound(tLifetimeTrackerList::Instance().begin(), tLifetimeTrackerList::Instance().end(), p.get(), tLifetimeTracker::SmallerFirst);
-  tLifetimeTrackerList::Instance().insert(position, p.get());
+  auto &tracker_list = tLifetimeTrackerList::Instance();
+  auto position = std::upper_bound(tracker_list.begin(), tracker_list.end(), p.get(), tLifetimeTracker::SmallerFirst);
+  tracker_list.insert(position, p.get());
 
   p.release();
 

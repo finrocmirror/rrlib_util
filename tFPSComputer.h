@@ -46,9 +46,9 @@ public:
 
   tFPSComputer(const util::tTime &current_time, long long int check_interval_ms = 1000, float old_value_weight = 0.75);
 
-  inline void IncrementFrameCounter()
+  inline void IncrementFrameCounter(unsigned int num_frames = 1)
   {
-    ++this->frame_counter;
+    this->frame_counter += num_frames;
   }
 
   inline bool IncrementFrameCounterAndCheckFPS()

@@ -41,15 +41,21 @@
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/util/patterns/singleton/policies/creation/CreateStatic.h"
-#include "rrlib/util/patterns/singleton/policies/creation/CreateUsingNew.h"
-#include "rrlib/util/patterns/singleton/policies/creation/CreateUsingMalloc.h"
 
+// default policies
+#include "rrlib/util/patterns/singleton/policies/creation/CreateUsingNew.h"
 #include "rrlib/util/patterns/singleton/policies/lifetime/DefaultLifetime.h"
-#include "rrlib/util/patterns/singleton/policies/lifetime/PhoenixSingleton.h"
-#include "rrlib/util/patterns/singleton/policies/lifetime/NoDestruction.h"
 
 #include "rrlib/util/patterns/singleton/tSingletonHolder.h"
+
+// creation policies
+#include "rrlib/util/patterns/singleton/policies/creation/CreateStatic.h"
+#include "rrlib/util/patterns/singleton/policies/creation/CreateUsingMalloc.h"
+
+// lifetime policies
+#include "rrlib/util/patterns/singleton/policies/lifetime/PhoenixSingleton.h"
+#include "rrlib/util/patterns/singleton/policies/lifetime/NoDestruction.h"
+#include "rrlib/util/patterns/singleton/policies/lifetime/Longevity.h"
 
 //----------------------------------------------------------------------
 // Debugging

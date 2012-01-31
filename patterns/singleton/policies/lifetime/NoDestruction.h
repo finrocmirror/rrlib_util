@@ -72,7 +72,7 @@ namespace singleton
 template <typename T>
 struct NoDestruction
 {
-  static void ScheduleDestruction(void (*function)())
+  static void ScheduleDestruction(T *, void (*function)())
   {}
   static void OnDeadReference()
   {

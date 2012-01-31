@@ -78,8 +78,13 @@ struct tLogImplementation
     std::cout << "log: " << message << std::endl;
   }
 };
-typedef tSingletonHolder<tLogImplementation, singleton::PhoenixSingleton> tLog;
+//typedef tSingletonHolder<tLogImplementation, singleton::PhoenixSingleton> tLog;
 //typedef tSingletonHolder<tLogImplementation, singleton::NoDestruction> tLog;
+typedef tSingletonHolder<tLogImplementation, singleton::Longevity> tLog;
+unsigned int GetLongevity(tLogImplementation *)
+{
+  return 2;
+}
 
 struct tKeyboardImplementation
 {
@@ -98,7 +103,12 @@ struct tKeyboardImplementation
     std::cout << "keyboard: " << message << std::endl;
   };
 };
-typedef rrlib::util::tSingletonHolder<tKeyboardImplementation> tKeyboard;
+//typedef rrlib::util::tSingletonHolder<tKeyboardImplementation> tKeyboard;
+typedef rrlib::util::tSingletonHolder<tKeyboardImplementation, singleton::Longevity> tKeyboard;
+unsigned int GetLongevity(tKeyboardImplementation *)
+{
+  return 1;
+}
 
 struct tDisplayImplementation
 {
@@ -117,7 +127,12 @@ struct tDisplayImplementation
     std::cout << "display: " << message << std::endl;
   };
 };
-typedef rrlib::util::tSingletonHolder<tDisplayImplementation> tDisplay;
+//typedef rrlib::util::tSingletonHolder<tDisplayImplementation> tDisplay;
+typedef rrlib::util::tSingletonHolder<tDisplayImplementation, singleton::Longevity> tDisplay;
+unsigned int GetLongevity(tDisplayImplementation *)
+{
+  return 1;
+}
 
 int main(int argc, char **argv)
 {

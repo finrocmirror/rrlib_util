@@ -110,7 +110,7 @@ private:
         tSingletonHolder::Destroyed() = false;
       }
       tSingletonHolder::InstancePointer() = TCreationPolicy<T>::Create();
-      TLifetimePolicy<T>::ScheduleDestruction(&tSingletonHolder::DestroyInstance);
+      TLifetimePolicy<T>::ScheduleDestruction(tSingletonHolder::InstancePointer(), &tSingletonHolder::DestroyInstance);
     }
   }
 

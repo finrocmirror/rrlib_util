@@ -311,6 +311,16 @@ public:
     }
   }
 
+  static void BuildStringListFromCharArrays(std::vector <std::string>& name_list, const std::vector <const char*>& names)
+  {
+    name_list.clear();
+    for (size_t i = 0; i < names.size(); i++)
+    {
+      assert(names [i] != NULL);
+      name_list.push_back(names [i]);
+    }
+  }
+
   /*!
    * \brief Returns true if string equals "true" or "1".
    * \param s string to be checked

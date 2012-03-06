@@ -295,7 +295,7 @@ void sFileIOUtils::SplitFullQualifiedFilename(const std::string& complete_name, 
 std::string sFileIOUtils::GetHostName(bool fqdn)
 {
   //RRLIB_LOG_PRINTF(logging::eLL_USER, "sFileIOUtils::GetHostName() >>> started\n");
-  std::string cmd = fqdn ? "hostname -f" : "hostname";
+  std::string cmd = fqdn ? "hostname -f" : "hostname -s";
   FILE * pipe = popen(cmd.c_str(), "r");
   char buf[ 1024 ];
   if (fgets(buf, sizeof(buf), pipe) == 0)

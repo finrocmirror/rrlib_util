@@ -34,10 +34,20 @@
 #ifndef _rrlib_util_sFileIOUtils_h_
 #define _rrlib_util_sFileIOUtils_h_
 
+//rrlib includes
+#include "rrlib/util/sStringUtils.h"
+#include "rrlib/logging/messages.h"
+
 //STL includes
 #include <string>
 #include <vector>
 #include <map>
+#include <fstream>
+#include <iterator>
+
+//boost includes
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/filter/bzip2.hpp>
 
 extern "C"
 {
@@ -110,6 +120,84 @@ public:
    * \note input file must have suffix ".gz".
    */
   static void DecompressFile(const std::string& input_filename, const std::string& output_filename);
+
+
+  /*!
+   * \brief Writes content of given container to file with given name
+   *
+   * \returns true iff file could be processed as expected
+   *
+   * \note If filename has suffix ".bz2" it is compressed accordingly.
+   */
+  template <class T>
+  static bool WriteContainerToFile(const std::vector<T> &content, const std::string& filename)
+  {
+    std::ofstream output_file_stream;
+    RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, "got file <", filename, ">");
+    if (sStringUtils::EndsWith(filename, ".bz2"))
+    {
+      RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, "compressing");
+      boost::iostreams::filtering_ostream out;
+      out.push(boost::iostreams::bzip2_compressor());
+      output_file_stream.open(filename.c_str());
+      if ( output_file_stream )
+      {
+        out.push(output_file_stream);
+        std::copy(content.begin(), content.end(), std::ostream_iterator<T>(out));
+        return true;
+      }
+    }
+    else
+    {
+      output_file_stream.open(filename.c_str());
+      if ( output_file_stream )
+      {
+        std::copy(content.begin(), content.end(), std::ostream_iterator<T>(output_file_stream));
+        output_file_stream.close();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /*!
+   * \brief Reads file with given name and writes its content to given container
+   *
+   * \returns true iff file could be processed as expected
+   *
+   * \note If filename has suffix ".bz2" it is decompressed accordingly before reading.
+   */
+  template <class T>
+  static bool ReadContainerFromFile(std::vector<T> &content, const std::string& filename)
+  {
+    std::ifstream input_file_stream;
+    RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, "got file <", filename, ">");
+    if (sStringUtils::EndsWith(filename, ".bz2"))
+    {
+      RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, "decompressing");
+      boost::iostreams::filtering_istream in;
+      in.push(boost::iostreams::bzip2_decompressor());
+      input_file_stream.open(filename.c_str());
+      if (input_file_stream)
+      {
+        in.push(input_file_stream);
+        std::copy(std::istream_iterator<T>(in), std::istream_iterator<T>(), std::back_inserter(content));
+        return true;
+      }
+    }
+    else
+    {
+      input_file_stream.open(filename.c_str());
+      if (input_file_stream)
+      {
+        std::copy(std::istream_iterator<T>(input_file_stream), std::istream_iterator<T>(), std::back_inserter(content));
+      }
+      input_file_stream.close();
+      return true;
+    }
+    return false;
+  }
+
 
 
 

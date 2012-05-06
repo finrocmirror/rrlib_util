@@ -39,6 +39,12 @@
     </sources>
   </rrlib>
 
+  <rrlib name="util_variadic_templates">
+    <sources>
+      variadic_templates.h
+    </sources>
+  </rrlib>
+
   <testprogram name="command_pattern">
     <sources>
       test/test_command_pattern.cpp

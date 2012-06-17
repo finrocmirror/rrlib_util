@@ -10,6 +10,7 @@
       sStringUtils.cpp
       tAutoRegister.h
       tDoubleDispatcher.h
+      tTime.cpp
       tTypeList.h
       type_list/*
       tFPSComputer.cpp

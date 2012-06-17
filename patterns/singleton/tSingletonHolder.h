@@ -90,11 +90,6 @@ public:
     return *tSingletonHolder::InstancePointer();
   }
 
-  static bool Destroyed()
-  {
-    return DestroyedVariable();
-  }
-
 //----------------------------------------------------------------------
 // Private fields and methods
 //----------------------------------------------------------------------
@@ -112,7 +107,7 @@ private:
       if (tSingletonHolder::Destroyed())
       {
         TLifetimePolicy<T>::OnDeadReference();
-        tSingletonHolder::DestroyedVariable() = false;
+        tSingletonHolder::Destroyed() = false;
       }
       tSingletonHolder::InstancePointer() = TCreationPolicy<T>::Create();
       TLifetimePolicy<T>::ScheduleDestruction(tSingletonHolder::InstancePointer(), &tSingletonHolder::DestroyInstance);
@@ -124,7 +119,7 @@ private:
     assert(!tSingletonHolder::Destroyed());
     TCreationPolicy<T>::Destroy(tSingletonHolder::InstancePointer());
     tSingletonHolder::InstancePointer() = 0;
-    tSingletonHolder::DestroyedVariable() = true;
+    tSingletonHolder::Destroyed() = true;
   }
 
   static T *&InstancePointer()
@@ -133,7 +128,7 @@ private:
     return instance;
   }
 
-  static bool &DestroyedVariable()
+  static bool &Destroyed()
   {
     static bool destroyed = false;
     return destroyed;

@@ -19,37 +19,32 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tLifetimeTracker.h
+/*!\file    final_class.h
  *
  * \author  Tobias Foehst
  *
- * \date    2012-01-23
+ * \date    2010-12-14
  *
- * \brief Contains tLifetimeTracker
+ * \brief Contains final_class
  *
- * \b tLifetimeTracker
+ * \b final_class
  *
  */
 //----------------------------------------------------------------------
-#ifndef __rrlib__util__patterns__singleton__tLifetimeTracker_h__
-#define __rrlib__util__patterns__singleton__tLifetimeTracker_h__
+#ifndef __rrlib__util__final_class_h__
+#define __rrlib__util__final_class_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
-#include <list>
-#include <memory>
-#include <algorithm>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/util/patterns/singleton.h"
 
 //----------------------------------------------------------------------
 // Debugging
 //----------------------------------------------------------------------
-#include <cassert>
 
 //----------------------------------------------------------------------
 // Namespace declaration
@@ -58,82 +53,24 @@ namespace rrlib
 {
 namespace util
 {
-namespace singleton
-{
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-class tLifetimeTracker;
-typedef tSingletonHolder<std::list<tLifetimeTracker *>> tLifetimeTrackerList;
+#define RRLIB_FINAL_CLASS private virtual rrlib::util::final_class
 
 //----------------------------------------------------------------------
 // Class declaration
 //----------------------------------------------------------------------
-//!
-/*!
- *
- */
-class tLifetimeTracker
+class final_class
 {
-
-//----------------------------------------------------------------------
-// Public methods and typedefs
-//----------------------------------------------------------------------
-public:
-
-  tLifetimeTracker(unsigned int longevity, void (*destroy_instance)())
-    : longevity(longevity),
-      destroy_instance(destroy_instance)
-  {}
-
-  ~tLifetimeTracker()
-  {
-    this->destroy_instance();
-  }
-
-  static void DestroyNextInstance()
-  {
-    assert(!tLifetimeTrackerList::Instance().empty());
-    delete tLifetimeTrackerList::Instance().front();
-    tLifetimeTrackerList::Instance().pop_front();
-  }
-
-  static bool SmallerFirst(const tLifetimeTracker *a, const tLifetimeTracker *b)
-  {
-    return a->longevity < b->longevity;
-  }
-
-//----------------------------------------------------------------------
-// Private fields and methods
-//----------------------------------------------------------------------
-private:
-
-  unsigned int longevity;
-  void (*destroy_instance)();
-
+protected:
+  ~final_class() {}
 };
-
-inline void SetLongevity(unsigned int longevity, void (*destroy_instance)())
-{
-  static std::mutex mutex;
-  std::unique_lock<std::mutex> lock(mutex);
-
-  std::auto_ptr<tLifetimeTracker> p(new tLifetimeTracker(longevity, destroy_instance));
-
-  auto &tracker_list = tLifetimeTrackerList::Instance();
-  auto position = std::upper_bound(tracker_list.begin(), tracker_list.end(), p.get(), tLifetimeTracker::SmallerFirst);
-  tracker_list.insert(position, p.get());
-
-  p.release();
-
-  std::atexit(&tLifetimeTracker::DestroyNextInstance);
-}
 
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
-}
 }
 }
 

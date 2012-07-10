@@ -2,34 +2,30 @@
 <!DOCTYPE targets PUBLIC "-//RRLIB//DTD make 1.0" "http://rrlib.org/xml/1.0/make.dtd">
 <targets>
 
-  <rrlib name="util"
-         libs="boost_iostreams">
+  <rrlib name="util">
     <sources>
+      final_class.h
       join.h
-      sFileIOUtils.cpp
-      sStringUtils.cpp
-      tAutoRegister.h
-      tDoubleDispatcher.h
-      tTime.cpp
       tTypeList.h
       type_list/*
-      tFPSComputer.cpp
     </sources>
   </rrlib>
 
+  <rrlib name="util_legacy"
+         libs="boost_iostreams">
+    <sources>
+      sFileIOUtils.cpp
+      sStringUtils.cpp
+      tAutoRegister.h
+      tTime.cpp
+      tFPSComputer.cpp
+    </sources>
+  </rrlib>
+  
   <rrlib name="util_unit_tests"
         libs="cppunit">
     <sources>
       tUnitTestSuite.cpp
-    </sources>
-  </rrlib>
-
-  <rrlib name="util_patterns">
-    <sources>
-      patterns/*
-      patterns/command/**
-      patterns/factory/**
-      patterns/singleton/**
     </sources>
   </rrlib>
 
@@ -45,39 +41,15 @@
     </sources>
   </rrlib>
 
-  <testprogram name="command_pattern">
-    <sources>
-      test/test_command_pattern.cpp
-    </sources>
-  </testprogram>
-
-  <testprogram name="factory_pattern">
-    <sources>
-      test/test_factory_pattern.cpp
-    </sources>
-  </testprogram>
-
   <testprogram name="final_class_pattern">
     <sources>
       test/test_final_class_pattern.cpp
-    </sources>
-  </testprogram>
- 
-  <testprogram name="singleton_pattern">
-    <sources>
-      test/test_singleton_pattern.cpp
     </sources>
   </testprogram>
 
   <testprogram name="type_list">
     <sources>
       test/test_type_list.cpp
-    </sources>
-  </testprogram>
-
-  <testprogram name="double_dispatcher">
-    <sources>
-      test/test_double_dispatcher.cpp
     </sources>
   </testprogram>
 

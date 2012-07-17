@@ -18,6 +18,7 @@
       sStringUtils.cpp
       tAutoRegister.h
       tTime.cpp
+      tTransformTime.cpp
       tFPSComputer.cpp
     </sources>
   </rrlib>

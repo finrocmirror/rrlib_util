@@ -133,14 +133,14 @@ public:
   static bool WriteContainerToFile(const std::vector<T> &content, const std::string& filename)
   {
     std::ofstream output_file_stream;
-    RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, "got file <", filename, ">");
+    RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "got file <", filename, ">");
     if (sStringUtils::EndsWith(filename, ".bz2"))
     {
-      RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, "compressing");
+      RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "compressing");
       boost::iostreams::filtering_ostream out;
       out.push(boost::iostreams::bzip2_compressor());
       output_file_stream.open(filename.c_str());
-      if ( output_file_stream )
+      if (output_file_stream)
       {
         out.push(output_file_stream);
         std::copy(content.begin(), content.end(), std::ostream_iterator<T>(out));
@@ -150,7 +150,7 @@ public:
     else
     {
       output_file_stream.open(filename.c_str());
-      if ( output_file_stream )
+      if (output_file_stream)
       {
         std::copy(content.begin(), content.end(), std::ostream_iterator<T>(output_file_stream));
         output_file_stream.close();
@@ -171,10 +171,10 @@ public:
   static bool ReadContainerFromFile(std::vector<T> &content, const std::string& filename)
   {
     std::ifstream input_file_stream;
-    RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, "got file <", filename, ">");
+    RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "got file <", filename, ">");
     if (sStringUtils::EndsWith(filename, ".bz2"))
     {
-      RRLIB_LOG_PRINT(rrlib::logging::eLL_DEBUG_VERBOSE_1, "decompressing");
+      RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "decompressing");
       boost::iostreams::filtering_istream in;
       in.push(boost::iostreams::bzip2_decompressor());
       input_file_stream.open(filename.c_str());

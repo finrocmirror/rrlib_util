@@ -104,6 +104,11 @@ public:
     return this->frame_counter;
   }
 
+  void SetCheckInterval(long long int new_check_interval_ms)
+  {
+    this->check_interval_ms = new_check_interval_ms;
+  }
+
 private:
   util::tTime current_fps_check;
   util::tTime last_fps_check;

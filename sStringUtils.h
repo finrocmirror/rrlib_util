@@ -78,7 +78,7 @@ std::basic_istream<Ch, Tr>& operator>>(std::basic_istream<Ch, Tr>& is, imanip m)
 /*!
     Stream manipulator implementation for reading a string from actual position within the stream up to the end of line.
 */
-inline std::istream& my_endl(std::istream& fin, std::string& str)
+inline std::istream& get_line(std::istream& fin, std::string& str)
 {
   std::ostringstream ss;
   char c;
@@ -226,14 +226,14 @@ public:
 
   /*!
    * Stream manipulator implementation for reading a string from actual position within the stream up to the end of line.
-   * Uses function <my_endl>, but provides normal stream manipulator interface.
+   * Uses function <get_line>, but provides normal stream manipulator interface.
    *
-   * Example: input_stream >> sStringUtils::endl( word );
+   * Example: input_stream >> sStringUtils::getline( word );
    *
    */
-  static imanip endl(std::string& str)
+  static imanip getline(std::string& str)
   {
-    return imanip(my_endl, str);
+    return imanip(get_line, str);
   }
 
 

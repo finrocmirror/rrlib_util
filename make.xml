@@ -6,7 +6,9 @@
     <sources>
       final_class.h
       join.h
+      tTaggedPointer.h
       tTypeList.h
+      tagged_pointer/*
       type_list/*
     </sources>
   </rrlib>
@@ -51,6 +53,12 @@
   <testprogram name="type_list">
     <sources>
       test/test_type_list.cpp
+    </sources>
+  </testprogram>
+  
+  <testprogram name="tagged_pointer">
+    <sources>
+      test/test_tagged_pointers.cpp
     </sources>
   </testprogram>
 

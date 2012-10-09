@@ -98,6 +98,10 @@ public:
   {
     implementation.SetRaw(raw_tagged_pointer);
   }
+  tTaggedPointer(T* pointer, int stamp)
+  {
+    Set(pointer, stamp);
+  }
 
   /*!
    * \return Pointer stored in this object
@@ -149,6 +153,10 @@ public:
   operator tStorage() const
   {
     return implementation.GetStorage();
+  }
+  operator tStorage&()
+  {
+    return implementation.GetStorageReference();
   }
 
   T& operator*() const

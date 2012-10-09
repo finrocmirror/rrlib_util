@@ -72,6 +72,36 @@ class tTaggedPointerImplementation : public tTaggedPointerImplementation < TAG_B
 {
 };
 
+template <typename TStorage>
+class tTaggedPointerImplementationBase
+{
+public:
+
+  typedef TStorage tStorage;
+
+  tTaggedPointerImplementationBase() : storage(0) {}
+
+  tStorage GetStorage() const
+  {
+    return storage;
+  }
+
+  tStorage& GetStorageReference()
+  {
+    return storage;
+  }
+
+  void SetRaw(tStorage raw)
+  {
+    storage = raw;
+  }
+
+protected:
+
+  /*! Current stamp and pointer are stored in this value */
+  tStorage storage;
+};
+
 #if __x86_64__
 
 const uint64_t POINTER16_MASK = 0x0000FFFFFFFFFFFFLL;
@@ -87,12 +117,9 @@ const uint64_t STAMP19_MASK =   0xFFFFE00000000000LL;
  * - store an index instead of a pointer
  */
 template <bool ALIGNED_POINTERS>
-class tTaggedPointerImplementation<16, ALIGNED_POINTERS>
+class tTaggedPointerImplementation<16, ALIGNED_POINTERS> : public tTaggedPointerImplementationBase<uint64_t>
 {
 public:
-  typedef uint64_t tStorage;
-
-  tTaggedPointerImplementation() : storage(0) {}
 
   void* GetPointer() const
   {
@@ -102,11 +129,6 @@ public:
   int GetStamp() const
   {
     return static_cast<int>(storage >> 48);
-  }
-
-  tStorage GetStorage() const
-  {
-    return storage;
   }
 
   void Set(void* pointer, int stamp)
@@ -125,32 +147,18 @@ public:
     storage = old_stamp | pointer_int;
   }
 
-  void SetRaw(tStorage raw)
-  {
-    storage = raw;
-  }
-
   void SetStamp(int stamp)
   {
     uint64_t old_pointer = storage & POINTER16_MASK;
     uint64_t stamp64 = stamp;
     storage = (stamp64 << 48) | old_pointer;
   }
-
-private:
-
-  /*! Current stamp and pointer are stored in this value */
-  tStorage storage;
 };
 
 template <>
-class tTaggedPointerImplementation<19, true>
+class tTaggedPointerImplementation<19, true> : public tTaggedPointerImplementationBase<uint64_t>
 {
 public:
-  typedef uint64_t tStorage;
-
-  tTaggedPointerImplementation() : storage(0) {}
-  tTaggedPointerImplementation(tStorage raw) : storage(raw) {}
 
   void* GetPointer() const
   {
@@ -160,11 +168,6 @@ public:
   int GetStamp() const
   {
     return static_cast<int>(storage >> 45);
-  }
-
-  tStorage GetStorage() const
-  {
-    return storage;
   }
 
   void Set(void* pointer, int stamp)
@@ -183,22 +186,12 @@ public:
     storage = old_stamp | (pointer_int >> 3);
   }
 
-  void SetRaw(tStorage raw)
-  {
-    storage = raw;
-  }
-
   void SetStamp(int stamp)
   {
     uint64_t old_pointer = storage & POINTER19_MASK;
     uint64_t stamp64 = stamp;
     storage = (stamp64 << 45) | old_pointer;
   }
-
-private:
-
-  /*! Current stamp and pointer are stored in this value */
-  tStorage storage;
 };
 
 
@@ -210,13 +203,9 @@ const uint32_t STAMP3_MASK =    0x00000007;
 static_assert(sizeof(void*) == 4, "Architecture not supported yet. However, it should not be too much effort to do so.");
 
 template <>
-class tTaggedPointerImplementation<3, true>
+class tTaggedPointerImplementation<3, true> : public tTaggedPointerImplementationBase<uint>
 {
 public:
-  typedef uint tStorage;
-
-  tTaggedPointerImplementation() : storage(0) {}
-  tTaggedPointerImplementation(tStorage raw) : storage(raw) {}
 
   void* GetPointer() const
   {
@@ -226,11 +215,6 @@ public:
   int GetStamp() const
   {
     return static_cast<int>(storage & STAMP3_MASK);
-  }
-
-  tStorage GetStorage() const
-  {
-    return storage;
   }
 
   void Set(void* pointer, int stamp)
@@ -244,21 +228,11 @@ public:
     Set(pointer, GetStamp());
   }
 
-  void SetRaw(tStorage raw)
-  {
-    storage = raw;
-  }
-
   void SetStamp(int stamp)
   {
     uint old_pointer = storage & POINTER3_MASK;
     storage = old_pointer | stamp;
   }
-
-private:
-
-  /*! Current stamp and pointer are stored in this value */
-  tStorage storage;
 };
 
 template <bool ALIGNED_POINTERS>
@@ -268,7 +242,6 @@ public:
   typedef uint64_t tStorage;
 
   tTaggedPointerImplementation() : storage(0) {}
-  tTaggedPointerImplementation(tStorage raw) : storage(raw) {}
 
   void* GetPointer() const
   {
@@ -281,6 +254,11 @@ public:
   }
 
   tStorage GetStorage() const
+  {
+    return storage;
+  }
+
+  tStorage& GetStorageReference()
   {
     return storage;
   }

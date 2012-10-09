@@ -207,7 +207,7 @@ private:
 const uint32_t POINTER3_MASK =  0xFFFFFFF8;
 const uint32_t STAMP3_MASK =    0x00000007;
 
-static_assert(sizeof(void*) == 4, "Architecture not supported yet. However, it should not be too much effort to do so.")
+static_assert(sizeof(void*) == 4, "Architecture not supported yet. However, it should not be too much effort to do so.");
 
 template <>
 class tTaggedPointerImplementation<3, true>

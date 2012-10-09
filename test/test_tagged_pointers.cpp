@@ -74,7 +74,9 @@ template <typename T, bool ALIGNED_POINTERS, uint TAG_BIT_WIDTH>
 void TestTaggedPointer()
 {
   // Some variables of type T
+  __attribute__((aligned(8))) // aligment required on 32 bit platforms
   T array[10];
+  __attribute__((aligned(8))) // aligment required on 32 bit platforms
   T single_value;
   std::vector<std::unique_ptr<T>> allocated_values;
   for (size_t i = 0; i < 10; ++i)
@@ -109,7 +111,7 @@ void TestTaggedPointer()
     int random = uniform_int_distribution(eng) & tPointer::cSTAMP_MASK;
     pointer.Set(allocated_values[idx].get(), random);
     assert(pointer.GetPointer() == allocated_values[idx].get() && pointer.GetStamp() == random);
-    RRLIB_LOG_PRINT(DEBUG, allocated_values[idx].get(), " ptr: ", pointer.GetPointer(), " stamp: ", pointer.GetStamp());
+    //RRLIB_LOG_PRINT(DEBUG, allocated_values[idx].get(), " ptr: ", pointer.GetPointer(), " stamp: ", pointer.GetStamp());
     random = uniform_int_distribution(eng) & tPointer::cSTAMP_MASK;
     pointer.SetPointer(&array[idx]);
     pointer.SetStamp(random);

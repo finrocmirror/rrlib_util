@@ -92,7 +92,8 @@ public:
    * Bit mask for tag.
    * The bits in this constant may be used in tag.
    */
-  enum { cSTAMP_MASK = (1 << TAG_BIT_WIDTH) - 1 };
+  enum { cSTAMP_MASK = (1LL << TAG_BIT_WIDTH) - 1LL };
+  static_assert(sizeof(cSTAMP_MASK) == sizeof(uint), "Anything else would not work or waste performance)");
 
   tTaggedPointer() {}
   tTaggedPointer(tStorage raw_tagged_pointer)

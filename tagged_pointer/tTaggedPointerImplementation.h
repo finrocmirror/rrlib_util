@@ -236,7 +236,7 @@ public:
 };
 
 template <bool ALIGNED_POINTERS>
-class tTaggedPointerImplementation<19, ALIGNED_POINTERS>
+class tTaggedPointerImplementation<32, ALIGNED_POINTERS>
 {
 public:
   typedef uint64_t tStorage;

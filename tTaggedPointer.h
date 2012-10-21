@@ -66,9 +66,10 @@ namespace util
  *
  * \tparam Pointer type (without *)
  * \tparam ALIGNED_POINTERS Are the T pointers used with this class 8-byte aligned? (Typically the case for any object T created with 'new')
- * \tparam TAG_BIT_WIDTH Bit width of tag. For maximum portability, this is limited to 19 bits (values 0-524287) for aligned pointers
+ * \tparam TAG_BIT_WIDTH Bit width of tag. 19 bits is supported on all platforms (values 0-524287) for aligned pointers
  *                       and 16 bits (values 0-65535) for non-aligned pointers.
  *                       A value of <= 3 (values 0-7) requires only a 32 bit integer for aligned pointers on 32 bit platforms.
+ *                       Maximum bit width on 32 bit platforms is 32.
  *
  * Assertions make sure that only valid pointers and stamps are used.
  */
@@ -77,7 +78,7 @@ class tTaggedPointer
 {
   typedef tagged_pointer::tTaggedPointerImplementation<TAG_BIT_WIDTH, ALIGNED_POINTERS> tImplementation;
 
-  static_assert(TAG_BIT_WIDTH >= 1 && (TAG_BIT_WIDTH <= 16 || (ALIGNED_POINTERS && TAG_BIT_WIDTH <= 19)), "Invalid TAG_BIT_WIDTH");
+  static_assert(TAG_BIT_WIDTH >= 1 && ((sizeof(void*) == 4 && TAG_BIT_WIDTH <= 32) || (TAG_BIT_WIDTH <= 16 || (ALIGNED_POINTERS && TAG_BIT_WIDTH <= 19))), "Invalid TAG_BIT_WIDTH");
 
 //----------------------------------------------------------------------
 // Public methods and typedefs
@@ -98,7 +99,7 @@ public:
   {
     implementation.SetRaw(raw_tagged_pointer);
   }
-  tTaggedPointer(T* pointer, int stamp)
+  tTaggedPointer(T* pointer, uint stamp)
   {
     Set(pointer, stamp);
   }
@@ -114,7 +115,7 @@ public:
   /*!
    * \return Stamp stored in this object
    */
-  int GetStamp() const
+  uint GetStamp() const
   {
     return implementation.GetStamp();
   }
@@ -123,7 +124,7 @@ public:
    * \param pointer New pointer
    * \param stamp New stamp
    */
-  void Set(T* pointer, int stamp)
+  void Set(T* pointer, uint stamp)
   {
     assert((stamp & cSTAMP_MASK) == stamp && "Stamp is out of bounds");
     assert(((!ALIGNED_POINTERS) || ((((size_t)pointer) & 0x7) == 0)) && "Pointer is not aligned");
@@ -142,7 +143,7 @@ public:
   /*!
    * \param stamp New stamp
    */
-  void SetStamp(int stamp)
+  void SetStamp(uint stamp)
   {
     assert((stamp & cSTAMP_MASK) == stamp && "Stamp is out of bounds");
     implementation.SetStamp(stamp);

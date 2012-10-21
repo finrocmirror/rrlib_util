@@ -126,12 +126,12 @@ public:
     return reinterpret_cast<void*>(storage & POINTER16_MASK);
   }
 
-  int GetStamp() const
+  uint GetStamp() const
   {
     return static_cast<int>(storage >> 48);
   }
 
-  void Set(void* pointer, int stamp)
+  void Set(void* pointer, uint stamp)
   {
     uint64_t pointer_int = reinterpret_cast<uint64_t>(pointer);
     assert((pointer_int & POINTER16_MASK) == pointer_int && "x86-64 pointers are using the high 16 bits now. Implementation needs to be changed (see comment to this class).");
@@ -147,7 +147,7 @@ public:
     storage = old_stamp | pointer_int;
   }
 
-  void SetStamp(int stamp)
+  void SetStamp(uint stamp)
   {
     uint64_t old_pointer = storage & POINTER16_MASK;
     uint64_t stamp64 = stamp;
@@ -165,12 +165,12 @@ public:
     return reinterpret_cast<void*>((storage & POINTER19_MASK) << 3);
   }
 
-  int GetStamp() const
+  uint GetStamp() const
   {
-    return static_cast<int>(storage >> 45);
+    return static_cast<uint>(storage >> 45);
   }
 
-  void Set(void* pointer, int stamp)
+  void Set(void* pointer, uint stamp)
   {
     uint64_t pointer_int = reinterpret_cast<uint64_t>(pointer);
     assert((pointer_int & POINTER16_MASK) == pointer_int && "x86-64 pointers are using the high 16 bits now. Implementation needs to be changed (see comment to this class).");
@@ -186,7 +186,7 @@ public:
     storage = old_stamp | (pointer_int >> 3);
   }
 
-  void SetStamp(int stamp)
+  void SetStamp(uint stamp)
   {
     uint64_t old_pointer = storage & POINTER19_MASK;
     uint64_t stamp64 = stamp;
@@ -212,12 +212,12 @@ public:
     return reinterpret_cast<void*>(storage & POINTER3_MASK);
   }
 
-  int GetStamp() const
+  uint GetStamp() const
   {
-    return static_cast<int>(storage & STAMP3_MASK);
+    return static_cast<uint>(storage & STAMP3_MASK);
   }
 
-  void Set(void* pointer, int stamp)
+  void Set(void* pointer, uint stamp)
   {
     uint pointer_int = reinterpret_cast<uint>(pointer);
     storage = pointer_int | stamp;
@@ -228,7 +228,7 @@ public:
     Set(pointer, GetStamp());
   }
 
-  void SetStamp(int stamp)
+  void SetStamp(uint stamp)
   {
     uint old_pointer = storage & POINTER3_MASK;
     storage = old_pointer | stamp;
@@ -248,9 +248,9 @@ public:
     return reinterpret_cast<void*>(ints[0]);
   }
 
-  int GetStamp() const
+  uint GetStamp() const
   {
-    return static_cast<int>(ints[1]);
+    return static_cast<uint>(ints[1]);
   }
 
   tStorage GetStorage() const
@@ -263,7 +263,7 @@ public:
     return storage;
   }
 
-  void Set(void* pointer, int stamp)
+  void Set(void* pointer, uint stamp)
   {
     SetPointer(pointer);
     SetStamp(stamp);
@@ -279,7 +279,7 @@ public:
     storage = raw;
   }
 
-  void SetStamp(int stamp)
+  void SetStamp(uint stamp)
   {
     ints[1] = stamp;
   }

@@ -63,7 +63,6 @@ namespace type_list
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TTypeList, typename TType> class tAppend;
 
 //----------------------------------------------------------------------
 // Class declaration
@@ -72,22 +71,13 @@ template <typename TTypeList, typename TType> class tAppend;
 /*!
  *
  */
-template <typename TType>
-struct tAppend<tEmptyList, TType>
-{
-  typedef tTypeList<TType> tResult;
-};
+template <typename TList, typename T>
+struct tAppend;
 
-template <typename THead, typename ... TTail>
-struct tAppend<tEmptyList, tTypeList<THead, TTail...>>
+template <typename ... TListTypes, typename T>
+struct tAppend<tTypeList<TListTypes...>, T>
 {
-  typedef tTypeList<THead, TTail...> tResult;
-};
-
-template <typename TType, typename THead, typename ... TTail>
-struct tAppend<tTypeList<THead, TTail...>, TType>
-{
-  typedef tTypeList<THead, typename tAppend<typename tTypeList<THead, TTail...>::tTail, TType>::tResult> tResult;
+  typedef tTypeList<TListTypes..., T> tResult;
 };
 
 //----------------------------------------------------------------------

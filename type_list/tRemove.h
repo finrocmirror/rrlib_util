@@ -63,7 +63,6 @@ namespace type_list
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TList, typename TType> class tRemove;
 
 //----------------------------------------------------------------------
 // Class declaration
@@ -72,22 +71,24 @@ template <typename TList, typename TType> class tRemove;
 /*!
  *
  */
-template <typename TType>
-struct tRemove<tEmptyList, TType>
+template <typename TList, typename T>
+class tRemove
+{
+  typedef typename tRemove<typename TList::tTail, T>::tResult tProcessedTail;
+public:
+  typedef typename tAppendList<tTypeList<typename TList::tHead>, tProcessedTail>::tResult tResult;
+};
+
+template <typename T>
+struct tRemove<tEmptyList, T>
 {
   typedef tEmptyList tResult;
 };
 
-template <typename TType, typename ... TTail>
-struct tRemove<tTypeList<TType, TTail...>, TType>
+template <typename TList>
+struct tRemove<TList, typename TList::tHead>
 {
-  typedef typename tTypeList<TType, TTail...>::tTail tResult;
-};
-
-template <typename TType, typename THead, typename ... TTail>
-struct tRemove<tTypeList<THead, TTail...>, TType>
-{
-  typedef tTypeList<THead, typename tRemove<typename tTypeList<THead, TTail...>::tTail, TType>::tResult> tResult;
+  typedef typename TList::tTail tResult;
 };
 
 //----------------------------------------------------------------------

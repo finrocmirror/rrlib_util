@@ -19,15 +19,15 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tDerivedToFront.h
+/*!\file    tTypeListBase.h
  *
  * \author  Tobias Foehst
  *
- * \date    2011-03-25
+ * \date    2012-10-24
  *
- * \brief Contains tDerivedToFront
+ * \brief Contains tTypeListBase
  *
- * \b tDerivedToFront
+ * \b tTypeListBase
  *
  */
 //----------------------------------------------------------------------
@@ -35,8 +35,8 @@
 #error Invalid include directive. Try #include "rrlib/util/tTypeList.h" instead.
 #endif
 
-#ifndef __rrlib__util__type_lists__tDerivedToFront_h__
-#define __rrlib__util__type_lists__tDerivedToFront_h__
+#ifndef __rrlib__util__type_lists__tTypeListBase_h__
+#define __rrlib__util__type_lists__tTypeListBase_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -71,20 +71,74 @@ namespace type_list
 /*!
  *
  */
-template <typename TList>
-class tDerivedToFront
+template <typename tList>
+struct tTypeListBase
 {
-  typedef typename tMostDerived<typename TList::tTail, typename TList::tHead>::tResult tMostDerivedFromHeadInTail;
-  typedef typename tReplace<typename TList::tTail, tMostDerivedFromHeadInTail, typename TList::tHead>::tResult tProcessedTail;
-  typedef typename tDerivedToFront<tProcessedTail>::tResult tSortedTail;
-public:
-  typedef typename tAppendList<tTypeList<tMostDerivedFromHeadInTail>, tSortedTail>::tResult tResult;
-};
+  static const size_t cSIZE = type_list::tSizeOf<tList>::cVALUE;
 
-template <>
-struct tDerivedToFront<tEmptyList>
-{
-  typedef tEmptyList tResult;
+  template <size_t Tindex>
+  struct tAt
+  {
+    typedef typename type_list::tAt<tList, Tindex>::tResult tResult;
+  };
+
+  template <typename T>
+  struct tIndexOf
+  {
+    static const size_t cVALUE = type_list::tFind<tList, T>::cINDEX;
+  };
+
+  template <typename T>
+  struct tAppend
+  {
+    typedef typename type_list::tAppend<tList, T>::tResult tResult;
+  };
+
+  template <typename TList>
+  struct tAppendList
+  {
+    typedef typename type_list::tAppendList<tList, TList>::tResult tResult;
+  };
+
+  template <typename T>
+  struct tRemove
+  {
+    typedef typename type_list::tRemove<tList, T>::tResult tResult;
+  };
+
+  template <typename T>
+  struct tRemoveAll
+  {
+    typedef typename type_list::tRemoveAll<tList, T>::tResult tResult;
+  };
+
+  struct tUnique
+  {
+    typedef typename type_list::tUnique<tList>::tResult tResult;
+  };
+
+  template <typename TOld, typename TNew>
+  struct tReplace
+  {
+    typedef typename type_list::tReplace<tList, TOld, TNew>::tResult tResult;
+  };
+
+  template <typename TOld, typename TNew>
+  struct tReplaceAll
+  {
+    typedef typename type_list::tReplaceAll<tList, TOld, TNew>::tResult tResult;
+  };
+
+  template <typename TBase>
+  struct tMostDerived
+  {
+    typedef typename type_list::tMostDerived<tList, TBase>::tResult tResult;
+  };
+
+  struct tDerivedToFront
+  {
+    typedef typename type_list::tDerivedToFront<tList>::tResult tResult;
+  };
 };
 
 //----------------------------------------------------------------------

@@ -41,8 +41,7 @@
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
-#include <boost/detail/select_type.hpp>
-#include <boost/type_traits/is_base_and_derived.hpp>
+#include <type_traits>
 
 //----------------------------------------------------------------------
 // Internal includes with ""
@@ -65,7 +64,6 @@ namespace type_list
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TList, typename TBase> class tMostDerived;
 
 //----------------------------------------------------------------------
 // Class declaration
@@ -74,20 +72,36 @@ template <typename TList, typename TBase> class tMostDerived;
 /*!
  *
  */
+namespace
+{
+
+template <bool, typename TThen, typename TElse>
+struct tIfThenElse
+{
+  typedef TThen tResult;
+};
+
+template <typename TThen, typename TElse>
+struct tIfThenElse<false, TThen, TElse>
+{
+  typedef TElse tResult;
+};
+
+}
+
+template <typename TList, typename TBase>
+class tMostDerived
+{
+  typedef typename tMostDerived<typename TList::tTail, TBase>::tResult tCandidate;
+  static const bool cHEAD_DERIVED_FROM_CANDIDATE = std::is_base_of<tCandidate, typename TList::tHead>::value;
+public:
+  typedef typename tIfThenElse<cHEAD_DERIVED_FROM_CANDIDATE, typename TList::tHead, tCandidate>::tResult tResult;
+};
+
 template <typename TBase>
 struct tMostDerived<tEmptyList, TBase>
 {
   typedef TBase tResult;
-};
-
-template <typename TBase, typename THead, typename ... TTail>
-class tMostDerived<tTypeList<THead, TTail...>, TBase>
-{
-  typedef typename tMostDerived<typename tTypeList<THead, TTail...>::tTail, TBase>::tResult tCandidate;
-
-public:
-
-  typedef typename boost::detail::if_true<boost::is_base_and_derived<tCandidate, THead>::value>::template then<THead, tCandidate>::type tResult;
 };
 
 //----------------------------------------------------------------------

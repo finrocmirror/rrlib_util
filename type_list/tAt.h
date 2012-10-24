@@ -63,7 +63,6 @@ namespace type_list
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TList, size_t Tindex> class tAt;
 
 //----------------------------------------------------------------------
 // Class declaration
@@ -72,16 +71,16 @@ template <typename TList, size_t Tindex> class tAt;
 /*!
  *
  */
-template <typename THead, typename ... TTail>
-struct tAt<tTypeList<THead, TTail...>, 0>
+template <typename TList, size_t Tindex>
+struct tAt
 {
-  typedef THead tResult;
+  typedef typename tAt < typename TList::tTail, Tindex - 1 >::tResult tResult;
 };
 
-template <size_t Tindex, typename THead, typename ... TTail>
-struct tAt<tTypeList<THead, TTail...>, Tindex>
+template <typename TList>
+struct tAt<TList, 0>
 {
-  typedef typename tAt < typename tTypeList<THead, TTail...>::tTail, Tindex - 1 >::tResult tResult;
+  typedef typename TList::tHead tResult;
 };
 
 //----------------------------------------------------------------------

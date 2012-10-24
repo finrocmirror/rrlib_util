@@ -191,11 +191,11 @@ int main(int argc, char **argv)
   std::cout << "<!>  + A     = ";
   PrintList<type_list::tAppend<tTypeList<>, A>::tResult>();
   std::cout << "<!>  + <AB!> = ";
-  PrintList<type_list::tAppend<tTypeList<>, tTypeList<A, B>>::tResult>();
+  PrintList<type_list::tAppendList<tTypeList<>, tTypeList<A, B>>::tResult>();
   std::cout << "<A!> + B     = ";
   PrintList<tTypeList<A>::tAppend<B>::tResult>();
   std::cout << "<A!> + <BC!> = ";
-  PrintList<tTypeList<A>::tAppend<tTypeList<B, C>>::tResult>();
+  PrintList<tTypeList<A>::tAppendList<tTypeList<B, C>>::tResult>();
 
   std::cout << "Testing tRemove C" << std::endl;
 

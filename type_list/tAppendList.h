@@ -19,15 +19,15 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tDerivedToFront.h
+/*!\file    tAppendList.h
  *
  * \author  Tobias Foehst
  *
- * \date    2011-03-25
+ * \date    2012-10-24
  *
- * \brief Contains tDerivedToFront
+ * \brief Contains tAppendList
  *
- * \b tDerivedToFront
+ * \b tAppendList
  *
  */
 //----------------------------------------------------------------------
@@ -35,8 +35,8 @@
 #error Invalid include directive. Try #include "rrlib/util/tTypeList.h" instead.
 #endif
 
-#ifndef __rrlib__util__type_lists__tDerivedToFront_h__
-#define __rrlib__util__type_lists__tDerivedToFront_h__
+#ifndef __rrlib__util__type_lists__tAppendList_h__
+#define __rrlib__util__type_lists__tAppendList_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -71,20 +71,18 @@ namespace type_list
 /*!
  *
  */
-template <typename TList>
-class tDerivedToFront
+template <typename TList, typename TListToAppend>
+class tAppendList
 {
-  typedef typename tMostDerived<typename TList::tTail, typename TList::tHead>::tResult tMostDerivedFromHeadInTail;
-  typedef typename tReplace<typename TList::tTail, tMostDerivedFromHeadInTail, typename TList::tHead>::tResult tProcessedTail;
-  typedef typename tDerivedToFront<tProcessedTail>::tResult tSortedTail;
+  typedef typename tAppend<TList, typename TListToAppend::tHead>::tResult tListWithHead;
 public:
-  typedef typename tAppendList<tTypeList<tMostDerivedFromHeadInTail>, tSortedTail>::tResult tResult;
+  typedef typename tAppendList<tListWithHead, typename TListToAppend::tTail>::tResult tResult;
 };
 
-template <>
-struct tDerivedToFront<tEmptyList>
+template <typename TList>
+struct tAppendList<TList, tEmptyList>
 {
-  typedef tEmptyList tResult;
+  typedef TList tResult;
 };
 
 //----------------------------------------------------------------------

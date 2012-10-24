@@ -43,12 +43,22 @@
 //----------------------------------------------------------------------
 #define __rrlib__util__type_list__include_guard__
 
+namespace rrlib
+{
+namespace util
+{
+template <typename ... TTypes>
+struct tTypeList;
+}
+}
+
 #include "rrlib/util/type_list/definitions.h"
 
 #include "rrlib/util/type_list/tSizeOf.h"
 #include "rrlib/util/type_list/tAt.h"
 #include "rrlib/util/type_list/tFind.h"
 #include "rrlib/util/type_list/tAppend.h"
+#include "rrlib/util/type_list/tAppendList.h"
 #include "rrlib/util/type_list/tRemove.h"
 #include "rrlib/util/type_list/tRemoveAll.h"
 #include "rrlib/util/type_list/tUnique.h"
@@ -56,6 +66,8 @@
 #include "rrlib/util/type_list/tReplaceAll.h"
 #include "rrlib/util/type_list/tMostDerived.h"
 #include "rrlib/util/type_list/tDerivedToFront.h"
+
+#include "rrlib/util/type_list/tTypeListBase.h"
 
 #undef __rrlib__util__type_list__include_guard__
 
@@ -82,93 +94,15 @@ namespace util
 /*!
  *
  */
-namespace
+template <typename THead, typename ... TTail>
+struct tTypeList<THead, TTail...> : public type_list::tTypeListBase<tTypeList<THead, TTail...>>
 {
-
-template <typename THead, typename TTail>
-class tTypeListBase
-{
-  typedef tTypeList<THead, TTail> tList;
-
-public:
-
   typedef THead tHead;
-  typedef TTail tTail;
-
-  static const size_t cSIZE = type_list::tSizeOf<tList>::cVALUE;
-
-  template <size_t Tindex>
-  struct tAt
-  {
-    typedef typename type_list::tAt<tList, Tindex>::tResult tResult;
-  };
-
-  template <typename TType>
-  struct tIndexOf
-  {
-    static const size_t cVALUE = type_list::tFind<tList, TType>::cINDEX;
-  };
-
-  template <typename TType>
-  struct tAppend
-  {
-    typedef typename type_list::tAppend<tList, TType>::tResult tResult;
-  };
-
-  template <typename TType>
-  struct tRemove
-  {
-    typedef typename type_list::tRemove<tList, TType>::tResult tResult;
-  };
-
-  template <typename TType>
-  struct tRemoveAll
-  {
-    typedef typename type_list::tRemoveAll<tList, TType>::tResult tResult;
-  };
-
-  struct tUnique
-  {
-    typedef typename type_list::tUnique<tList>::tResult tResult;
-  };
-
-  template <typename TOldType, typename TNewType>
-  struct tReplace
-  {
-    typedef typename type_list::tReplace<tList, TOldType, TNewType>::tResult tResult;
-  };
-
-  template <typename TOldType, typename TNewType>
-  struct tReplaceAll
-  {
-    typedef typename type_list::tReplaceAll<tList, TOldType, TNewType>::tResult tResult;
-  };
-
-  template <typename TBase>
-  struct tMostDerived
-  {
-    typedef typename type_list::tMostDerived<tList, TBase>::tResult tResult;
-  };
-
-  struct tDerivedToFront
-  {
-    typedef typename type_list::tDerivedToFront<tList>::tResult tResult;
-  };
-
+  typedef tTypeList<TTail...> tTail;
 };
 
-}
-
-template <typename THead>
-struct tTypeList<THead> : public tTypeListBase<THead, type_list::tEmptyList>
-{};
-
-template <typename THead, typename ... TTail>
-struct tTypeList<THead, TTail...> : public tTypeListBase<THead, tTypeList<TTail...>>
-{};
-
-template <typename THead, typename ... TTail>
-struct tTypeList<THead, tTypeList<TTail...>> : public tTypeListBase<THead, tTypeList<TTail...>>
+template <>
+struct tTypeList<> : public type_list::tTypeListBase<tTypeList<>>
 {};
 
 //----------------------------------------------------------------------

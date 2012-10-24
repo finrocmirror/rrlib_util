@@ -63,7 +63,6 @@ namespace type_list
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TList> class tSizeOf;
 
 //----------------------------------------------------------------------
 // Class declaration
@@ -72,18 +71,17 @@ template <typename TList> class tSizeOf;
 /*!
  *
  */
+template <typename TList>
+struct tSizeOf
+{
+  static const size_t cVALUE = tSizeOf<typename TList::tTail>::cVALUE + 1;
+};
+
 template <>
 struct tSizeOf<tEmptyList>
 {
-  enum { cVALUE = 0 };
+  static const size_t cVALUE = 0;
 };
-
-template <typename THead, typename ... TTail>
-struct tSizeOf<tTypeList<THead, TTail...>>
-{
-  enum { cVALUE = tSizeOf<typename tTypeList<THead, TTail...>::tTail>::cVALUE + 1 };
-};
-
 
 //----------------------------------------------------------------------
 // End of namespace declaration

@@ -63,7 +63,6 @@ namespace type_list
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TList, typename TType> class tFind;
 
 //----------------------------------------------------------------------
 // Class declaration
@@ -72,27 +71,24 @@ template <typename TList, typename TType> class tFind;
 /*!
  *
  */
-template <typename TType>
-struct tFind<tEmptyList, TType>
+template <typename TList, typename T>
+class tFind
+{
+  static const size_t cINDEX_IN_TAIL = tFind<typename TList::tTail, T>::cINDEX;
+public:
+  static const size_t cINDEX = cINDEX_IN_TAIL == cNOT_IN_LIST ? cNOT_IN_LIST : cINDEX_IN_TAIL + 1;
+};
+
+template <typename T>
+struct tFind<tEmptyList, T>
 {
   static const size_t cINDEX = cNOT_IN_LIST;
 };
 
-template <typename TType, typename ... TTail>
-struct tFind<tTypeList<TType, TTail...>, TType>
+template <typename TList>
+struct tFind<TList, typename TList::tHead>
 {
   static const size_t cINDEX = 0;
-};
-
-template <typename TType, typename THead, typename ... TTail>
-class tFind<tTypeList<THead, TTail...>, TType>
-{
-  static const size_t temp = tFind<typename tTypeList<THead, TTail...>::tTail, TType>::cINDEX;
-
-public:
-
-  static const size_t cINDEX = temp == cNOT_IN_LIST ? cNOT_IN_LIST : temp + 1;
-
 };
 
 //----------------------------------------------------------------------

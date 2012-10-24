@@ -63,7 +63,6 @@ namespace type_list
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TList, typename TOldType, typename TNewType> class tReplaceAll;
 
 //----------------------------------------------------------------------
 // Class declaration
@@ -72,22 +71,26 @@ template <typename TList, typename TOldType, typename TNewType> class tReplaceAl
 /*!
  *
  */
-template <typename TOldType, typename TNewType>
-struct tReplaceAll<tEmptyList, TOldType, TNewType>
+template <typename TList, typename TOld, typename TNew>
+class tReplaceAll
+{
+  typedef typename tReplaceAll<typename TList::tTail, TOld, TNew>::tResult tProcessedTail;
+public:
+  typedef typename tAppendList<tTypeList<typename TList::tHead>, tProcessedTail>::tResult tResult;
+};
+
+template <typename TOld, typename TNew>
+struct tReplaceAll<tEmptyList, TOld, TNew>
 {
   typedef tEmptyList tResult;
 };
 
-template <typename TOldType, typename TNewType, typename ... TTail>
-struct tReplaceAll<tTypeList<TOldType, TTail...>, TOldType, TNewType>
+template <typename TList, typename TNew>
+class tReplaceAll<TList, typename TList::tHead, TNew>
 {
-  typedef tTypeList<TNewType, typename tReplaceAll<typename tTypeList<TOldType, TTail...>::tTail, TOldType, TNewType>::tResult> tResult;
-};
-
-template <typename TOldType, typename TNewType, typename THead, typename ... TTail>
-struct tReplaceAll<tTypeList<THead, TTail...>, TOldType, TNewType>
-{
-  typedef tTypeList<THead, typename tReplaceAll<typename tTypeList<THead, TTail...>::tTail, TOldType, TNewType>::tResult> tResult;
+  typedef typename tReplaceAll<typename TList::tTail, typename TList::tHead, TNew>::tResult tProcessedTail;
+public:
+  typedef typename tAppendList<tTypeList<TNew>, tProcessedTail>::tResult tResult;
 };
 
 //----------------------------------------------------------------------

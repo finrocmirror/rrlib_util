@@ -63,7 +63,6 @@ namespace type_list
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TList> class tUnique;
 
 //----------------------------------------------------------------------
 // Class declaration
@@ -72,28 +71,19 @@ template <typename TList> class tUnique;
 /*!
  *
  */
+template <typename TList>
+class tUnique
+{
+  typedef typename tRemoveAll<typename TList::tTail, typename TList::tHead>::tResult tTailWithoutHead;
+  typedef typename tUnique<tTailWithoutHead>::tResult tUniqueTailWithoutHead;
+public:
+  typedef typename tAppendList<tTypeList<typename TList::tHead>, tUniqueTailWithoutHead>::tResult tResult;
+};
+
 template <>
 struct tUnique<tEmptyList>
 {
   typedef tEmptyList tResult;
-};
-
-template <typename THead>
-struct tUnique<tTypeList<THead>>
-{
-  typedef tTypeList<THead> tResult;
-};
-
-template <typename THead, typename ... TTail>
-class tUnique<tTypeList<THead, TTail...>>
-{
-  typedef typename tUnique<typename tTypeList<THead, TTail...>::tTail>::tResult tTail;
-  typedef typename tRemove<tTail, THead>::tResult tTailWithoutHead;
-
-public:
-
-  typedef tTypeList<THead, tTailWithoutHead> tResult;
-
 };
 
 //----------------------------------------------------------------------

@@ -57,24 +57,21 @@ namespace rrlib
 {
 namespace util
 {
+namespace type_list
+{
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename ... TTypes> struct tTypeList;
-
-namespace type_list
-{
 
 typedef tTypeList<> tEmptyList;
 
 const size_t cNOT_IN_LIST = static_cast<size_t>(-1);
 
-}
-
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
+}
 }
 }
 

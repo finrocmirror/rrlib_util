@@ -351,6 +351,20 @@ public:
     os << object;
     s = os.str();
   }
+  /*!
+   * \brief Converting a std::string representing a hexadecimal number into a decimal number
+   * \param string representing hexadecimal number
+   */
+
+  template<class T>
+  static T HexStringToDecNumber(std::string str)
+  {
+    std::istringstream iss(str);
+    T result = 0;
+    iss >> std::hex >> result;
+    return result;
+  }
+
 
   /*!
    * \brief Enclosing string with the given prefix and suffix

@@ -224,6 +224,8 @@ public:
 
   static void Replace(char *input_str, char target_token, char replace_token);
 
+  static std::string ConstReplace(const std::string &input_str, const char* target_token, const char* replace_token);
+
   /*!
    * Stream manipulator implementation for reading a string from actual position within the stream up to the end of line.
    * Uses function <get_line>, but provides normal stream manipulator interface.
@@ -351,6 +353,20 @@ public:
     os << object;
     s = os.str();
   }
+  /*!
+   * \brief Converting a std::string representing a hexadecimal number into a decimal number
+   * \param string representing hexadecimal number
+   */
+
+  template<class T>
+  static T HexStringToDecNumber(std::string str)
+  {
+    std::istringstream iss(str);
+    T result = 0;
+    iss >> std::hex >> result;
+    return result;
+  }
+
 
   /*!
    * \brief Enclosing string with the given prefix and suffix

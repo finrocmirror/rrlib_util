@@ -67,7 +67,7 @@ struct tTestType
   int64_t i;
 };
 
-std::uniform_int_distribution<int> uniform_int_distribution;
+std::uniform_int_distribution<uint> uniform_int_distribution;
 std::mt19937 eng(1234);
 
 template <typename T, bool ALIGNED_POINTERS, uint TAG_BIT_WIDTH>
@@ -108,7 +108,7 @@ void TestTaggedPointer()
   for (size_t i = 0; i < 1000; ++i)
   {
     size_t idx = i % 10;
-    int random = uniform_int_distribution(eng) & tPointer::cSTAMP_MASK;
+    uint random = uniform_int_distribution(eng) & tPointer::cSTAMP_MASK;
     pointer.Set(allocated_values[idx].get(), random);
     assert(pointer.GetPointer() == allocated_values[idx].get() && pointer.GetStamp() == random);
     //RRLIB_LOG_PRINT(DEBUG, allocated_values[idx].get(), " ptr: ", pointer.GetPointer(), " stamp: ", pointer.GetStamp());

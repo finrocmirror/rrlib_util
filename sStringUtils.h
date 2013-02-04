@@ -333,7 +333,7 @@ public:
    * \param object to be converted
    */
   template <class T>
-  static std::string StringOf(T object)
+  static std::string StringOf(const T& object)
   {
     std::ostringstream os;
     os << object;

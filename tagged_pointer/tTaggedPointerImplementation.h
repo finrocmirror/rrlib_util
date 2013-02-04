@@ -70,6 +70,8 @@ namespace tagged_pointer
 template <uint TAG_BIT_WIDTH, bool ALIGNED_POINTERS>
 class tTaggedPointerImplementation : public tTaggedPointerImplementation < TAG_BIT_WIDTH + 1, ALIGNED_POINTERS >
 {
+public:
+  typedef typename tTaggedPointerImplementation < TAG_BIT_WIDTH + 1, ALIGNED_POINTERS >::tImplementation tImplementation;
 };
 
 template <typename TStorage>
@@ -121,6 +123,8 @@ class tTaggedPointerImplementation<16, ALIGNED_POINTERS> : public tTaggedPointer
 {
 public:
 
+  typedef tTaggedPointerImplementation tImplementation;
+
   void* GetPointer() const
   {
     return reinterpret_cast<void*>(storage & POINTER16_MASK);
@@ -159,6 +163,8 @@ template <>
 class tTaggedPointerImplementation<19, true> : public tTaggedPointerImplementationBase<uint64_t>
 {
 public:
+
+  typedef tTaggedPointerImplementation tImplementation;
 
   void* GetPointer() const
   {
@@ -207,6 +213,8 @@ class tTaggedPointerImplementation<3, true> : public tTaggedPointerImplementatio
 {
 public:
 
+  typedef tTaggedPointerImplementation tImplementation;
+
   void* GetPointer() const
   {
     return reinterpret_cast<void*>(storage & POINTER3_MASK);
@@ -240,6 +248,7 @@ class tTaggedPointerImplementation<32, ALIGNED_POINTERS>
 {
 public:
   typedef uint64_t tStorage;
+  typedef tTaggedPointerImplementation tImplementation;
 
   tTaggedPointerImplementation() : storage(0) {}
 

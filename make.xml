@@ -6,6 +6,7 @@
     <sources>
       final_class.h
       join.h
+      tIntegerSequence.h
       tTaggedPointer.h
       tTypeList.h
       tagged_pointer/*

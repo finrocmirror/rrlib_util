@@ -76,7 +76,7 @@ namespace util
 template <typename T, bool ALIGNED_POINTERS, uint TAG_BIT_WIDTH>
 class tTaggedPointer
 {
-  typedef tagged_pointer::tTaggedPointerImplementation<TAG_BIT_WIDTH, ALIGNED_POINTERS> tImplementation;
+  typedef typename tagged_pointer::tTaggedPointerImplementation<TAG_BIT_WIDTH, ALIGNED_POINTERS>::tImplementation tImplementation;
 
   static_assert(TAG_BIT_WIDTH >= 1 && ((sizeof(void*) == 4 && TAG_BIT_WIDTH <= 32) || (TAG_BIT_WIDTH <= 16 || (ALIGNED_POINTERS && TAG_BIT_WIDTH <= 19))), "Invalid TAG_BIT_WIDTH");
 

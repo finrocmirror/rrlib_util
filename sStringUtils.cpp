@@ -121,6 +121,18 @@ void sStringUtils::Replace(char *input_str, char target_token, char replace_toke
   }
 }
 
+std::string sStringUtils::ConstReplace(const std::string &input_str, const char* target_token, const char* replace_token)
+{
+  std::string output_str = input_str;
+  size_t pos = output_str.find(target_token);
+  while (pos != std::string::npos)
+  {
+    output_str.replace(pos, strlen(target_token), replace_token);
+    pos = output_str.find(target_token);
+  }
+  return output_str;
+}
+
 void sStringUtils::TrimWhitespace(std::string &text)
 {
   std::string check(text);

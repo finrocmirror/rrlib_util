@@ -19,13 +19,13 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    fileno.h
+/*!\file    rrlib/util/fstream/fileno.h
  *
  * \author  Tobias Foehst
  *
  * \date    2010-07-29
  *
- * \brief Contains an implementation of fileno for iostreams
+ * \brief   Contains an implementation of fileno for iostreams
  *
  * \b fileno
  *

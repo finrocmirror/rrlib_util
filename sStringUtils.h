@@ -19,12 +19,12 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    sStringUtils.h
+/*!\file    rrlib/util/sStringUtils.h
  *
  * \author  Bernd Helge Schaefer
  * \author  Jens Wettach
- * \date    15.11.05
  *
+ * \date    2005-11-15
  *
  * \brief   Contains static class sStringUtils
  *

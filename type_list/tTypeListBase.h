@@ -19,13 +19,13 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tTypeListBase.h
+/*!\file    rrlib/util/type_list/tTypeListBase.h
  *
  * \author  Tobias Foehst
  *
  * \date    2012-10-24
  *
- * \brief Contains tTypeListBase
+ * \brief   Contains tTypeListBase
  *
  * \b tTypeListBase
  *

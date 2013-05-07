@@ -19,15 +19,15 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tReplaceAllAll.h
+/*!\file    rrlib/util/type_list/tReplaceAll.h
  *
  * \author  Tobias Foehst
  *
  * \date    2011-03-25
  *
- * \brief Contains tReplaceAllAll
+ * \brief   Contains tReplaceAll
  *
- * \b tReplaceAllAll
+ * \b tReplaceAll
  *
  */
 //----------------------------------------------------------------------
@@ -35,8 +35,8 @@
 #error Invalid include directive. Try #include "rrlib/util/tTypeList.h" instead.
 #endif
 
-#ifndef __rrlib__util__type_lists__tReplaceAllAll_h__
-#define __rrlib__util__type_lists__tReplaceAllAll_h__
+#ifndef __rrlib__util__type_lists__tReplaceAll_h__
+#define __rrlib__util__type_lists__tReplaceAll_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")

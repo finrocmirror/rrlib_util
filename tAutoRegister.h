@@ -19,12 +19,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tAutoRegister.h
+/*!\file    rrlib/util/tAutoRegister.h
  *
  * \author  Jens Wettach
- * \date    2010-01-01
  *
-
+ * \date    2010-01-01
  *
  * \brief   Contains tAutoRegister, tRegister
  *

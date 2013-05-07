@@ -19,13 +19,13 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tFind.h
+/*!\file    rrlib/util/type_list/tFind.h
  *
  * \author  Tobias Foehst
  *
  * \date    2011-03-25
  *
- * \brief Contains tFind
+ * \brief   Contains tFind
  *
  * \b tFind
  *

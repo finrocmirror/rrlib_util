@@ -19,11 +19,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tTransformTime.cpp
+/*!\file    rrlib/util/tTransformTime.cpp
  *
  * \author  Bernd Helge Schaefer
  *
- * \date    06.06.2006
+ * \date    2006-06-06
  *
  */
 //----------------------------------------------------------------------

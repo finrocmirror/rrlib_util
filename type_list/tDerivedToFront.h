@@ -19,13 +19,13 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tDerivedToFront.h
+/*!\file    rrlib/util/type_list/tDerivedToFront.h
  *
  * \author  Tobias Foehst
  *
  * \date    2011-03-25
  *
- * \brief Contains tDerivedToFront
+ * \brief   Contains tDerivedToFront
  *
  * \b tDerivedToFront
  *

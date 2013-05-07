@@ -19,13 +19,13 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    final_class.h
+/*!\file    rrlib/util/final_class.h
  *
  * \author  Tobias Foehst
  *
  * \date    2010-12-14
  *
- * \brief Contains final_class
+ * \brief   Contains final_class
  *
  * \b final_class
  *

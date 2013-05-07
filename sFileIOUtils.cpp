@@ -19,12 +19,13 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    sFileIOUtils.cpp
+/*!\file    rrlib/util/sFileIOUtils.cpp
  *
  * \author  Bernd Helge Schaefer
  * \author  Jens Wettach
  * \author  Tim Braun
- * \date    15.11.05
+ *
+ * \date    2005-11-15
  *
  */
 //----------------------------------------------------------------------

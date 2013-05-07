@@ -19,7 +19,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    test_type_list.cpp
+/*!\file    rrlib/util/test/test_type_list.cpp
  *
  * \author  Tobias Foehst
  *

@@ -19,11 +19,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    sStringUtils.cpp
+/*!\file    rrlib/util/sStringUtils.cpp
  *
  * \author  Bernd Helge Schaefer
- * \date    15.11.05
  *
+ * \date    2005-11-15
  *
  */
 //----------------------------------------------------------------------

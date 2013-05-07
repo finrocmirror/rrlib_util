@@ -19,18 +19,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    tFPSComputer.cpp
+/*!\file    rrlib/util/tFPSComputer.cpp
  *
  * \author  Bernd Helge Schaefer
- * \date    2008-03-29
  *
- * \brief   Contains class tFPSComputer
+ * \date    2008-03-29
  *
  */
 //----------------------------------------------------------------------
-// this is a -*- C++ -*- file
-//----------------------------------------------------------------------
-
 #include "rrlib/util/tFPSComputer.h"
 
 //----------------------------------------------------------------------

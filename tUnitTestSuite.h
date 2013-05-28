@@ -66,6 +66,7 @@ namespace util
 
 #define RRLIB_UNIT_TESTS_ASSERT(expression) CPPUNIT_ASSERT(expression)
 #define RRLIB_UNIT_TESTS_EQUALITY(a, b) CPPUNIT_ASSERT_EQUAL(a, b)
+#define RRLIB_UNIT_TESTS_EQUALITY_DOUBLE(a, b, delta) CPPUNIT_ASSERT_DOUBLES_EQUAL(a, b, delta)
 #define RRLIB_UNIT_TESTS_EXCEPTION(expression, exception_type) CPPUNIT_ASSERT_THROW(expression, exception_type)
 
 //----------------------------------------------------------------------

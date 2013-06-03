@@ -34,6 +34,7 @@
 
 #include <sys/time.h>
 #include <iostream>
+#include "rrlib/time/time.h"
 
 namespace rrlib
 {
@@ -50,9 +51,9 @@ namespace util
 {
 //! Repesents times (absolutes and differences)
 /*! Use this class whenever you want to deal with times,
-  as it provides a number of operators and functions.
+ as it provides a number of operators and functions.
  */
-class  tTime
+class tTime
 {
 public:
 
@@ -61,8 +62,8 @@ public:
   {
     tv_sec = 0;
     tv_usec = 0;
-  };
-
+  }
+  ;
 
   //! constructor, takes a timeval for creation
   tTime(const tTime & t)
@@ -86,6 +87,17 @@ public:
     NormalizeTime();
   }
 
+  //! constructor that gets a time in seconds plus microseconds
+  tTime(const rrlib::time::tTimestamp &timestamp)
+  {
+    // 1970-01-01T00:00:00+00:00
+    const rrlib::time::tTimestamp unix_timestamp = std::chrono::system_clock::from_time_t(0);
+    rrlib::time::tDuration duration = timestamp - unix_timestamp;
+    tv_sec = std::chrono::duration_cast < std::chrono::seconds > (duration).count();
+    tv_usec = std::chrono::duration_cast < std::chrono::microseconds > (duration).count() - tv_sec * 1000000;
+    NormalizeTime();
+  }
+
   //! This static function returns a tTime that contains the current System-time
   static inline tTime Now()
   {
@@ -95,8 +107,8 @@ public:
   }
 
   /*! Returns the time of the current thread (time elapsed since start
-    of thread. It exists only for internal MCA usage. You do not need
-    to call it directly. */
+   of thread. It exists only for internal MCA usage. You do not need
+   to call it directly. */
   static inline tTime TaskTime()
   {
 # if (CLOCKS_PER_SEC == 1000000)
@@ -120,8 +132,8 @@ public:
   }
 
   /*! Returns a time that is calculated by
-    tTime::Now()+tTime.FromMSec(msec)
-  */
+   tTime::Now()+tTime.FromMSec(msec)
+   */
   static inline tTime FutureMSec(long msec)
   {
     tTime ntime(0, msec * 1000);
@@ -194,31 +206,31 @@ public:
   }
 
   /*! Returns tTime in nanoseconds */
-  inline long long ToNSec()const
+  inline long long ToNSec() const
   {
     return ((long long)tv_usec + (long long)tv_sec * 1000000) * 1000;
   }
 
   /*! Returns tTime in microseconds */
-  inline long long ToUSec()const
+  inline long long ToUSec() const
   {
     return (long long)tv_usec + (long long)tv_sec * 1000000;
   }
 
   /*! Returns tTime in milli seconds rounded down to an long integer.*/
-  inline long long ToMSec()const
+  inline long long ToMSec() const
   {
     return (long long)tv_usec / 1000 + (long long)tv_sec * 1000;
   }
 
   /*! Returns tTime in seconds rounded down to an long integer.*/
-  inline long ToSec()const
+  inline long ToSec() const
   {
     return tv_sec;
   }
 
   /*! Don't use this function: Returns the tv_sec value if timeval which is the basis of tTime */
-  inline long TvSec()const
+  inline long TvSec() const
   {
     return tv_sec;
   }
@@ -248,31 +260,31 @@ public:
   }
 
   /*! Use this function if you want to express the time in hours, minutes and seconds */
-  inline int Hours()const
+  inline int Hours() const
   {
     return tv_sec / 3600 % 24;
   }
 
   /*! Use this function if you want to express the time in hours, minutes and seconds */
-  inline int Minutes()const
+  inline int Minutes() const
   {
     return (tv_sec % 3600) / 60;
   }
 
   /*! Use this function if you want to express the time in hours, minutes and seconds */
-  inline int Seconds()const
+  inline int Seconds() const
   {
     return (tv_sec % 3600) % 60;
   }
 
   /*! Use this function if you want to get the subseconds in milliseconds (rounded) */
-  inline int MSeconds()const
+  inline int MSeconds() const
   {
     return tv_usec / 1000;
   }
 
   /*! Adds two times */
-  inline tTime operator+(const tTime& b)const
+  inline tTime operator+(const tTime& b) const
   {
     tTime a = *this;
     return a += b;
@@ -289,7 +301,7 @@ public:
   }
 
   /*! Substracts the second time from the first */
-  inline tTime operator-(const tTime& b)const
+  inline tTime operator-(const tTime& b) const
   {
     tTime a = *this;
     return a -= b;
@@ -306,7 +318,7 @@ public:
   }
 
   /*! sign operator */
-  inline tTime operator-()const
+  inline tTime operator-() const
   {
     tTime a(-tv_sec, tv_usec);
 //     a.tv_usec = tv_usec;
@@ -315,7 +327,7 @@ public:
   }
 
   /*! Multiplies the time by a factor. Uses operator*= (see below). */
-  inline tTime operator*(double factor)const
+  inline tTime operator*(double factor) const
   {
     tTime a = *this;
     return a *= factor;
@@ -331,7 +343,7 @@ public:
   }
 
   /*! Compares two variables of type tTime. Returns true if they are not equal*/
-  inline bool operator!=(const tTime& b)const
+  inline bool operator!=(const tTime& b) const
   {
     return (tv_usec != b.tv_usec) || (tv_sec != b.tv_sec);
   }
@@ -366,10 +378,16 @@ public:
     return (tv_sec == b.tv_sec) ? ((tv_usec == b.tv_usec) || (tv_usec > b.tv_usec)) : (tv_sec > b.tv_sec);
   }
 
+  operator rrlib::time::tTimestamp()
+  {
+    rrlib::time::tTimestamp timestamp = std::chrono::system_clock::from_time_t((time_t) this->tv_sec);
+    return timestamp + std::chrono::duration_cast<rrlib::time::tDuration>(std::chrono::microseconds(this->tv_usec));
+  }
+
   /*! Casts this tTime object into timespec object (consists of tv_sec/tv_nsec, see h)*/
   operator timespec()
   {
-    timespec t = {tv_sec, 1000 * tv_usec};
+    timespec t = { tv_sec, 1000 * tv_usec };
     return t;
   }
 
@@ -380,7 +398,6 @@ public:
     strftime(buffer, sizeof(buffer), format_string.c_str(), localtime(&tv_sec));
     return std::string(buffer);
   }
-
 
   // some standard time intervals to be used for timeouts etc
   static const tTime time_forever;
@@ -417,9 +434,9 @@ private:
   long tv_usec;
 
   /*! Makes sure that tv_usec lies in the interval [0; 1000000] by:
-      - converting multiples of 1000000 usec into multiples of sec
-      - transforming tv_sec and tv_usec so that the usec part is positive
-  */
+   - converting multiples of 1000000 usec into multiples of sec
+   - transforming tv_sec and tv_usec so that the usec part is positive
+   */
   inline void NormalizeTime()
   {
     // test modulo
@@ -429,7 +446,7 @@ private:
     // ensure that usec part is positive
     if (tv_usec < 0)
     {
-      tv_sec --;
+      tv_sec--;
       tv_usec += 1000000;
     }
   }
@@ -464,6 +481,7 @@ inline std::istream &operator>>(std::istream &str, tTime &time)
   time = tTime(tv_sec, tv_usec);
   return str;
 }
+
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 

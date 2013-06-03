@@ -124,6 +124,14 @@ public:
 
 
   /*!
+   * \brief Test if file exists for given file name
+   *
+   * \returns true if file exists
+   */
+  static bool FileExists(const std::string &filename);
+
+
+  /*!
    * \brief Writes content of given container to file with given name
    *
    * \returns true iff file could be processed as expected

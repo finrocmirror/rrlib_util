@@ -203,6 +203,29 @@ void sFileIOUtils::DecompressFile(const std::string& input_filename, const std::
 } // DecompressFile()
 
 //----------------------------------------------------------------------
+// class sFileIOUtils::FileExists()
+//----------------------------------------------------------------------
+bool sFileIOUtils::FileExists(const std::string &filename)
+{
+  // catch empty file
+  if (filename == "")
+  {
+    return false;
+  }
+
+  // test if file exists
+  FILE* file = fopen(filename.c_str(), "rb");
+  if (file == 0)
+  {
+    return false;
+  }
+  fclose(file);
+
+  return true;
+}
+
+
+//----------------------------------------------------------------------
 // class sFileIOUtils::ShellExpandFilename()
 //----------------------------------------------------------------------
 bool sFileIOUtils::ShellExpandFilename(std::string &file_name)

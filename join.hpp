@@ -96,7 +96,7 @@ inline std::string JoinImplementation(TInputIterator first, TInputIterator last,
 }
 
 template <typename TIterator>
-inline void Join(TIterator first, TIterator last, std::ostream &destination, const char *delimiter = ", ")
+inline void Join(TIterator first, TIterator last, std::ostream &destination, const char *delimiter)
 {
   if (first != last)
   {
@@ -105,13 +105,13 @@ inline void Join(TIterator first, TIterator last, std::ostream &destination, con
 }
 
 template <typename TContainer>
-inline void Join(TContainer container, std::ostream &destination, const char *delimiter = ", ")
+inline void Join(TContainer container, std::ostream &destination, const char *delimiter)
 {
   Join(container.begin(), container.end(), destination, delimiter);
 }
 
 template <typename TIterator>
-inline const std::string Join(TIterator first, TIterator last, const char *delimiter = ", ")
+inline const std::string Join(TIterator first, TIterator last, const char *delimiter)
 {
   if (first != last)
   {
@@ -121,7 +121,7 @@ inline const std::string Join(TIterator first, TIterator last, const char *delim
 }
 
 template <typename TContainer>
-inline const std::string Join(const TContainer &container, const char *delimiter = ", ")
+inline const std::string Join(const TContainer &container, const char *delimiter)
 {
   return Join(container.begin(), container.end(), delimiter);
 }

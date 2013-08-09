@@ -378,14 +378,14 @@ public:
     return (tv_sec == b.tv_sec) ? ((tv_usec == b.tv_usec) || (tv_usec > b.tv_usec)) : (tv_sec > b.tv_sec);
   }
 
-  operator rrlib::time::tTimestamp()
+  operator rrlib::time::tTimestamp() const
   {
     rrlib::time::tTimestamp timestamp = std::chrono::system_clock::from_time_t((time_t) this->tv_sec);
     return timestamp + std::chrono::duration_cast<rrlib::time::tDuration>(std::chrono::microseconds(this->tv_usec));
   }
 
   /*! Casts this tTime object into timespec object (consists of tv_sec/tv_nsec, see h)*/
-  operator timespec()
+  operator timespec() const
   {
     timespec t = { tv_sec, 1000 * tv_usec };
     return t;

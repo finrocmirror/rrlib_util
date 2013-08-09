@@ -55,8 +55,8 @@
  *       upstream.
  */
 //----------------------------------------------------------------------
-#ifndef ___rrlib__util__fstream__fileno_h___
-#define ___rrlib__util__fstream__fileno_h___
+#ifndef __rrlib__util__fstream__fileno_h__
+#define __rrlib__util__fstream__fileno_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")

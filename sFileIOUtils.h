@@ -138,8 +138,8 @@ public:
    *
    * \note If filename has suffix ".bz2" it is compressed accordingly.
    */
-  template <class T>
-  static bool WriteContainerToFile(const std::vector<T> &content, const std::string& filename)
+  template <class ConstForwardIterator>
+  static bool WriteContainerToFile(ConstForwardIterator begin, ConstForwardIterator end, const std::string& filename)
   {
     std::ofstream output_file_stream;
     RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "got file <", filename, ">");
@@ -152,7 +152,7 @@ public:
       if (output_file_stream)
       {
         out.push(output_file_stream);
-        std::copy(content.begin(), content.end(), std::ostream_iterator<T>(out));
+        std::copy(begin, end, std::ostream_iterator<typename ConstForwardIterator::value_type>(out));
         return true;
       }
     }
@@ -161,12 +161,18 @@ public:
       output_file_stream.open(filename.c_str());
       if (output_file_stream)
       {
-        std::copy(content.begin(), content.end(), std::ostream_iterator<T>(output_file_stream));
+        std::copy(begin, end, std::ostream_iterator<typename ConstForwardIterator::value_type>(output_file_stream));
         output_file_stream.close();
         return true;
       }
     }
     return false;
+  }
+
+  template <class Container>
+  static bool WriteContainerToFile(const Container &container, const std::string& filename)
+  {
+    return WriteContainerToFile(container.begin(), container.end(), filename);
   }
 
   /*!
@@ -176,8 +182,8 @@ public:
    *
    * \note If filename has suffix ".bz2" it is decompressed accordingly before reading.
    */
-  template <class T>
-  static bool ReadContainerFromFile(std::vector<T> &content, const std::string& filename)
+  template <class Container>
+  static bool ReadContainerFromFile(Container &container, const std::string& filename)
   {
     std::ifstream input_file_stream;
     RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "got file <", filename, ">");
@@ -190,7 +196,8 @@ public:
       if (input_file_stream)
       {
         in.push(input_file_stream);
-        std::copy(std::istream_iterator<T>(in), std::istream_iterator<T>(), std::back_inserter(content));
+        std::copy(std::istream_iterator<typename Container::value_type>(in), std::istream_iterator<typename Container::value_type>(), std::back_inserter(container));
+        RRLIB_LOG_PRINT(ERROR, "got ", container.size(), " container elements from file ", filename);
         return true;
       }
     }
@@ -199,7 +206,8 @@ public:
       input_file_stream.open(filename.c_str());
       if (input_file_stream)
       {
-        std::copy(std::istream_iterator<T>(input_file_stream), std::istream_iterator<T>(), std::back_inserter(content));
+        std::copy(std::istream_iterator<typename Container::value_type>(input_file_stream), std::istream_iterator<typename Container::value_type>(), std::back_inserter(container));
+        RRLIB_LOG_PRINT(ERROR, "got ", container.size(), " container elements from file ", filename);
       }
       input_file_stream.close();
       return true;

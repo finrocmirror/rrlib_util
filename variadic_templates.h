@@ -63,13 +63,12 @@ namespace util
 // Function declaration
 //----------------------------------------------------------------------
 
-template <typename TElement>
-inline void ProcessVariadicValues(std::function<void(const TElement &)> process_value)
+template <typename TProcessor>
+inline void ProcessVariadicValues(const TProcessor &process_value)
 {}
 
-template <typename TElement, typename THead, typename ... TTail>
-//inline void ProcessVariadicValues(const THead &head, const TTail &... tail, std::function<void(const THead &)> process_value) FIXME: will probably be valid with gcc 4.6 and does not need hints at instantiation
-inline void ProcessVariadicValues(std::function<void(const TElement &)> process_value, const THead &head, const TTail &... tail)
+template <typename TProcessor, typename THead, typename ... TTail>
+inline void ProcessVariadicValues(const TProcessor &process_value, const THead &head, const TTail &... tail)
 {
   process_value(head);
   ProcessVariadicValues(process_value, tail...);

@@ -236,6 +236,19 @@ bool sFileIOUtils::ShellExpandFilename(std::string &file_name)
 //----------------------------------------------------------------------
 // class sFileIOUtils::ShellExpandFilename()
 //----------------------------------------------------------------------
+std::string sFileIOUtils::ShellExpandFilename(const std::string &file_name)
+{
+  std::string result("");
+  if (ShellExpandFilename(result, file_name))
+    return result;
+  else
+    return "";
+} // ShellExpandFilename()
+
+
+//----------------------------------------------------------------------
+// class sFileIOUtils::ShellExpandFilename()
+//----------------------------------------------------------------------
 bool sFileIOUtils::ShellExpandFilename(std::string &result, const std::string &file_name)
 {
   //result = "";  //in case &result == &file_name, then it causes trouble.

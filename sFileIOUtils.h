@@ -227,6 +227,14 @@ public:
   static bool ShellExpandFilename(std::string &file_name) __attribute__((__warn_unused_result__));
 
   /*! Expands the given filename via a pipe and echo command in order to replace all contained environment variables with their actual value.
+   *
+   * \param file_name   file name to be expanded
+   *
+   * \returns Expanded file name
+   */
+  static std::string ShellExpandFilename(const std::string &file_name)  __attribute__((__warn_unused_result__));
+
+  /*! Expands the given filename via a pipe and echo command in order to replace all contained environment variables with their actual value.
   *
   * Thus variables as e.g. $MCAPROJECTHOME can be used for specifying OIV files in scene description files.
   *

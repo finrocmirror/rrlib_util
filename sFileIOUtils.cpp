@@ -473,6 +473,11 @@ struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
   for_each(tokens.begin(), tokens.end(), sStringUtils::Trim<std::string>());
   RRLIB_LOG_PRINTF(DEBUG_VERBOSE_1, "sFileIOUtils::HostToIpViaHost() >>> got %d tokens:\n", tokens.size());
   RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, Join(tokens, "\n"));
+  if (tokens.size() != 4)
+  {
+    RRLIB_LOG_PRINT(WARNING, "Could not determine IP for host name ", name);
+    return address;
+  }
 
   assert(tokens.size() == 4);
   RRLIB_LOG_PRINTF(USER, "found_name <%s> , ip <%s> \n", tokens[0].c_str(), tokens[3].c_str());

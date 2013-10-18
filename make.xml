@@ -6,6 +6,7 @@
     <sources>
       final_class.h
       join.h
+      tEnumBasedFlags.h
       tIntegerSequence.h
       tNoncopyable.h
       tTaggedPointer.h

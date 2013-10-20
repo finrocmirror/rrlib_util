@@ -2,10 +2,11 @@
 <!DOCTYPE targets PUBLIC "-//RRLIB//DTD make 1.0" "http://rrlib.org/xml/1.0/make.dtd">
 <targets>
 
-  <rrlib name="util">
+  <rrlib>
     <sources>
       final_class.h
       join.h
+      tEnumBasedFlags.h
       tIntegerSequence.h
       tNoncopyable.h
       tTaggedPointer.h
@@ -15,7 +16,7 @@
     </sources>
   </rrlib>
 
-  <rrlib name="util_legacy"
+  <rrlib name="legacy"
          libs="boost_iostreams">
     <sources>
       sFileIOUtils.cpp
@@ -27,20 +28,20 @@
     </sources>
   </rrlib>
   
-  <rrlib name="util_unit_tests"
+  <rrlib name="unit_tests"
         libs="cppunit">
     <sources>
       tUnitTestSuite.cpp
     </sources>
   </rrlib>
 
-  <rrlib name="util_fstream">
+  <rrlib name="fstream">
     <sources>
       fstream/*
     </sources>
   </rrlib>
 
-  <rrlib name="util_variadic_templates">
+  <rrlib name="variadic_templates">
     <sources>
       variadic_templates.h
     </sources>

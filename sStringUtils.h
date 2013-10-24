@@ -339,7 +339,7 @@ public:
   {
     std::ostringstream os;
     os << object;
-    return(os.str());
+    return (os.str());
   }
 
   /*!

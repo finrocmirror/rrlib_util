@@ -93,8 +93,8 @@ public:
     // 1970-01-01T00:00:00+00:00
     const rrlib::time::tTimestamp unix_timestamp = std::chrono::system_clock::from_time_t(0);
     rrlib::time::tDuration duration = timestamp - unix_timestamp;
-    tv_sec = std::chrono::duration_cast < std::chrono::seconds > (duration).count();
-    tv_usec = std::chrono::duration_cast < std::chrono::microseconds > (duration).count() - tv_sec * 1000000;
+    tv_sec = std::chrono::duration_cast <std::chrono::seconds> (duration).count();
+    tv_usec = std::chrono::duration_cast <std::chrono::microseconds> (duration).count() - tv_sec * 1000000;
     NormalizeTime();
   }
 

@@ -130,6 +130,13 @@ public:
    */
   static bool FileExists(const std::string &filename);
 
+  /*!
+   * \brief Counts # lines in given file
+   *
+   * \returns # lines
+   */
+  static size_t CountLineNumbers(const std::string &filename);
+
 
   /*!
    * \brief Writes content of given container to file with given name

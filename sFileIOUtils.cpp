@@ -222,7 +222,19 @@ bool sFileIOUtils::FileExists(const std::string &filename)
   fclose(file);
 
   return true;
-}
+} // FileExists()
+
+
+//----------------------------------------------------------------------
+// class sFileIOUtils::CountLineNumbers()
+//----------------------------------------------------------------------
+size_t sFileIOUtils::CountLineNumbers(const std::string &filename)
+{
+  std::ifstream file(filename);
+  return std::count(std::istreambuf_iterator<char>(file),
+                    std::istreambuf_iterator<char>(), '\n');
+} // CountLineNumbers()
+
 
 
 //----------------------------------------------------------------------

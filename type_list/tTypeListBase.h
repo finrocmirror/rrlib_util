@@ -71,75 +71,78 @@ namespace type_list
 /*!
  *
  */
-template <typename tList>
+template <typename TList>
 struct tTypeListBase
 {
-  static const size_t cSIZE = type_list::tSizeOf<tList>::cVALUE;
+  static const size_t cSIZE;
 
   template <size_t Tindex>
   struct tAt
   {
-    typedef typename type_list::tAt<tList, Tindex>::tResult tResult;
+    typedef typename type_list::tAt<TList, Tindex>::tResult tResult;
   };
 
   template <typename T>
   struct tIndexOf
   {
-    static const size_t cVALUE = type_list::tFind<tList, T>::cINDEX;
+    static const size_t cVALUE = type_list::tFind<TList, T>::cINDEX;
   };
 
   template <typename T>
   struct tAppend
   {
-    typedef typename type_list::tAppend<tList, T>::tResult tResult;
+    typedef typename type_list::tAppend<TList, T>::tResult tResult;
   };
 
-  template <typename TList>
+  template <typename TOtherList>
   struct tAppendList
   {
-    typedef typename type_list::tAppendList<tList, TList>::tResult tResult;
+    typedef typename type_list::tAppendList<TList, TOtherList>::tResult tResult;
   };
 
   template <typename T>
   struct tRemove
   {
-    typedef typename type_list::tRemove<tList, T>::tResult tResult;
+    typedef typename type_list::tRemove<TList, T>::tResult tResult;
   };
 
   template <typename T>
   struct tRemoveAll
   {
-    typedef typename type_list::tRemoveAll<tList, T>::tResult tResult;
+    typedef typename type_list::tRemoveAll<TList, T>::tResult tResult;
   };
 
   struct tUnique
   {
-    typedef typename type_list::tUnique<tList>::tResult tResult;
+    typedef typename type_list::tUnique<TList>::tResult tResult;
   };
 
   template <typename TOld, typename TNew>
   struct tReplace
   {
-    typedef typename type_list::tReplace<tList, TOld, TNew>::tResult tResult;
+    typedef typename type_list::tReplace<TList, TOld, TNew>::tResult tResult;
   };
 
   template <typename TOld, typename TNew>
   struct tReplaceAll
   {
-    typedef typename type_list::tReplaceAll<tList, TOld, TNew>::tResult tResult;
+    typedef typename type_list::tReplaceAll<TList, TOld, TNew>::tResult tResult;
   };
 
   template <typename TBase>
   struct tMostDerived
   {
-    typedef typename type_list::tMostDerived<tList, TBase>::tResult tResult;
+    typedef typename type_list::tMostDerived<TList, TBase>::tResult tResult;
   };
 
   struct tDerivedToFront
   {
-    typedef typename type_list::tDerivedToFront<tList>::tResult tResult;
+    typedef typename type_list::tDerivedToFront<TList>::tResult tResult;
   };
 };
+
+template <typename TList>
+const size_t tTypeListBase<TList>::cSIZE = type_list::tSizeOf<TList>::cVALUE;
 
 //----------------------------------------------------------------------
 // End of namespace declaration

@@ -148,7 +148,7 @@ void PrintListElements<type_list::tEmptyList>()
 template <typename TList>
 void PrintList()
 {
-  std::cout << "size: " << type_list::tSizeOf<TList>::cVALUE << " \telements: <";
+  std::cout << "size: " << TList::cSIZE << " \telements: <";
   PrintListElements<TList>();
   std::cout << ">" << std::endl;
 }

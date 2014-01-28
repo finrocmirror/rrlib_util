@@ -35,6 +35,13 @@
     </sources>
   </rrlib>
 
+  <rrlib name="exception">
+    <sources>
+      tTraceableException.h
+      exception/*
+    </sources>
+  </rrlib>
+
   <rrlib name="fstream">
     <sources>
       fstream/*
@@ -62,6 +69,12 @@
   <testprogram name="tagged_pointer">
     <sources>
       test/test_tagged_pointers.cpp
+    </sources>
+  </testprogram>
+
+  <testprogram name="exceptions">
+    <sources>
+      test/test_exceptions.cpp
     </sources>
   </testprogram>
 

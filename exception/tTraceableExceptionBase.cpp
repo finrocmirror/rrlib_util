@@ -121,7 +121,8 @@ std::vector<tMapEntry> ReadMaps() noexcept
             for (; *end != '-'; ++end);
             *end++ = 0;
             map_entries.push_back({reinterpret_cast<void *>(strtoll(begin, nullptr, 16)), reinterpret_cast<void *>(strtoll(end, nullptr, 16)), ""});
-            input >> map_entries.back().filename;
+            std::ws(input);
+            std::getline(input, map_entries.back().filename);
           }
         }
       }
@@ -170,8 +171,14 @@ std::string LookupLocation(void *address, const std::vector<tMapEntry> &map_entr
         address = reinterpret_cast<void *>(reinterpret_cast<char *>(address) - 1);
 
         std::stringstream run_addr2line;
-        run_addr2line << "addr2line -fpCe " << it->filename << " " << address;
-        std::cout << run_addr2line.str() << std::endl;
+        std::string filename = it->filename;
+        size_t position = 0;
+        while ((position = filename.find_first_of("\\\"", position)) != filename.npos)
+        {
+          filename.insert(position, "\\");
+          position += 2;
+        }
+        run_addr2line << "addr2line -fpCe \"" << filename << "\" " << address << " 2> /dev/null";
         FILE *pipe = popen(run_addr2line.str().c_str(), "r");
         if (pipe)
         {
@@ -187,14 +194,16 @@ std::string LookupLocation(void *address, const std::vector<tMapEntry> &map_entr
         pclose(pipe);
         location.erase(location.find_last_not_of("\n\r\t ") + 1);
 
-        auto unknown = location.find("at ??");
-        if (unknown != location.npos)
+        if (!location.empty())
         {
-          location.erase(unknown);
-          location += "from " + it->filename;
+          auto unknown = location.find("at ??");
+          if (unknown != location.npos)
+          {
+            location.erase(unknown);
+            location += "from " + it->filename;
+          }
+          return location;
         }
-
-        return location;
       }
     }
   }

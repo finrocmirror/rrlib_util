@@ -217,7 +217,7 @@ std::string LookupLocation(void *address, const std::vector<tMapEntry> &map_entr
 
 std::terminate_handler original_terminate = nullptr;
 
-[[noreturn]] void terminate() noexcept
+void terminate() noexcept
 {
   try
   {
@@ -285,7 +285,7 @@ const char *tTraceableExceptionBase::Backtrace() const noexcept
       char address_example[64];
       snprintf(address_example, sizeof(address_example), "%p", reinterpret_cast<void *>(-1));
       char format_string[8];
-      snprintf(format_string, sizeof(format_string), "0x%%0%ux", strlen(address_example) - 2);
+      snprintf(format_string, sizeof(format_string), "0x%%0%zux", strlen(address_example) - 2);
 
       for (size_t i = cCALLS_TO_SKIP; i < this->stack_trace_depth; ++i)
       {

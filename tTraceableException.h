@@ -80,6 +80,9 @@ explicit tTraceableException(const TArgs &... args) noexcept :
   T(args...)
   {}
 
+  ~tTraceableException() noexcept
+  {}
+
 };
 
 //----------------------------------------------------------------------

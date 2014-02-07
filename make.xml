@@ -4,6 +4,7 @@
 
   <rrlib>
     <sources>
+      demangle.h
       final_class.h
       join.h
       tEnumBasedFlags.h

@@ -48,6 +48,7 @@
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
 #include <string>
+#include <cxxabi.h>
 
 //----------------------------------------------------------------------
 // Internal includes with ""

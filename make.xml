@@ -7,6 +7,7 @@
       demangle.h
       final_class.h
       join.h
+      string.cpp
       tEnumBasedFlags.h
       tIntegerSequence.h
       tNoncopyable.h
@@ -78,5 +79,11 @@
       test/test_exceptions.cpp
     </sources>
   </testprogram>
+  
+  <unittest name="string">
+    <sources>
+      test/unit_test_string.cpp
+    </sources>
+  </unittest>
 
 </targets>

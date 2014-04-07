@@ -265,10 +265,8 @@ public:
 
   /*!
    * Retrieves network host name via "hostname" and returns result.
-   * \param fqdn whether FQDN  (Fully  Qualified Domain Name) or short name shall be retrieved
    */
-  static std::string GetHostName(bool fqdn = true);
-
+  static std::string GetHostName();
 
   /*!
    * Retrieves ip address of host with given network name via "gethostbyname" and returns result.

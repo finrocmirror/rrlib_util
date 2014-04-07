@@ -55,6 +55,8 @@ extern "C"
 // Debug
 //----------------------------------------------------------------------
 #include <cassert>
+#include <cstring>
+#include <cerrno>
 
 //----------------------------------------------------------------------
 // Namespace usage
@@ -337,26 +339,20 @@ void sFileIOUtils::SplitFullQualifiedFilename(const std::string& complete_name, 
 } // SplitFullQualifiedFilename()
 
 
-
 //----------------------------------------------------------------------
 // class sFileIOUtils::GetHostName()
 //----------------------------------------------------------------------
-std::string sFileIOUtils::GetHostName(bool fqdn)
+std::string sFileIOUtils::GetHostName()
 {
-  //RRLIB_LOG_PRINTF(USER, "sFileIOUtils::GetHostName() >>> started\n");
-  std::string cmd = fqdn ? "hostname -f" : "hostname";
-  FILE * pipe = popen(cmd.c_str(), "r");
-  char buf[ 1024 ];
-  if (fgets(buf, sizeof(buf), pipe) == 0)
+  char name[1024];
+  int result = gethostname(name, 1024);
+  if (result)
   {
-    RRLIB_LOG_PRINTF(ERROR, "sFileIOUtils::GetHostName(bool fqdn) >> Error querying host name!\n");
+    RRLIB_LOG_PRINTF(ERROR, "got error: <%s>\n", strerror(errno));
     exit(EXIT_FAILURE);
   }
-  pclose(pipe);
-  std::string name(buf);
-  sStringUtils::TrimWhitespace(name);
-  //boost::trim(name);
-  //RRLIB_LOG_PRINTF(USER, "sFileIOUtils::GetHostName() >>> finished with name <%s>\n", name.c_str());
+  RRLIB_LOG_PRINTF(DEBUG, "got hostname: <%s>\n", name);
+
   return name;
 } // GetHostName()
 

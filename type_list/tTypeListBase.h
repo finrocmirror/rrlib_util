@@ -85,7 +85,7 @@ struct tTypeListBase
   template <typename T>
   struct tIndexOf
   {
-    static const size_t cVALUE = type_list::tFind<TList, T>::cINDEX;
+    static const size_t cVALUE;
   };
 
   template <typename T>
@@ -143,6 +143,10 @@ struct tTypeListBase
 
 template <typename TList>
 const size_t tTypeListBase<TList>::cSIZE = type_list::tSizeOf<TList>::cVALUE;
+
+template <typename TList>
+template <typename T>
+const size_t tTypeListBase<TList>::tIndexOf<T>::cVALUE = type_list::tFind<TList, T>::cINDEX;
 
 //----------------------------------------------------------------------
 // End of namespace declaration

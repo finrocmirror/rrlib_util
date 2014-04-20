@@ -19,7 +19,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 //----------------------------------------------------------------------
-/*!\file    rrlib/util/test/unit_test_string.cpp
+/*!\file    rrlib/util/tests/string.cpp
  *
  * \author  Max Reichardt
  *

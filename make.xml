@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE targets PUBLIC "-//RRLIB//DTD make 1.0" "http://rrlib.org/xml/1.0/make.dtd">
+<!DOCTYPE targets PUBLIC "-//FINROC//DTD make 14.05" "http://finroc.org/xml/14.05/make.dtd">
 <targets>
 
-  <rrlib>
+  <library>
     <sources>
       demangle.h
       join.h
@@ -15,9 +15,9 @@
       tagged_pointer/*
       type_list/*
     </sources>
-  </rrlib>
+  </library>
 
-  <rrlib name="legacy"
+  <library name="legacy"
          libs="boost_iostreams">
     <sources>
       final_class.h
@@ -28,62 +28,32 @@
       tTransformTime.cpp
       tFPSComputer.cpp
     </sources>
-  </rrlib>
+  </library>
   
-  <rrlib name="unit_tests"
+  <library name="unit_tests"
         libs="cppunit">
     <sources>
       tUnitTestSuite.cpp
     </sources>
-  </rrlib>
+  </library>
 
-  <rrlib name="exception">
+  <library name="exception">
     <sources>
       tTraceableException.h
       exception/*
     </sources>
-  </rrlib>
+  </library>
 
-  <rrlib name="fstream">
+  <library name="fstream">
     <sources>
       fstream/*
     </sources>
-  </rrlib>
+  </library>
 
-  <rrlib name="variadic_templates">
+  <library name="variadic_templates">
     <sources>
       variadic_templates.h
     </sources>
-  </rrlib>
-
-  <testprogram name="final_class_pattern">
-    <sources>
-      test/test_final_class_pattern.cpp
-    </sources>
-  </testprogram>
-
-  <testprogram name="type_list">
-    <sources>
-      test/test_type_list.cpp
-    </sources>
-  </testprogram>
-  
-  <testprogram name="tagged_pointer">
-    <sources>
-      test/test_tagged_pointers.cpp
-    </sources>
-  </testprogram>
-
-  <testprogram name="exceptions">
-    <sources>
-      test/test_exceptions.cpp
-    </sources>
-  </testprogram>
-  
-  <unittest name="string">
-    <sources>
-      test/unit_test_string.cpp
-    </sources>
-  </unittest>
+  </library>
 
 </targets>

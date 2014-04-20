@@ -58,6 +58,7 @@ namespace util
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
 #define RRLIB_FINAL_CLASS private virtual rrlib::util::final_class
+class final_class __attribute__((deprecated)); // use C++11's final specifier instead
 
 //----------------------------------------------------------------------
 // Class declaration

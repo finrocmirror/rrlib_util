@@ -5,7 +5,6 @@
   <rrlib>
     <sources>
       demangle.h
-      final_class.h
       join.h
       string.cpp
       tEnumBasedFlags.h
@@ -21,6 +20,7 @@
   <rrlib name="legacy"
          libs="boost_iostreams">
     <sources>
+      final_class.h
       sFileIOUtils.cpp
       sStringUtils.cpp
       tAutoRegister.h

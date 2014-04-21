@@ -66,10 +66,10 @@ namespace util
 
 #define RRLIB_UNIT_TESTS_ASSERT(expression) CPPUNIT_ASSERT(expression)
 #define RRLIB_UNIT_TESTS_ASSERT_MESSAGE(msg, expression) CPPUNIT_ASSERT_MESSAGE(msg, expression)
-#define RRLIB_UNIT_TESTS_EQUALITY(a, b) CPPUNIT_ASSERT_EQUAL(a, b)
-#define RRLIB_UNIT_TESTS_EQUALITY_MESSAGE(msg, a, b) CPPUNIT_ASSERT_EQUAL_MESSAGE(msg, a, b)
-#define RRLIB_UNIT_TESTS_EQUALITY_DOUBLE(a, b, delta) CPPUNIT_ASSERT_DOUBLES_EQUAL(a, b, delta)
-#define RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE(msg, a, b, delta) CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE(msg, a, b, delta)
+#define RRLIB_UNIT_TESTS_EQUALITY(expected, actual) CPPUNIT_ASSERT_EQUAL(expected, actual)
+#define RRLIB_UNIT_TESTS_EQUALITY_MESSAGE(msg, expected, actual) CPPUNIT_ASSERT_EQUAL_MESSAGE(msg, expected, actual)
+#define RRLIB_UNIT_TESTS_EQUALITY_DOUBLE(expected, actual, delta) CPPUNIT_ASSERT_DOUBLES_EQUAL(expected, actual, delta)
+#define RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE(msg, expected, actual, delta) CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE(msg, expected, actual, delta)
 #define RRLIB_UNIT_TESTS_EXCEPTION(expression, exception_type) CPPUNIT_ASSERT_THROW(expression, exception_type)
 #define RRLIB_UNIT_TESTS_EXCEPTION_MESSAGE(msg, expression, exception_type) CPPUNIT_ASSERT_THROW_MESSAGE(msg, expression, exception_type)
 

@@ -69,16 +69,13 @@ namespace test
 // Implementation
 //----------------------------------------------------------------------
 
-class tTestString : public rrlib::util::tUnitTestSuite
+class TestString : public util::tUnitTestSuite
 {
-  RRLIB_UNIT_TESTS_BEGIN_SUITE(tTestString);
+  RRLIB_UNIT_TESTS_BEGIN_SUITE(TestString);
   RRLIB_UNIT_TESTS_ADD_TEST(TestFunctions);
   RRLIB_UNIT_TESTS_END_SUITE;
 
 private:
-
-  virtual void InitializeTests() {}
-  virtual void CleanUp() {}
 
   virtual void TestFunctions()
   {
@@ -137,7 +134,7 @@ private:
 
 };
 
-RRLIB_UNIT_TESTS_REGISTER_SUITE(tTestString);
+RRLIB_UNIT_TESTS_REGISTER_SUITE(TestString);
 
 //----------------------------------------------------------------------
 // End of namespace declaration

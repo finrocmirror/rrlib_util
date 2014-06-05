@@ -69,9 +69,9 @@ namespace util
 //----------------------------------------------------------------------
 // Implementation
 //----------------------------------------------------------------------
-class tTestTypeList : public util::tUnitTestSuite
+class TestTypeList : public util::tUnitTestSuite
 {
-  RRLIB_UNIT_TESTS_BEGIN_SUITE(tTestTypeList);
+  RRLIB_UNIT_TESTS_BEGIN_SUITE(TestTypeList);
   RRLIB_UNIT_TESTS_ADD_TEST(Size);
   RRLIB_UNIT_TESTS_ADD_TEST(At);
   RRLIB_UNIT_TESTS_ADD_TEST(IndexOf);
@@ -89,12 +89,6 @@ private:
   struct E {};
 
   typedef tTypeList<A, C, B, C, D> tList;
-
-  virtual void InitializeTests()
-  {}
-
-  virtual void CleanUp()
-  {}
 
   void Size()
   {
@@ -167,7 +161,7 @@ private:
   }
 };
 
-RRLIB_UNIT_TESTS_REGISTER_SUITE(tTestTypeList);
+RRLIB_UNIT_TESTS_REGISTER_SUITE(TestTypeList);
 
 //----------------------------------------------------------------------
 // End of namespace declaration

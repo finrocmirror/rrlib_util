@@ -85,15 +85,19 @@ class tUnitTestSuite : public CPPUNIT_NS::TestFixture
 
 public:
 
+  ~tUnitTestSuite() = 0;
+
   void setUp();
 
   void tearDown();
 
 private:
 
-  virtual void InitializeTests() = 0;
+  virtual void InitializeTests()
+  {};
 
-  virtual void CleanUp() = 0;
+  virtual void CleanUp()
+  {};
 
 };
 

@@ -37,8 +37,11 @@
 #include <sstream>
 #include <cstring>
 #include <vector>
+
+#if __linux__
 #include <execinfo.h>
 #include <unistd.h>
+#endif
 
 //----------------------------------------------------------------------
 // Internal includes with ""
@@ -80,6 +83,7 @@ const size_t cCALLS_TO_SKIP = 2;
 // Implementation
 //----------------------------------------------------------------------
 
+#if __linux__
 namespace
 {
 std::string LookupSelf()
@@ -240,11 +244,13 @@ void terminate() noexcept
 
 }
 
+#endif
+
 //----------------------------------------------------------------------
 // tTraceableExceptionBase constructors
 //----------------------------------------------------------------------
 tTraceableExceptionBase::tTraceableExceptionBase() :
-#ifdef NDEBUG
+#if defined(NDEBUG) || !__linux__
   stack_trace_depth(0)
 {}
 #else
@@ -273,6 +279,7 @@ const char *tTraceableExceptionBase::Backtrace() const noexcept
     return "<Backtrace was optimized out>";
   }
 
+#if __linux__
   if (this->buffered_backtrace.empty())
   {
     try
@@ -305,6 +312,10 @@ const char *tTraceableExceptionBase::Backtrace() const noexcept
     }
   }
   return this->buffered_backtrace.c_str();
+#else
+  // just to suppress warnings, should never be reached
+  return "<No backtrace available>";
+#endif
 }
 
 //----------------------------------------------------------------------

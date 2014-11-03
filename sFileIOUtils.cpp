@@ -479,7 +479,7 @@ struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
   sStringUtils::Tokenize(result_str, tokens, " \t");
 
   for_each(tokens.begin(), tokens.end(), sStringUtils::Trim<std::string>());
-  RRLIB_LOG_PRINTF(DEBUG_VERBOSE_1, "sFileIOUtils::HostToIpViaHost() >>> got %d tokens:\n", tokens.size());
+  RRLIB_LOG_PRINTF(DEBUG_VERBOSE_1, "sFileIOUtils::HostToIpViaHost() >>> got %zu tokens:\n", tokens.size());
   RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, Join(tokens, "\n"));
   if (tokens.size() != 4)
   {

@@ -40,6 +40,8 @@
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
+#include "rrlib/logging/configuration.h"
+
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
@@ -105,6 +107,8 @@ void tUnitTestSuite::tearDown()
 //----------------------------------------------------------------------
 int main(int argc, char **argv)
 {
+  rrlib::logging::SetDomainMaxMessageLevel(".", rrlib::logging::tLogLevel::USER);
+
   CPPUNIT_NS::TextUi::TestRunner runner;
   runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
 

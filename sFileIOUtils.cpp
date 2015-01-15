@@ -461,10 +461,11 @@ struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
   RRLIB_LOG_PRINTF(DEBUG_VERBOSE_1, "sFileIOUtils::HostToIpViaHost() >>> got %d tokens:\n", tokens.size());
   RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, Join(tokens, "\n"));
 
-  assert(tokens.size() == 4);
-  RRLIB_LOG_PRINTF(USER, "found_name <%s> , ip <%s> \n", tokens[0].c_str(), tokens[3].c_str());
-
-  inet_aton(tokens[3].c_str(), &address);
+  if (tokens.size() == 4)
+  {
+    RRLIB_LOG_PRINTF(USER, "found_name <%s> , ip <%s> \n", tokens[0].c_str(), tokens[3].c_str());
+    inet_aton(tokens[3].c_str(), &address);
+  }
   return address;
 } // HostToIpViaHost()
 

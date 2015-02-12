@@ -382,13 +382,13 @@ struct ::in_addr sFileIOUtils::HostToIpViaGetHostByName(const std::string& name)
 //----------------------------------------------------------------------
 struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
 {
-  RRLIB_LOG_PRINT(USER, "started with host <", name, ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "started with host <", name, ">");
   struct in_addr address;
   address.s_addr = 0;
 
   std::stringstream command;
   command << "nslookup \"" << name << "\"";
-  RRLIB_LOG_PRINT(USER, "command = <", command, ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "command = <", command, ">");
   FILE * pipe = popen(command.str().c_str(), "r");
   if (!pipe)
   {
@@ -402,7 +402,7 @@ struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
     result << buf;
   }
   pclose(pipe);
-  RRLIB_LOG_PRINT(USER, "host = <", name, ">, result = <", result.str(), ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "host = <", name, ">, result = <", result.str(), ">");
 
   std::string result_str(result.str());
   std::string search_token("Name:");
@@ -413,7 +413,7 @@ struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
     return address;
   }
   result_str.erase(0, pos + search_token.length());
-  RRLIB_LOG_PRINT(USER, "pos = ", pos);
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "pos = ", pos);
 
   search_token = "Address:";
   pos = result_str.find(search_token);
@@ -426,23 +426,20 @@ struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
 
   std::string found_name(result_str.substr(0, pos));
   sStringUtils::TrimWhitespace(found_name);
-  //boost::trim(found_name);
   std::string ip(result_str.substr(pos + search_token.length()));
   sStringUtils::TrimWhitespace(ip);
-  //boost::trim(ip);
 
-  RRLIB_LOG_PRINT(USER, "found_name <", found_name, "> , name <", name, ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "found_name <", found_name, "> , name <", name, ">");
 
   if (found_name != name)
   {
     RRLIB_LOG_PRINT(ERROR, "nslookup failed .... returning <", inet_ntoa(address), ">");
     return address;
   }
-  RRLIB_LOG_PRINT(USER, "found_name <", found_name, "> , ip <", ip, ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "found_name <", found_name, "> , ip <", ip, ">");
 
   inet_aton(ip.c_str(), &address);
 
-  //return ip.c_str();
   return address;
 } // HostToIpViaNslookup()
 
@@ -452,13 +449,13 @@ struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
 //----------------------------------------------------------------------
 struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
 {
-  RRLIB_LOG_PRINT(USER, "started with host <", name, ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "started with host <", name, ">");
   struct in_addr address;
   address.s_addr = 0;
 
   std::stringstream command;
   command << "host -t A \"" << name << "\"";
-  RRLIB_LOG_PRINT(USER, "command = <", command.str(), ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "command = <", command.str(), ">");
   FILE * pipe = popen(command.str().c_str(), "r");
   if (!pipe)
   {
@@ -472,25 +469,23 @@ struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
     result << buf;
   }
   pclose(pipe);
-  RRLIB_LOG_PRINT(USER, "host = <", name, "> , result = <", result.str(), ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "host = <", name, "> , result = <", result.str(), ">");
 
-  std::string result_str(result.str());
-  std::vector<std::string> tokens;
-  sStringUtils::Tokenize(result_str, tokens, " \t");
-
-  for_each(tokens.begin(), tokens.end(), sStringUtils::Trim<std::string>());
-  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "got ", tokens.size(), " tokens:");
-  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, Join(tokens, "\n"));
-  if (tokens.size() != 4)
+  string result_str(result.str());
+  string search("has address");
+  size_t pos = result_str.find(search);
+  if (pos == string::npos)
   {
-    RRLIB_LOG_PRINT(WARNING, "Could not determine IP for host name ", name);
+    RRLIB_LOG_PRINT(ERROR, "could not find address token in host call");
     return address;
   }
-
-  assert(tokens.size() == 4);
-  RRLIB_LOG_PRINT(USER, "found_name <", tokens[0], "> , ip <", tokens[3], ">");
-
-  inet_aton(tokens[3].c_str(), &address);
+  string address_str(result_str.substr(pos + search.size(), result_str.size()));
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "token = <", address_str, ">");
+  sStringUtils::TrimWhitespace(address_str);
+  if (inet_aton(address_str.c_str(), &address) == 0)
+    RRLIB_LOG_PRINT(ERROR, "could not resolve address <", address_str, ">");
+  else
+    RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "address = <", inet_ntoa(address), ">");
   return address;
 } // HostToIpViaHost()
 
@@ -499,7 +494,7 @@ struct in_addr sFileIOUtils::HostToIpViaHost(const std::string & name)
 //----------------------------------------------------------------------
 struct in_addr sFileIOUtils::HostToIpViaHostsFile(const std::string & name)
 {
-  RRLIB_LOG_PRINT(USER, "started with host <", name, ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "started with host <", name, ">");
   struct in_addr address;
   address.s_addr = 0;
 
@@ -525,7 +520,7 @@ struct in_addr sFileIOUtils::HostToIpViaHostsFile(const std::string & name)
           if (inet_aton(iter->c_str(), &address))
           {
             ip_address = *iter;
-            RRLIB_LOG_PRINT(USER, "sFileIOUtils::HostToIpViaHostsFile() >>> got ip <", ip_address, "> of host <", name, "> from hosts file");
+            RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "sFileIOUtils::HostToIpViaHostsFile() >>> got ip <", ip_address, "> of host <", name, "> from hosts file");
             found = true;
             break;
           }

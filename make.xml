@@ -23,7 +23,6 @@
       final_class.h
       sFileIOUtils.cpp
       sStringUtils.cpp
-      tAutoRegister.h
       tTime.cpp
       tTransformTime.cpp
       tFPSComputer.cpp

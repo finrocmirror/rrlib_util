@@ -82,8 +82,11 @@ const size_t cCALLS_TO_SKIP = 2;
 //----------------------------------------------------------------------
 // Implementation
 //----------------------------------------------------------------------
+#ifndef __linux__
+#define RRLIB_UTIL_EXCEPTION_DISABLE_TRACING
+#endif
 
-#if __linux__
+#ifndef RRLIB_UTIL_EXCEPTION_DISABLE_TRACING
 namespace
 {
 std::string LookupSelf()
@@ -250,7 +253,7 @@ void terminate() noexcept
 // tTraceableExceptionBase constructors
 //----------------------------------------------------------------------
 tTraceableExceptionBase::tTraceableExceptionBase() :
-#if defined(NDEBUG) || !__linux__
+#if defined(NDEBUG) || defined(RRLIB_UTIL_EXCEPTION_DISABLE_TRACING)
   stack_trace_depth(0)
 {}
 #else
@@ -279,7 +282,7 @@ const char *tTraceableExceptionBase::Backtrace() const noexcept
     return "<Backtrace was optimized out>";
   }
 
-#if __linux__
+#ifndef RRLIB_UTIL_EXCEPTION_DISABLE_TRACING
   if (this->buffered_backtrace.empty())
   {
     try

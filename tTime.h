@@ -111,14 +111,7 @@ public:
    to call it directly. */
   static inline tTime TaskTime()
   {
-# if (CLOCKS_PER_SEC == 1000000)
-
-    return tTime(0, clock());
-# else
-
-    return tTime(0, clock() * (1000000 / CLOCKS_PER_SEC));
-# endif
-
+    return tTime(0, clock() * (clock_t(1000000) / CLOCKS_PER_SEC));
   }
 
   /*! Returns a time that is calculated by tTime::Now()+tTime(0,usec)

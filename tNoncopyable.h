@@ -99,9 +99,11 @@ public:
 //----------------------------------------------------------------------
 protected:
 
-  tNoncopyable() {}
+  tNoncopyable() = default;
+  ~tNoncopyable() = default;
 
-  ~tNoncopyable() {}
+  tNoncopyable(tNoncopyable&&) = default; // still movable
+  tNoncopyable& operator=(tNoncopyable &&) = default; // still movable
 
 };
 

@@ -388,7 +388,7 @@ struct in_addr sFileIOUtils::HostToIpViaNslookup(const std::string & name)
 
   std::stringstream command;
   command << "nslookup \"" << name << "\"";
-  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "command = <", command, ">");
+  RRLIB_LOG_PRINT(DEBUG_VERBOSE_1, "command = <", command.str(), ">");
   FILE * pipe = popen(command.str().c_str(), "r");
   if (!pipe)
   {

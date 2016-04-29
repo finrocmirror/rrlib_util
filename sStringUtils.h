@@ -202,7 +202,7 @@ public:
    */
   static void Tokenize(const std::string& str,
                        std::vector<std::string>& tokens,
-                       const std::string& delimiters);
+                       const std::string& delimiters) __attribute__((deprecated("USE rrlib::util::Tokenize() [rrlib/util/string.h] instead")));
 
 
   /*!
@@ -262,26 +262,11 @@ public:
     }
   }
 
-
-  /*!
-   * \brief Trims whitespace at the front and the back of given string.
-   * To be used as function object in for_each statements.
-   *
-   */
-  template<class T>
-  struct Trim : public std::unary_function<T, void>
-  {
-    void operator()(T& x)
-    {
-      TrimWhitespace(x);
-    }
-  };
-
   /*!
    * \brief Trims whitespace at the front and the back of given string
    *
    */
-  static void TrimWhitespace(std::string &text);
+  static void TrimWhitespace(std::string &text) __attribute__((deprecated("USE rrlib::util::TrimWhitespace() [rrlib/util/string.h] instead")));
 
   /*!
    * \brief Removes multiple whitespaces in the given string
@@ -292,12 +277,12 @@ public:
   /*!
      * \brief returns true if given element is first part of given text
      */
-  static bool BeginsWith(const std::string& text, const std::string& element);
+  static bool BeginsWith(const std::string& text, const std::string& element) __attribute__((deprecated("USE rrlib::util::StartsWith() [rrlib/util/string.h] instead")));
 
   /*!
      * \brief returns true if given element is last part of given text
      */
-  static bool EndsWith(const std::string& text, const std::string& element);
+  static bool EndsWith(const std::string& text, const std::string& element) __attribute__((deprecated("USE rrlib::util::EndsWith() [rrlib/util/string.h] instead")));
 
   /*!
    * \brief Builds a list of strings from a list of character arrays.

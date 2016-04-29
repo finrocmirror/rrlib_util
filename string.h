@@ -135,6 +135,15 @@ inline bool StartsWith(const char* string, const char* prefix)
  */
 void TrimWhitespace(std::string& string);
 
+/*!
+ * Splits a string into a list of tokens using the provided delimiter.
+ *
+ * \param str The string to be split up
+ * \param tokens The list of tokens
+ * \param The delimiter
+ */
+void Tokenize(const std::string& str, std::vector<std::string>& tokens, const std::string& delimiters);
+
 
 //----------------------------------------------------------------------
 // End of namespace declaration

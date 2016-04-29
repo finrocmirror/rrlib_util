@@ -31,9 +31,7 @@
 //----------------------------------------------------------------------
 
 #include "rrlib/util/sStringUtils.h"
-
-// boost includes
-//#include <boost/algorithm/string.hpp> // trim
+#include "rrlib/util/string.h"
 
 //----------------------------------------------------------------------
 // Namespace declaration
@@ -49,20 +47,7 @@ void sStringUtils::Tokenize(const std::string& str,
                             std::vector<std::string>& tokens,
                             const std::string& delimiters)
 {
-  // Skip delimiters at beginning.
-  std::string::size_type lastPos = str.find_first_not_of(delimiters, 0);
-  // Find first "non-delimiter".
-  std::string::size_type pos     = str.find_first_of(delimiters, lastPos);
-
-  while (std::string::npos != pos || std::string::npos != lastPos)
-  {
-    // Found a token, add it to the vector.
-    tokens.push_back(str.substr(lastPos, pos - lastPos));
-    // Skip delimiters.  Note the "not_of"
-    lastPos = str.find_first_not_of(delimiters, pos);
-    // Find next "non-delimiter"
-    pos = str.find_first_of(delimiters, lastPos);
-  }
+  return rrlib::util::Tokenize(str, tokens, delimiters);
 }
 
 void sStringUtils::RemoveBracketsAndSpaces(const char* input_str, char* output_str, const char replace_token)
@@ -135,23 +120,7 @@ std::string sStringUtils::ConstReplace(const std::string &input_str, const char*
 
 void sStringUtils::TrimWhitespace(std::string &text)
 {
-  std::string check(text);
-  std::string::size_type pos(text.size());
-
-  //trim right side
-  while (pos > 0 && std::isspace(text[pos - 1]))
-    --pos;
-  text.erase(pos);
-
-  // trim left side
-  pos = 0;
-  while (pos < text.size() && std::isspace(text[pos]))
-    ++pos;
-  text.erase(0, pos);
-  /*
-  boost::trim(check);
-  assert(text == check && "Internal Error: hand-coded string trimming does not return same value as boost::trim. Please go and tell tim.");
-  */
+  return util::TrimWhitespace(text);
 }
 
 void sStringUtils::RemoveMultipleWhitespaces(std::string &text)
@@ -174,27 +143,12 @@ void sStringUtils::RemoveMultipleWhitespaces(std::string &text)
 
 bool sStringUtils::EndsWith(const std::string& text, const std::string& element)
 {
-  if (text.length() < element.length()) // if element is longer than text, the text can not contain the element
-  {
-    return false;
-  }
-
-  std::size_t element_pos = text.rfind(element);
-
-  if (element_pos != std::string::npos)
-  {
-    return (element_pos == (text.length() - element.length())); // check whether the last characters equal the element
-  }
-  else
-  {
-    return false; // if element was not found in text
-  }
-
+  return util::EndsWith(text, element);
 }
 
 bool sStringUtils::BeginsWith(const std::string& text, const std::string& element)
 {
-  return (text.find(element) == 0);
+  return util::StartsWith(text, element);
 }
 
 bool sStringUtils::StringToBool(std::string s)

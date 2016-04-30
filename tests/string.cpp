@@ -104,6 +104,25 @@ private:
     TestTrimWhitespace("string \t  \n ", "string");
     TestTrimWhitespace("\t  string \n ", "string");
     TestTrimWhitespace("\n two strings  ", "two strings");
+
+    std::vector<std::string> tokens, expected;
+    const size_t cZERO = 0;
+    Tokenize("", tokens, ",;");
+    RRLIB_UNIT_TESTS_ASSERT(expected == tokens);
+    Tokenize(";,;", tokens, ",;");
+    RRLIB_UNIT_TESTS_ASSERT(expected == tokens);
+    Tokenize(" ;;", tokens, ",;");
+    expected = { " " };
+    RRLIB_UNIT_TESTS_ASSERT(expected == tokens);
+    Tokenize(";; String1,;String2, ", tokens, ",;");
+    expected = { " String1", "String2", " " };
+    RRLIB_UNIT_TESTS_ASSERT(expected == tokens);
+    Tokenize("(V1,V2,V3)", tokens, "(,)");
+    expected = { "V1", "V2", "V3" };
+    RRLIB_UNIT_TESTS_ASSERT(expected == tokens);
+    Tokenize("  x1,  x2,  x3", tokens, " ,");
+    expected = { "x1", "x2", "x3" };
+    RRLIB_UNIT_TESTS_ASSERT(expected == tokens);
   }
 
   void TestStartsWith(const char* string, const char* prefix, bool expected_result)

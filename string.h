@@ -136,11 +136,11 @@ inline bool StartsWith(const char* string, const char* prefix)
 void TrimWhitespace(std::string& string);
 
 /*!
- * Splits a string into a list of tokens using the provided delimiter.
+ * Splits a string into a list of tokens using the provided delimiters.
  *
  * \param str The string to be split up
- * \param tokens The list of tokens
- * \param The delimiter
+ * \param tokens The list of tokens (vector object contains the found tokens after the function returns. The function calls clear() on the vector - so it does not contain any previous elements.).
+ * \param delimiters The delimiters (as provided to std::string::find_first_of)
  */
 void Tokenize(const std::string& str, std::vector<std::string>& tokens, const std::string& delimiters);
 

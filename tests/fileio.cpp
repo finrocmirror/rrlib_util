@@ -37,7 +37,6 @@
 //----------------------------------------------------------------------
 #include "rrlib/util/tUnitTestSuite.h"
 #include "rrlib/util/fileio.h"
-#include "rrlib/util/join.h"
 
 //----------------------------------------------------------------------
 // Debugging
@@ -88,13 +87,10 @@ private:
 
   void TestFileAccess()
   {
-    RRLIB_LOG_PRINT_STATIC(DEBUG, "\nTestShellExpandFilename ... started");
     string result(""), expected(""), absolute_file_name(""), file_name("");
     char* env_home(getenv("HOME"));
     RRLIB_UNIT_TESTS_ASSERT(env_home != nullptr);
-    RRLIB_LOG_PRINT_STATIC(DEBUG, "env_home \t\t= ", env_home);
     CPPUNIT_ASSERT_NO_THROW(absolute_file_name = CreateTempFile(env_home));
-    RRLIB_LOG_PRINT_STATIC(DEBUG, "absolute_file_name \t= ", absolute_file_name);
     RRLIB_UNIT_TESTS_ASSERT(FileExists(absolute_file_name));
     file_name = absolute_file_name;
     auto pos = absolute_file_name.find_last_of("/");
@@ -104,7 +100,6 @@ private:
     }
     string search(string("$HOME/") + file_name);
     expected = absolute_file_name;
-    RRLIB_LOG_PRINT_STATIC(DEBUG, "searched file name \t= ", search, "\nexpected \t\t= ", expected);
     bool ok(false);
     CPPUNIT_ASSERT_NO_THROW(ok = ShellExpandFilename(result, search));
     RRLIB_UNIT_TESTS_ASSERT(ok);
@@ -119,7 +114,6 @@ private:
 
     CPPUNIT_ASSERT_NO_THROW(DeleteFile(expected));
     RRLIB_UNIT_TESTS_ASSERT(!FileExists(absolute_file_name));
-    RRLIB_LOG_PRINT_STATIC(DEBUG, "\nTestShellExpandFilename ... completed");
   }
 
   void TestDirectoryAccess()
@@ -130,31 +124,25 @@ private:
     CPPUNIT_ASSERT_NO_THROW(ChangeCurrentDirectory(temp_dir));
     std::vector<std::string> files;
     RRLIB_UNIT_TESTS_ASSERT(GetAllFilesInDirectory(temp_dir, files));
-    RRLIB_LOG_PRINT_STATIC(USER, "\nfiles: ", Join(files));
     RRLIB_UNIT_TESTS_ASSERT(files.size() == 2);
 
     string test_dir(temp_dir + "/test_fileio/");
     CPPUNIT_ASSERT_NO_THROW(CreateDirectory(test_dir));
     RRLIB_UNIT_TESTS_ASSERT(FileExists(test_dir));
     RRLIB_UNIT_TESTS_ASSERT(GetAllFilesInDirectory(temp_dir, files));
-    RRLIB_LOG_PRINT_STATIC(USER, "\nfiles: ", Join(files));
     RRLIB_UNIT_TESTS_ASSERT(files.size() == 3);
     CPPUNIT_ASSERT_NO_THROW(ChangeCurrentDirectory(test_dir));
     string cur_dir;
     CPPUNIT_ASSERT_NO_THROW(cur_dir = GetCurrentDirectory());
-    RRLIB_LOG_PRINT_STATIC(USER, "\ncurrent dir = <", cur_dir, ">");
-    RRLIB_LOG_PRINT_STATIC(USER, "\ntest dir = <", test_dir, ">");
     RRLIB_UNIT_TESTS_ASSERT(cur_dir == test_dir);
 
     string temp_file("");
     CPPUNIT_ASSERT_NO_THROW(temp_file = CreateTempFile(test_dir));
     RRLIB_UNIT_TESTS_ASSERT(GetAllFilesInDirectory(test_dir, files));
-    RRLIB_LOG_PRINT_STATIC(USER, "\nfiles: ", Join(files));
     RRLIB_UNIT_TESTS_ASSERT(files.size() == 3);
 
     string file_dir(""), file_base(""), file_ext("");
     SplitFullQualifiedFilename(temp_file, file_dir, file_base, file_ext);
-    RRLIB_LOG_PRINT_STATIC(USER, "\nfile_dir = ", file_dir, ", file_base = ", file_base, ", file_ext = ", file_ext);
     RRLIB_UNIT_TESTS_ASSERT(file_dir == test_dir.substr(0, test_dir.size() - 1));
     RRLIB_UNIT_TESTS_ASSERT(file_dir == test_dir.substr(0, test_dir.find_last_of("/")));
     RRLIB_UNIT_TESTS_ASSERT(file_base == temp_file.substr(test_dir.size(), temp_file.find_last_of(".") - test_dir.size()));

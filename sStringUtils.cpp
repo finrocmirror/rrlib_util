@@ -47,7 +47,7 @@ void sStringUtils::Tokenize(const std::string& str,
                             std::vector<std::string>& tokens,
                             const std::string& delimiters)
 {
-  return rrlib::util::Tokenize(str, tokens, delimiters);
+  return util::Tokenize(str, tokens, delimiters);
 }
 
 void sStringUtils::RemoveBracketsAndSpaces(const char* input_str, char* output_str, const char replace_token)

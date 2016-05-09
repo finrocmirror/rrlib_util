@@ -19,9 +19,9 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 //----------------------------------------------------------------------
-/*!\file    rrlib/util/tests/string.cpp
+/*!\file    rrlib/util/tests/fileio.cpp
  *
- * \author  Max Reichardt
+ * \author  Jens Wettach
  *
  * \date    2016-05-09
  *

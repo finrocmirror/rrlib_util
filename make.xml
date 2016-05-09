@@ -17,17 +17,28 @@
     </sources>
   </library>
 
-  <library name="legacy"
-         libs="boost_iostreams">
+  <library name="fileio">
+    <sources>
+      fileio.cpp
+    </sources>
+  </library>
+
+  <library name="legacy">
     <sources>
       final_class.h
-      sFileIOUtils.cpp
       sStringUtils.cpp
       tTime.cpp
       tTransformTime.cpp
       tFPSComputer.cpp
     </sources>
   </library>
+  
+  <library name="deprecated" libs="boost_iostreams">
+    <sources>
+      sFileIOUtils.cpp
+    </sources>
+  </library>
+  
   
   <library name="unit_tests"
         libs="cppunit">

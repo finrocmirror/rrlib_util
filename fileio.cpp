@@ -178,11 +178,11 @@ std::string CreateTempDirectory(const std::string& root_directory)
 //----------------------------------------------------------------------
 // DeleteFile()
 //----------------------------------------------------------------------
-bool DeleteFile(const std::string& filename)
+bool DeleteFile(const std::string& file_name)
 {
-  if (remove(filename.c_str()) != 0)
+  if (remove(file_name.c_str()) != 0)
   {
-    throw runtime_error("Could not delete file <" + filename + ">: " + strerror(errno));
+    throw runtime_error("Could not delete file <" + file_name + ">: " + strerror(errno));
   }
   return true;
 } // DeleteFile()
@@ -202,20 +202,20 @@ bool DeleteDirectory(const std::string& directoryname)
 //----------------------------------------------------------------------
 // FileExists()
 //----------------------------------------------------------------------
-bool FileExists(const std::string &filename)
+bool FileExists(const std::string &file_name)
 {
-  return (access(filename.c_str(), F_OK) != -1);
+  return (access(file_name.c_str(), F_OK) != -1);
 } // FileExists()
 
 
 //----------------------------------------------------------------------
 // CountLineNumbers()
 //----------------------------------------------------------------------
-size_t CountLineNumbers(const std::string &filename)
+size_t CountLineNumbers(const std::string &file_name)
 {
-  std::ifstream file(filename);
+  std::ifstream file(file_name);
   if (!file.good())
-    throw runtime_error("Could not open file <" + filename + ">.");
+    throw runtime_error("Could not open file <" + file_name + ">.");
   return std::count(std::istreambuf_iterator<char>(file),
                     std::istreambuf_iterator<char>(), '\n');
 } // CountLineNumbers()
@@ -319,6 +319,24 @@ void SplitFullQualifiedFilename(const std::string& complete_name, std::string& f
   }
 
 } // SplitFullQualifiedFilename()
+
+
+//----------------------------------------------------------------------
+// GetFileExtension()
+//----------------------------------------------------------------------
+std::string GetFileExtension(const std::string &file_name)
+{
+  auto pos = file_name.rfind('.');
+  if (pos != std::string::npos)
+  {
+    return file_name.substr(pos + 1);
+  }
+  else
+  {
+    RRLIB_LOG_PRINT(WARNING, "No file extension found in file name <", file_name, ">.");
+    return "";
+  }
+} // GetFileExtension()
 
 
 //----------------------------------------------------------------------

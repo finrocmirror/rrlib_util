@@ -158,6 +158,13 @@ void sFileIOUtils::SplitFullQualifiedFilename(const std::string& complete_name, 
   return fileio::SplitFullQualifiedFilename(complete_name, file_dir, file_base, file_ext);
 } // SplitFullQualifiedFilename()
 
+//----------------------------------------------------------------------
+// class sFileIOUtils::GetFileExtension()
+//----------------------------------------------------------------------
+std::string sFileIOUtils::GetFileExtension(const std::string &filename)
+{
+  return fileio::GetFileExtension(filename);
+} // GetFileExtension()
 
 //----------------------------------------------------------------------
 // End of namespace declaration

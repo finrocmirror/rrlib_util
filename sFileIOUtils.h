@@ -199,8 +199,15 @@ public:
   static void SplitFullQualifiedFilename(const std::string& complete_name, std::string& file_dir, std::string& file_base, std::string& file_ext)
   __attribute__((deprecated("USE rrlib::util::fileio::SplitFullQualifiedFilename()")));
 
-};
+  /*
+   * Extracts the file extension from a given filename
+   * \param filename complete file name
+   * \returns file extension if existing, an empty string else
+   */
+  static std::string GetFileExtension(const std::string &filename)
+  __attribute__((deprecated("USE rrlib::util::fileio::GetFileExtension()")));
 
+} __attribute__((deprecated("USE functions from rrlib::util::fileio")));
 
 //======================================================================
 // Implementation of template functions

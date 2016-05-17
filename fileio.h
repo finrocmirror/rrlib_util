@@ -101,55 +101,55 @@ std::string CreateTempFile(const std::string& root_directory = "");
 std::string CreateTempDirectory(const std::string& root_directory = "");
 
 /*!
- * \brief Removes the file with \param filename.
+ * \brief Removes the file with \param file_name.
  * \return true if file could be removed
  * \throws runtime_error if file removal fails
  */
-bool DeleteFile(const std::string& filename);
+bool DeleteFile(const std::string& file_name);
 
 /*!
- * \brief Removes the directory with \param directoryname.
+ * \brief Removes the directory with \param directory_name.
  * \return true if directory could be removed
  * \throws runtime_error if directory removal fails
  */
-bool DeleteDirectory(const std::string& directoryname);
+bool DeleteDirectory(const std::string& directory_name);
 
 /*!
- * \brief Tests if file with \param filename exists
+ * \brief Tests if file with \param file_name exists
  *
  * \return true if file exists, false otherwise
  */
-bool FileExists(const std::string &filename);
+bool FileExists(const std::string &file_name);
 
 /*!
- * \brief Counts number of lines in \param filename
+ * \brief Counts number of lines in \param file_name
  *
  * \return numboer of lines
  * \throws runtime_error if file cannot be opened
  */
-size_t CountLineNumbers(const std::string &filename);
+size_t CountLineNumbers(const std::string &file_name);
 
-/*! Expands the \param filename via a pipe and echo command in order to replace all contained environment variables with their actual value.
+/*! Expands the \param file_name via a pipe and echo command in order to replace all contained environment variables with their actual value.
  *
- * \param filename file name to be expanded (will contain the result afterwards)
+ * \param file_name file name to be expanded (will contain the result afterwards)
  *
  * \return true if file name could be expanded
  * \throws runtime_error if expansion of file name failed
  */
-bool ShellExpandFilename(std::string &filename) __attribute__((__warn_unused_result__));
+bool ShellExpandFilename(std::string &file_name) __attribute__((__warn_unused_result__));
 
-/*! Expands the \param filename via a pipe and echo command in order to replace all contained environment variables with their actual value.
+/*! Expands the \param file_name via a pipe and echo command in order to replace all contained environment variables with their actual value.
  *
- * \param filename file name to be expanded
+ * \param file_name file name to be expanded
  *
  * \return expanded file name in case of success
  * \throws runtime_error if expansion of file name failed
  */
 std::string ShellExpandFilename(const std::string &file_name)  __attribute__((__warn_unused_result__));
 
-/*! Expands the \param filename via a pipe and echo command in order to replace all contained environment variables with their actual value.
+/*! Expands the \param file_name via a pipe and echo command in order to replace all contained environment variables with their actual value.
  *
- * \param filename file name to be expanded
+ * \param file_name file name to be expanded
  * \param result will contain the expanded file name
  *
  * \return true if file name could be expanded
@@ -165,6 +165,14 @@ bool ShellExpandFilename(std::string &result, const std::string& file_name) __at
  *    \param file_ext file extension (output)
  */
 void SplitFullQualifiedFilename(const std::string& complete_name, std::string& file_dir, std::string& file_base, std::string& file_ext);
+
+/*
+ * Extracts the file extension from \param file_name
+ * \param file_name file name with extension
+ * \returns file extension (may be empty)
+ */
+std::string GetFileExtension(const std::string &file_name);
+
 
 //----------------------------------------------------------------------
 // End of namespace declaration

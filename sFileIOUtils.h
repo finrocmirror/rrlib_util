@@ -200,11 +200,11 @@ public:
   __attribute__((deprecated("USE rrlib::util::fileio::SplitFullQualifiedFilename()")));
 
   /*
-   * Extracts the file extension from a given filename
-   * \param filename complete file name
+   * Extracts the file extension from a given file name
+   * \param file_name complete file name
    * \returns file extension if existing, an empty string else
    */
-  static std::string GetFileExtension(const std::string &filename)
+  static std::string GetFileExtension(const std::string &file_name)
   __attribute__((deprecated("USE rrlib::util::fileio::GetFileExtension()")));
 
 } __attribute__((deprecated("USE functions from rrlib::util::fileio")));

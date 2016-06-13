@@ -106,7 +106,6 @@ private:
     TestTrimWhitespace("\n two strings  ", "two strings");
 
     std::vector<std::string> tokens, expected;
-    const size_t cZERO = 0;
     Tokenize("", tokens, ",;");
     RRLIB_UNIT_TESTS_ASSERT(expected == tokens);
     Tokenize(";,;", tokens, ",;");

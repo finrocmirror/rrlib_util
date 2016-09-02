@@ -76,7 +76,7 @@ tManagedConstCharPointer::tManagedConstCharPointer(const char* pointer, bool cop
   {
     size_t string_length = strlen(pointer);
     char* temp = new char[string_length + 2];
-    temp[0] = 0;
+    temp[0] = cOWNS_BUFFER_MARKER;
     memcpy(temp + 1, pointer, string_length + 1);
     this->pointer = temp;
   }

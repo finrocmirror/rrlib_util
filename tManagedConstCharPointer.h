@@ -79,6 +79,8 @@ namespace util
  */
 class tManagedConstCharPointer : public rrlib::util::tNoncopyable
 {
+  /*! Character that marks string copies to be deleted */
+  static const char cOWNS_BUFFER_MARKER = 1;
 
 //----------------------------------------------------------------------
 // Public methods and typedefs
@@ -110,7 +112,7 @@ public:
 
   ~tManagedConstCharPointer()
   {
-    if (pointer && pointer[0] == 0)
+    if (OwnsBuffer())
     {
       delete[] pointer;
     }
@@ -121,7 +123,15 @@ public:
    */
   const char* Get() const
   {
-    return pointer ? (pointer[0] ? pointer : (pointer + 1)) : nullptr;
+    return OwnsBuffer() ? (pointer + 1) : pointer;
+  }
+
+  /*!
+   * \return Does this smart pointer own the buffer it points to?
+   */
+  bool OwnsBuffer() const
+  {
+    return pointer ? pointer[0] == cOWNS_BUFFER_MARKER : false;
   }
 
 //----------------------------------------------------------------------
@@ -129,7 +139,7 @@ public:
 //----------------------------------------------------------------------
 private:
 
-  /*! Wrapped pointer; for string copies to be deleted a 0 is prepended */
+  /*! Wrapped pointer; for string copies to be deleted a cOWNS_BUFFER_MARKER is prepended */
   const char* pointer;
 
 };

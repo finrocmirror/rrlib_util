@@ -121,7 +121,7 @@ public:
    */
   bool Get(TFlag flag) const
   {
-    return wrapped & (1 << static_cast<TStorage>(flag));
+    return this->wrapped & (1 << static_cast<TStorage>(flag));
   }
 
   /*!
@@ -129,7 +129,7 @@ public:
    */
   constexpr TStorage Raw() const
   {
-    return wrapped;
+    return this->wrapped;
   }
 
   /*!
@@ -138,23 +138,59 @@ public:
    * \param flag Flag to set or remove
    * \param value Set flag? (false will remove it)
    */
-  inline void Set(TFlag flag, bool value = true)
+  inline tEnumBasedFlags &Set(TFlag flag, bool value = true)
   {
     if (value)
     {
-      wrapped |= (1 << static_cast<TStorage>(flag));
+      this->wrapped |= (1 << static_cast<TStorage>(flag));
     }
     else
     {
-      wrapped &= (~(1 << static_cast<TStorage>(flag)));
+      this->wrapped &= (~(1 << static_cast<TStorage>(flag)));
     }
+    return *this;
   }
 
+  /*! Reset all flags
+   *
+   */
+  inline tEnumBasedFlags &Reset()
+  {
+    this->wrapped = TStorage();
+    return *this;
+  }
+
+  /*! Reset given flag to false
+   *
+   * \param flag   The Flag to reset
+   */
+  inline tEnumBasedFlags &Reset(TFlag flag)
+  {
+    return this->Set(flag, false);
+  }
 
   tEnumBasedFlags& operator |= (const tEnumBasedFlags& other)
   {
-    wrapped |= other.wrapped;
+    this->wrapped |= other.wrapped;
     return *this;
+  }
+
+  /*! Checks if any flag is set
+   *
+   * \return True if at least one flag is set
+   */
+  inline bool Any() const
+  {
+    return this->wrapped;
+  }
+
+  /*! Checks if no flag is set to true
+   *
+   * \return True if no flag is set
+   */
+  inline bool None() const
+  {
+    return !this->Any();
   }
 
 //----------------------------------------------------------------------

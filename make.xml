@@ -9,6 +9,7 @@
       string.cpp
       tEnumBasedFlags.h
       tIntegerSequence.h
+      tIteratorRange.h
       tManagedConstCharPointer.cpp
       tNoncopyable.h
       tTaggedPointer.h

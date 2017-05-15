@@ -133,6 +133,12 @@ tIteratorRange<TIterator> MakeRange(TIterator begin, TIterator end)
   return tIteratorRange<TIterator>(begin, end);
 }
 
+template <typename TContainer>
+tIteratorRange<decltype(std::begin(std::declval<TContainer>()))> MakeRange(const TContainer &container)
+{
+  return MakeRange(std::begin(container), std::end(container));
+}
+
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------

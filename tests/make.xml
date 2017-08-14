@@ -6,5 +6,6 @@
   <program name="tagged_pointer" sources="tagged_pointer.cpp" />
   <program name="string" sources="string.cpp" />
   <program name="fileio" sources="fileio.cpp" />
+  <program name="time" sources="time.cpp" />
 
 </targets>

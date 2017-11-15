@@ -212,6 +212,11 @@ inline bool operator!=(const tEnumBasedFlags<TFlag, TStorage>& flags1, const tEn
 {
   return flags1.Raw() != flags2.Raw();
 }
+template <typename TFlag, typename TStorage = uint>
+inline bool operator<(const tEnumBasedFlags<TFlag, TStorage>& flags1, const tEnumBasedFlags<TFlag, TStorage>& flags2)
+{
+  return flags1.Raw() < flags2.Raw();
+}
 
 //----------------------------------------------------------------------
 // End of namespace declaration
